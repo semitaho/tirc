@@ -1,1 +1,1 @@
-web: java -jar target/tirc-2.0.jar
+web: java -Dserver.port=$PORT -jar  target/tirc-2.0.jar
