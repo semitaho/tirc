@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"></meta>
+<meta content="width=device-width,height=1, initial-scale=1, user-scalable=no, maximum-scale=1"
+	name="viewport"></meta>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/styles.css">
+
+<!--
+<script src="js/vendor/require.js"></script>
+-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/vendor/react.js"></script>
+
+<script src="js/vendor/JSXTransformer.js"></script>
+<script src="js/services/TircBackend.js"></script>
+<script src="js/services/GeoService.js"></script>
+<script src="js/services/Parser.js"></script>
+
+<script src="js/services/NotificationService.js"></script>
+
+<script type="text/jsx" src="js/components/tircScreen.js"></script>
+<script type="text/jsx" src="js/components/textrow.js"></script>
+<script type="text/jsx" src="js/components/nickpanel.js"></script>
+<script type="text/jsx" src="js/components/topicPanel.js"></script>
+<script type="text/jsx" src="js/components/mainpanel.js"></script>
+<script type="text/jsx" src="js/components/messagebox.js"></script>
+
+<script src="http://maps.google.com/maps/api/js?sensor=true&language=fi" style=""></script>
+
+
+<title handle-focus ng-bind="title"></title>
+
+</head>
+<body geolocate current="location">
+	<div class="tirc_content" id="tirc_content">
+		
+		<header class="tirc_header_panel">
+			<h1>tIrc</h1>
+			
+		
+			<div class="current_user">
+				<a href="#" ng-bind="nick" ng-show="!showDropdown"
+					ng-click="showDropdown = true"></a> 
+				
+				<select style="width: 100%;"
+					name="nick_Choose" ng-model="nick"
+					ng-options="name for name in names" ng-show="showDropdown"
+					ng-change="selectNick();">
+
+				</select>
+				
+			</div>
+
+			<div class="current_date">
+				<input type="date" ng-model="dt" ng-change="initLogs();"
+					placeholder="yyyy-MM-dd" min="2013-01-01" max="2014-12-31" required />
+			</div>
+			
+		</header>
+		
+		<div id="tirc_main"></div>
+       
+  	
+		<footer id="action_panel" class="tirc_action_panel"></footer>
+		
+	</div>
+<script>
+
+$(document).ready(function(){
+	TircBackend.connect();
+});
+</script>
+</body>
+</html>

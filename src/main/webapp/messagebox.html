@@ -1,0 +1,9 @@
+<footer class="tirc_action_panel" id="action_panel">
+	<div ng-class="{message_container_part: focus, message_container_full: !focus}">
+		<input type="text" ng-focus="onfocus();"  ng-model="line" name="text" id="textline" class="message_box"
+					placeholder="say something...">
+	</div>
+	
+	<a href="javascript:void(0);" class="accept" ng-show="focus" ng-click="accept();"> &checkmark;
+		</href> 
+</footer>

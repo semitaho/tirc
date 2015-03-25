@@ -1,0 +1,94 @@
+package fi.toni.tirc.util;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.mongodb.BasicDBObject;
+
+import fi.toni.tirc.communication.TircLine;
+
+public class TircUtil {
+	
+	private static final String DATE_PATTERN = "HH:mm:ss";
+	public  static String getCurrentTimeAsString() {
+		DateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+		String format = dateFormat.format(new Date());
+		return format;
+	}
+	
+	public  static String getTimestampAsString(long timeinmillis) {
+		DateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
+		String format = dateFormat.format(new Date(timeinmillis));
+		return format;
+	}
+	
+	public static String resolveUserAgent(HttpServletRequest request) {
+		String userAgent = request.getHeader("User-Agent");
+		StringBuilder ua = new StringBuilder();
+		if (userAgent.indexOf("Firefox") != -1) {
+			ua.append("Firefox");
+		} else if (userAgent.indexOf("Chrome") != -1) {
+			ua.append("Chrome");
+		} else if (userAgent.indexOf("Safari") != -1) {
+			ua.append("Safari");
+		} else if (userAgent.indexOf("Opera") != -1
+				|| userAgent.indexOf("OPR") != -1) {
+			ua.append("Opera");
+		} else if (userAgent.indexOf("MSIE") != -1) {
+			ua.append("Internet Explorer");
+		}
+
+		if (userAgent.indexOf("Mobile") != -1) {
+			ua.append(", Mobiili");
+		}
+		return ua.toString();
+	}
+	
+	public static BasicDBObject mapToDBModel(TircLine line){
+		BasicDBObject dbLine = new BasicDBObject("line", line.getLine());
+		if (line.getNick() != null){
+			dbLine.append("nick", line.getNick());
+		}
+		dbLine.append("source" , line.getSource());
+		if (line.getType() != null){
+			dbLine.append("type", line.getType());
+		}
+	
+		Date date = new Date(line.getDate().getTime());
+		dbLine.append("datetime", date);
+		return dbLine;
+	}
+	
+	public static TircLine mapToJoinLine(String nick){
+		TircLine tircLine = new TircLine();
+		tircLine.setType("join");
+		tircLine.setNick(nick);
+		return tircLine;
+	}
+	
+	public static TircLine mapToTircLine(BasicDBObject dbObject){
+		Date date = dbObject.getDate("datetime");
+		TircLine tircLine = new TircLine(date);
+		if (dbObject.containsField("nick")){
+			tircLine.setNick(dbObject.getString("nick"));
+		}
+		tircLine.setType(dbObject.getString("type"));
+		tircLine.setSource(dbObject.getString("source"));
+		if (dbObject.containsField("line")){
+			tircLine.setLine(dbObject.getString("line"));
+		}
+		return tircLine;
+	}
+	
+	public static Date localDateToDate(LocalDate datelocal){
+		Instant instant =  datelocal.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+		Date res = Date.from(instant);
+		return res;
+	}
+}

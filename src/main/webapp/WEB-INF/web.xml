@@ -1,0 +1,47 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0"
+         metadata-complete="true">
+    <display-name>tIrc Web Application</display-name
+    
+    <!-- 
+         <context-param>
+        <param-name>resteasy.guice.modules</param-name>
+        <param-value>fi.toni.tirc.rest.TircRestModule</param-value>
+    </context-param>
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/backend</param-value>
+	</context-param>
+	<context-param>
+        <param-name>resteasy.guice.stage</param-name>
+        <param-value>PRODUCTION</param-value>
+    </context-param>
+    <listener>
+        <listener-class>fi.toni.tirc.rest.TircBootstrap</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>Resteasy</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher</servlet-class>
+    </servlet>
+   <servlet>
+        <servlet-name>TircSSE</servlet-name>
+        <servlet-class>fi.toni.tirc.sse.TircSseServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Resteasy</servlet-name>
+        <url-pattern>/backend/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>TircSSE</servlet-name>
+    	<url-pattern>/sse/*</url-pattern>
+    	
+    </servlet-mapping>
+      -->
+ </web-app>
