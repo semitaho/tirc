@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>fi.toni</groupId>
+	<artifactId>tirc</artifactId>
+	<version>2.0</version>
+	<packaging>jar</packaging>
+	<name>tIrc</name>
+
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.1.7.RELEASE</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		 -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> 
+			</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-core</artifactId> 
+			</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
+			</dependency> -->
+		<!-- <dependency> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-server</artifactId> 
+			<version>${jettyVersion}</version> </dependency> <dependency> <groupId>org.eclipse.jetty</groupId> 
+			<artifactId>jetty-webapp</artifactId> <version>${jettyVersion}</version> 
+			</dependency> <dependency> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-util</artifactId> 
+			<version>${jettyVersion}</version> </dependency> <dependency> <groupId>org.eclipse.jetty</groupId> 
+			<artifactId>jetty-io</artifactId> <version>${jettyVersion}</version> </dependency> -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>async-http-servlet-3.0</artifactId>
+			<version>3.0.5.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.5.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson-provider</artifactId>
+			<version>3.0.5.Final</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-multipart-provider</artifactId>
+			<version>3.0.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-guice</artifactId>
+			<version>3.0.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-servlet</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<start-class>fi.toni.tirc.TircApplication</start-class>
+	</properties>
+	<build>
+
+		<resources>
+			<resource>
+				<directory>src/webapp</directory>
+
+			</resource>
+			<resource>
+				<directory>src/resources</directory>
+			</resource>
+		</resources>
+		<sourceDirectory>src</sourceDirectory>
+		<outputDirectory>target</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
+				<configuration> <source>1.8</source> <target>1.8</target> </configuration> 
+				</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
+				<configuration> <archive> <manifest> <addClasspath>true</addClasspath> </manifest> 
+				</archive> </configuration> </plugin> -->
+			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <version>2.2</version> 
+				<configuration> <appendAssemblyId>false</appendAssemblyId> </configuration> 
+				<executions> <execution> <id>make-assembly</id> <phase>package</phase> <goals> 
+				<goal>single</goal> </goals> <configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
+				</descriptorRefs> <archive> <manifest> <mainClass>fi.toni.tirc.TircServer</mainClass> 
+				</manifest> </archive> </configuration> </execution> <execution> <id>make-zip</id> 
+				<phase>package</phase> <goals> <goal>single</goal> </goals> <configuration> 
+				<descriptors> <descriptor>/src/assembly/zip.xml</descriptor> </descriptors> 
+				</configuration> </execution> </executions> </plugin> -->
+			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>2.0.2</version> 
+				<configuration> <includes> <include>TircServer.java</include> </includes> 
+				</configuration> </plugin> -->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
+				<version>1.1</version> <executions> <execution> <goals> <goal>java</goal> 
+				</goals> </execution> </executions> <configuration> <mainClass>fi.toni.tirc.TircServer</mainClass> 
+				</configuration> </plugin> -->
+
+		</plugins>
+	</build>
+</project>
