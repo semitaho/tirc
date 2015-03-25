@@ -13,6 +13,9 @@ gulp.task('templates', function() {
 	});
 
 var webserver = require('gulp-webserver');
+
+gulp.task('build', ['templates']);
+
 gulp.task('default', function() {
 	
 	gulp.watch(watchfiles, ['templates']);
