@@ -3,7 +3,9 @@
  */
 package fi.toni.tirc.db;
 
-import static junit.framework.Assert.assertTrue;
+
+import static junit.framework
+		.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,11 +31,11 @@ import fi.toni.tirc.communication.TircLine;
  */
 public class MongoTest {
 	
-	private Mongo mongo;
+	private fi.toni.tirc.db.Mongo mongo;
 	
 	@Before
 	public void setUp(){
-		mongo = new Mongo();
+		mongo = new fi.toni.tirc.db.Mongo();
 		mongo.postCreate();
 	}
 	
