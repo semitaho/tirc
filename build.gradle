@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    	classpath 'org.mongodb:mongo-java-driver:2.12.5'
+
+        classpath 'org.hidetake:gradle-ssh-plugin:0.3.12'
+    
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.6.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'org.hidetake.ssh'
+ssh {
+  knownHosts = allowAnyHosts    // Disable host key verification
+}
+jar {
+
+	baseName =  'tirc'
+	version = '2.0'
+}
+
+
+remotes {
+	ec2 {
+		host= sshhost
+		user = sshuser
+		password = pass
+	}
+}
+
+
+
+task deploy(dependsOn: build, type: SshTask)  {
+	session(remotes.ec2){
+		println 'copying...'
+		put 'build/libs/tirc-2.0.jar', '/home/ec2-user'
+	}	
+}
+task copyweb(type:Copy) {
+	from ('src/main/webapp')
+	into ('build/resources/main/static')
+	
+    
+}
+
+task copyprod(type:Copy){
+	if (gradle.startParameter.taskNames[0] == 'deploy'){
+		println 'doing production copy...'
+		from ('src/main/resources/tirc.production.properties'){
+			rename '(.*)\\.production(.*)', '$1$2'
+			}
+		into 'build/resources/main'
+	}
+}
+
+jar.dependsOn copyprod, copyweb
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	compile('org.mongodb:mongo-java-driver:2.12.5')
+	compile('org.springframework.boot:spring-boot-starter-web') {
+		exclude module: 'spring-boot-starter-tomcat'
+		
+	}
+	compile('org.springframework:spring-web')
+	testCompile 'junit:junit:4.10'
+	
+	compile('org.springframework.boot:spring-boot-starter-jetty')
+	
+}

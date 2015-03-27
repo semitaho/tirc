@@ -54,8 +54,8 @@ public class TircConfiguration {
 	}
 
 	private String loadConfigurationIdentifier() {
-		if (System.getProperty("env") != null){
-			return System.getProperty("env");
+		if (System.getenv("env") != null){
+			return System.getenv("env");
 		}
 		Properties props = new Properties();
 		try {

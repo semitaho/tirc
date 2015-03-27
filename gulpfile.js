@@ -21,8 +21,8 @@ gulp.task('default', function() {
 	gulp.watch(watchfiles, ['templates']);
    gulp.src('src/main/webapp').pipe(webserver({
       livereload: true,
-      open: 'http://0.0.0.0:8080/index.html',
-      port: 8080,
+      open: 'http://0.0.0.0:9001/index.html',
+      port: 9001,
       host: '0.0.0.0'
    }));
 });
