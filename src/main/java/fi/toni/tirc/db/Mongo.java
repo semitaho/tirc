@@ -177,6 +177,10 @@ public class Mongo {
 			if (SKIP_TYPE_LIST.contains(tircline.getType())) {
 				continue;
 			}
+			if (tircline.getTarget() != null){
+				continue;
+			}
+
 			objectsInserting.add(TircUtil.mapToDBModel(tircline));
 		}
 		collection.insert(objectsInserting);

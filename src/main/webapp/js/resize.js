@@ -2,12 +2,11 @@ var Resizer = (function(){
 	
 	var doScroll = function(){
 		var elem  =$('.tirc_screen')[0];
-		console.log('scroll height: '+elem.scrollHeight);
 		elem.scrollTop = elem.scrollHeight;
 	};
-	var scroll = function(last){
+	var scroll = function(){
 		var elem  =$('.tirc_screen');
-		doScroll();    	
+		setTimeout(doScroll, 500);
 	};
 	
 
@@ -20,7 +19,6 @@ var Resizer = (function(){
 		}
 		var tabpanelY = tabpanel.position().top;
 		var startY = tabpanelY + tabpanel.height();
-  
 		var pos = elem.position();
 		elem.css('top', startY +'px');
 		var box  =$('#action_panel');
@@ -33,7 +31,7 @@ var Resizer = (function(){
 
 	return {
 		resize: resize,
-		scroll : doScroll
+		scroll : scroll
 	};
 })();
 

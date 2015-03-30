@@ -16,6 +16,7 @@ public class MessageBody {
 	
 	private String nickold;
 	private String nick;
+	private String target;
 	private String state;
 
 	private String text;
@@ -36,6 +37,14 @@ public class MessageBody {
 
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getTarget() {
+		return target;
 	}
 
 	public String getText() {

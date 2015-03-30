@@ -28,6 +28,8 @@ public class TircLine extends Measured implements Serializable {
 	private Date date;
 
 	private String type;
+
+	private String target;
 	
 	public TircLine() {
 	
@@ -79,6 +81,15 @@ public class TircLine extends Measured implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
 	@Override
 	public String getReceiveType() {
 		return TircType.RECEIVE.getTypeName();

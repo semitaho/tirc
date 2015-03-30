@@ -3,12 +3,14 @@ var Tirc = React.createClass({
 
 
     render: function () {
-        var data = this.props.data;
+        var tabs = this.props.data.tabs;
+        var tircdata = this.props.data;
+        var data = tircdata.active;
         return (<div className="tirc_content">
             <div className="table">
                 <header className="row tirc_header_panel">
-                    <h1 className="cell">tIrc</h1>
-                    <Userselect users={data.users} chosen={data.chosen} />
+                    <Tabheader items={tabs} selected={data.name} />
+                    <Userselect users={tircdata.users} chosen={tircdata.chosen} />
                 </header>
             </div>
             <Mainpanel topic={data.mainpanel.topic} tircusers={data.mainpanel.tircusers}  users={data.mainpanel.users} connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata} />

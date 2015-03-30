@@ -164,9 +164,12 @@ public class TircRestService {
         tircLine.setType("comment");
         tircLine.setLine(TircMessageFormatter.formatComment(text));
         tircLine.setNick(nick);
+        tircLine.setTarget(message.getTarget());
         bus.addNewLine(tircLine);
-        cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
-                + "): " + text);
+        if (tircLine.getTarget() != null) {
+            cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
+                    + "): " + text);
+        }
     }
 
     @RequestMapping(value = "/saywelcome", method = RequestMethod.POST)

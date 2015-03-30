@@ -1,6 +1,6 @@
 var TircState = (function () {
-    var _state = {};
-
+    var _state = {tabs: [{name: 'tirc'}]};
+    _state.active = _state.tabs[0];
     return {
         getInitialState: function () {
             return _state;
@@ -16,44 +16,64 @@ var TircState = (function () {
         },
 
         setusers: function (data) {
-            _state.mainpanel.users = data;
+            _state.tabs[0].mainpanel.users = data;
         },
         settircusers: function (data) {
-            _state.mainpanel.tircusers = data;
+            _state.tabs[0].mainpanel.tircusers = data;
 
         },
 
         settopic: function (data) {
-            _state.mainpanel.topic = data;
+            _state.tabs[0].mainpanel.topic = data;
         },
 
         setmessage: function (data) {
             console.log('setting message...');
-            var newCurrentData = _state.mainpanel.currentdata.slice();
+            var newCurrentData = _state.tabs[0].mainpanel.currentdata.slice();
             newCurrentData.push(data);
-            _state.mainpanel.currentdata = newCurrentData;
+            _state.tabs[0].mainpanel.currentdata = newCurrentData;
         },
 
         setconnectdata: function (data) {
             for (key in data)
-                _state[key] = data[key];
+                _state.tabs[0][key] = data[key];
             _state.users = [];
+            console.log('tab data:'+JSON.stringify(_state));
         },
 
         setusersdata: function (data) {
             var users = data[0].users;
-            _state.users = users;
+            _state.tabs[0].users = users;
             _state.chosen = Config.loadUser('taho');
         },
 
         settext: function (value) {
-            _state.messagebox.text = value;
+            _state.tabs[0].text = value;
         },
         setnick: function (newnick) {
             _state.chosen = newnick;
         },
-        settext: function (newtext) {
-            _state.text = newtext;
+
+        addtab: function(nick){
+            var index = -1;
+            var foundTab = _.find(_state.tabs, function(tab, index) {
+                return (tab.name === nick);
+            });
+            if (foundTab === null || foundTab === undefined){
+                console.log('creating new tab...');
+                var mainpanel = {topic: 'privakeskustelu: '+nick, tircusers: [{nick: Config.loadUser()},{nick: nick}], users: [], connectdata: [], currentdata: []};
+                foundTab = {name: nick, mainpanel:mainpanel};
+                _state.tabs.push(foundTab);
+
+            }
+            _state.active = foundTab;
+        },
+
+        selecttab : function(nick){
+            var foundTab = _.find(_state.tabs, function(tab, index) {
+                return (tab.name === nick);
+            });
+            _state.active = foundTab;
         }
 
     }

@@ -7,8 +7,7 @@ var Mainpanel = React.createClass({
 
     destroy: function () {
         GeoService.unwatch();
-        var backend = this.props.backend;
-        backend.sayGoodbye(Config.loadUser('taho'));
+        TircBackend.sayGoodbye(Config.loadUser('taho'));
     },
 
 
@@ -21,6 +20,7 @@ var Mainpanel = React.createClass({
         Resizer.resize();
 
     },
+
 
     render: function () {
         this.props.tircusers.sort(function (user1, user2) {

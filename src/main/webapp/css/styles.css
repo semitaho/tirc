@@ -117,6 +117,19 @@ selector {
 	font-size: 2em;
 }
 
+.tirc_info_panel .tircuser .nick a {
+	color: #ffffff;
+}
+
+.tirc_info_panel .guest:hover{
+	background: gray;
+	cursor: pointer;
+}
+
+
+.tirc_info_panel .guest .nick{
+	text-decoration: underline;
+}
 
 .tirc_info_panel .tircuser .idle {
 	display: none;
@@ -745,6 +758,23 @@ a.ng-click-active {
 	color: orange;
 	font-size: 80%;
 }
+
+.tab {
+	color: white;
+	font-size: 2em;
+	float: left;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 5px 5px 0 0;
+	border-bottom: .4px solid black;
+}
+
+.tab.active {
+	font-weight: bold;
+	background: none repeat scroll 0 0 #4179AD;
+}
+
+
 
  
 

@@ -31,13 +31,7 @@ var TircScreen = React.createClass({
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        var currentDataPrevious = this.props.currentdata;
-        var currentDataNext = nextProps.currentdata;
-        if (currentDataNext.length > currentDataPrevious.length) {
-            return true;
-        }
-        return false;
-
+        return true;
     },
 
 

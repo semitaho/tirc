@@ -6,12 +6,9 @@ var TircBackend = (function () {
     var URL = "/backend/";
 
     var messagecallbacks = {
-        onusers : function (data) {
+        onusers: function (data) {
             var arr = Parser.formatusers(data.users);
-            console.log('on userss..');
             TircState.onstatechange(TircState.setusers, arr);
-
-            // this.setState({users: arr});
         },
         ontircusers: function (data) {
             TircState.onstatechange(TircState.settircusers, data);
@@ -41,7 +38,7 @@ var TircBackend = (function () {
     };
 
     var onmessage = function (data) {
-        console.log('on message: '+data.type);
+        console.log('on message: ' + data.type);
         messagecallbacks[data.type].apply(this, [data.data]);
         TircBackend.listen(data.lastid, onmessage, onlistenerror);
 
@@ -62,7 +59,6 @@ var TircBackend = (function () {
         TircState.onstatechange(TircState.setconnectdata, state);
         TircBackend.listen(data.id, onmessage, onlistenerror);
     };
-
 
 
     var onconnecterror = function () {
@@ -142,7 +138,6 @@ var TircBackend = (function () {
         stateobj.text = 'plooah';
         stateobj.users = [];
         TircState.onstatechange(TircState.setconnectdata, stateobj);
-        TircBackend.listen("haahu", onmessage, onlistenerror);
 
     };
 
