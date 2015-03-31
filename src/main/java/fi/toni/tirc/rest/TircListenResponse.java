@@ -10,9 +10,9 @@ package fi.toni.tirc.rest;
  */
 public class TircListenResponse {
 	private String lastid;
-
 	private Object data;
 	private String type;
+
 
 	public String getLastid() {
 		return lastid;
@@ -37,5 +37,4 @@ public class TircListenResponse {
 	public void setType(String type) {
 		this.type = type;
 	}
-
 }

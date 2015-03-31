@@ -14,16 +14,17 @@ var TircScreen = React.createClass({
     },
 
     componentDidMount: function () {
+        var index = this.props.index;
         console.log('TircScreen: didMount');
         var link = $(this.getDOMNode()).find('a').not($('.embed a'));
-
+        var index = this.props.index;
         if (link.length === 0) {
             console.log('no sizes...');
-            Resizer.resize();
+            Resizer.resize(index);
         } else {
             link.embedly({
                 done: function () {
-                    Resizer.resize();
+                    Resizer.resize(index);
                 }
             });
         }
@@ -36,17 +37,19 @@ var TircScreen = React.createClass({
 
 
     componentDidUpdate: function (prevProps, prevState) {
+        var index = prevProps.index;
+
         console.log('TircScreen: didUpdate');
         var link = $(this.getDOMNode()).find('a').not($('.embed a'));
         if (link.length === 0) {
             console.log('links: ' + link.length);
-            Resizer.resize();
+            Resizer.resize(index);
 
         }
         else {
             link.embedly({
                 done: function () {
-                    Resizer.resize();
+                    Resizer.resize(index);
                 }
             });
         }

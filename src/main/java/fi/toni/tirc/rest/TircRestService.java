@@ -108,11 +108,11 @@ public class TircRestService {
         return tircData;
     }
 
-    @RequestMapping("/listen/{eventId}")
+    @RequestMapping("/listen/{eventId}/{subscriber}")
     public
     @ResponseBody
     DeferredResult<TircListenResponse> listen(
-            @PathVariable String eventId, HttpServletRequest request) {
+            @PathVariable(value = "eventId") String eventId, @PathVariable("subscriber") String nick, HttpServletRequest request) {
         final long TIMEOUT = 5 * 60000;
         log.debug("starting to listen...");
         final DeferredResult<TircListenResponse> deferredResult = new DeferredResult<TircListenResponse>(
@@ -126,7 +126,7 @@ public class TircRestService {
 
 
         Runnable runnable = () -> {
-            ArrayBlockingQueue<Measured> queue = listenerThread.init(eventId);
+            ArrayBlockingQueue<Measured> queue = listenerThread.init(eventId, nick);
             try {
                 Measured measures = queue.take();
                 TircListenResponse tircListenResponse = new TircListenResponse();
@@ -159,6 +159,7 @@ public class TircRestService {
     @RequestMapping(method = RequestMethod.POST, value = "/say")
     public void say(@RequestBody MessageBody message) {
         String text = message.getText();
+        log.debug("text is: "+text);
         String nick = message.getNick();
         TircLine tircLine = new TircLine(Source.TIRC);
         tircLine.setType("comment");

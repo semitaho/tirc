@@ -157,9 +157,16 @@ var TircBackend = (function () {
 
 
         say: function (nick, text, callback) {
+            var target = null;
+            if (TircState.getActiveName() !== 'tirc'){
+                console.log('active is: '+TircState.getActiveName());
+                target = TircState.getActiveName();
+            }
+
             var message = {
                 nick: nick,
-                text: text
+                text: text,
+                target: target
             };
             $.ajax({
                 type: "POST",
@@ -239,8 +246,9 @@ var TircBackend = (function () {
         },
 
         listen: function (id, successCallback, errorCallback) {
+            var subscriber = Config.loadUser();
             $.ajax({
-                url: URL + 'listen/' + id,
+                url: URL + 'listen/' + id+'/'+subscriber,
                 crossDomain: true,
                 type: "GET"
             }).done(successCallback).error(function (err) {

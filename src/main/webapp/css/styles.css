@@ -39,6 +39,10 @@ body {
 	position:relative;
 }
 
+.tirc_content .hidden {
+    display:none;
+}
+
 h1 {
 	font-size: 3.2em;
 	font-weight: bold;

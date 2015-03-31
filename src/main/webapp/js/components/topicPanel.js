@@ -2,7 +2,8 @@ var TopicPanel = React.createClass({
     
 
 	 render : function(){
-		 return <div className="tab_panel"><div>{this.props.topic}</div></div>
+         var id = 'tab_panel_'+this.props.index;
+		 return <div className="tab_panel" id={id}><div>{this.props.topic}</div></div>
 		 }      
   
 });

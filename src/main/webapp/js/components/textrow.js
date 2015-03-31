@@ -64,7 +64,9 @@ var Textrow = React.createClass({
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        return false;
+        var props = this.props;
+        return !_.isEqual(props, nextProps);
+
     },
 
 
@@ -153,14 +155,9 @@ var Textrow = React.createClass({
     },
     renderjoin: function (item) {
         return ( <div
-            className = "textrow" >
+            className = "textrow">
             <div
-                className = "quit" > {item.nick
-                }
-                saapui
-                kanavalle - {item.time
-                }</
-            div>
+                className = "quit" >{item.nick} saapui kanavalle - {item.time}</div>
 
         </div>
         )
