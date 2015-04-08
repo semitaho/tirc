@@ -42,6 +42,7 @@ public class TircListenerThread {
 		for (TircListenClient client : clientQueues) {
 			if (measured instanceof TircLine){
 				TircLine line  = (TircLine)measured;
+				log.debug("line: "+line.getTarget()+", message: "+line.getLine());
 				if (line.getTarget() != null && !line.getTarget().equals(client.getSubscriber()) && !line.getNick().equals(client.getSubscriber())){
 					continue;
 				}

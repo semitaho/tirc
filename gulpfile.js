@@ -1,12 +1,12 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
 var react = require('gulp-react');
-var watchfiles = 'src/main/webapp/*.jade';
+var watchfiles = 'client/*.jade';
 
 var webrootdir = 'www';
-var htmlfiles = 'src/main/webapp/**/*.html';
-var cssfiles = 'src/main/webapp/css/**/*.css';
-var jsfiles = 'src/main/webapp/js/**/*.js';
+var htmlfiles = 'client/**/*.html';
+var cssfiles = 'client/css/**/*.css';
+var jsfiles = 'client/js/**/*.js';
 
 gulp.task('templates', function() {
 	  var YOUR_LOCALS = {};

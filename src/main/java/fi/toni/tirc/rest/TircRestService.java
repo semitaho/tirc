@@ -167,7 +167,7 @@ public class TircRestService {
         tircLine.setNick(nick);
         tircLine.setTarget(message.getTarget());
         bus.addNewLine(tircLine);
-        if (tircLine.getTarget() != null) {
+        if (tircLine.getTarget() == null) {
             cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
                     + "): " + text);
         }

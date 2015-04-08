@@ -102,7 +102,7 @@ var TircState = (function () {
 
         setusersdata: function (data) {
             var users = data[0].users;
-            _state.tabs[0].users = users;
+            _state.users = users;
             _state.chosen = Config.loadUser('taho');
         }
         ,

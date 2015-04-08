@@ -1,4 +1,4 @@
-var TircScreen = React.createClass({displayName: "TircScreen",
+var TircScreen = React.createClass({
 
     componentWillMount: function () {
         console.log('TircScreen: willMount');
@@ -10,10 +10,10 @@ var TircScreen = React.createClass({displayName: "TircScreen",
         var visible = this.props.visible;
         var classStr = 'tirc_screen';
 
-        return React.createElement("div", {ref: "screen", className: classStr},   dataall.map(function (item) {
+        return <div ref="screen" className={classStr}>{  dataall.map(function (item) {
             id++;
-            return ( React.createElement(Textrow, {key: id, elem: item}) )
-        }) )
+            return ( <Textrow key={id} elem={item}/> )
+        }) }</div>
     },
 
     componentDidMount: function () {
@@ -33,7 +33,11 @@ var TircScreen = React.createClass({displayName: "TircScreen",
     },
 
     shouldComponentUpdate: function (nextProps, nextState) {
-        return true;
+        var props = this.props;
+        if (!_.isEqual(props, nextProps)) {
+            return true;
+        }
+        return false;
     },
 
 
@@ -42,22 +46,16 @@ var TircScreen = React.createClass({displayName: "TircScreen",
         var index = prevProps.index;
         console.log('TircScreen: didUpdate');
         var link = $(this.getDOMNode()).find('a').not($('.embed a'));
-        /*
-         if (link.length === 0) {
-         Resizer.resize(index);
-         TircState.onstatechange(TircState.setvisibility, true);
-
-         }
-         else {
-         link.embedly({
-         done: function () {
-         Resizer.resize(index);
-         TircState.onstatechange(TircState.setvisibility, true);
-         }
-         });
-         }
-         */
-        return true;
+        if (link.length === 0) {
+            Resizer.resize(index);
+        }
+        else {
+            link.embedly({
+                done: function () {
+                    Resizer.resize(index);
+                }
+            });
+        }
     }
 
 

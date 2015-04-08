@@ -1,4 +1,4 @@
-var Textrow = React.createClass({displayName: "Textrow",
+var Textrow = React.createClass({
 
     getClassName: function (text) {
         if (this.isJoinOrPart(text)) {
@@ -75,131 +75,123 @@ var Textrow = React.createClass({displayName: "Textrow",
         if (item.nick === Config.loadUser('taho')) {
             textrowstyle += ' own';
         }
-        return (React.createElement("div", {className: textrowstyle}, 
-            React.createElement("div", {className: "nick columns"}, item.nick), 
-            React.createElement("div", {className: "nicktext"}, 
-                React.createElement("div", {
-                    className: "text", 
-                    dangerouslySetInnerHTML: 
+        return (<div className={textrowstyle}>
+            <div className="nick columns">{item.nick}</div>
+            <div className="nicktext">
+                <div
+                    className="text"
+                    dangerouslySetInnerHTML={
                     {
                         __html: item.line + '<span class="time"> - ' + item.time + '</span>'
                     }
-                        }
-                )
-            )
-        )
+                        }>
+                </div>
+            </div>
+        </div>
         )
     },
 
     renderme: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "action", 
-                dangerouslySetInnerHTML: 
+        return ( <div
+            className="textrow">
+            <div
+                className="action"
+                dangerouslySetInnerHTML={
                 {
                     __html: item.line + '<span class="time"> - ' + item.time + '</span>'
                 }
-                    })
-        ))
+                    }></div>
+        </div>)
     },
 
 
     renderwelcome: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "action", 
-                dangerouslySetInnerHTML: 
+        return ( <div
+            className="textrow">
+            <div
+                className="action"
+                dangerouslySetInnerHTML={
                 {
                     __html: item.nick + ' saapui paikalle ' + item.line + '<span class="time"> - ' + item.time + '</span>'
                 }
-                    
-            })
-        )
+                    }
+                ></div>
+        </div>
         )
     },
 
     renderaction: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "star", 
-                dangerouslySetInnerHTML: 
+        return ( <div
+            className="textrow">
+            <div
+                className="star"
+                dangerouslySetInnerHTML={
                 {
                     __html: item.line + '<span class="time"> - ' + item.time + '</span>'
                 }
-                    
-            })
-        )
+                    }
+                ></div>
+        </div>
         )
     },
 
     renderquit: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "quit"}, " ", item.nick, 
-                
-                "poistui" + ' ' +
-                "kokonaan" + ' ' +
-                "ircistä: ", 
-                item.line, 
-                
-                "-", item.time
-                )
+        return ( <div
+            className="textrow">
+            <div
+                className="quit"> {item.nick} poistui
+                kokonaan
+                ircistä: {
+                    item.line
+                }
+                -{item.time
+                }</div>
 
-        )
+        </div>
         )
     },
     renderjoin: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "quit"}, item.nick, " saapui kanavalle - ", item.time)
+        return ( <div
+            className="textrow">
+            <div
+                className="quit">{item.nick} saapui kanavalle - {item.time}</div>
 
-        )
+        </div>
         )
     },
 
     renderpart: function (item) {
-        return ( React.createElement("div", {
-            className: "textrow"}, 
-            React.createElement("div", {
-                className: "quit"}, " ", item.nick, 
-                
-                "jätti" + ' ' +
-                "kanavan - ", item.time
-                )
-
-        )
+        return ( <div
+            className="textrow">
+            <div className="quit"> {item.nick} jätti kanavan - {item.time}</div>
+        </div>
         )
     },
     render: function () {
         if (this['render' + this.props.elem.type]) {
-            console.log('type is: '+this.props.elem.type);
+            console.log('type is: ' + this.props.elem.type);
             return this['render' + this.props.elem.type](this.props.elem);
         } else {
             console.log('ERROR! method: render' + this.props.elem.type + ' cannot be found, row: ' + JSON.stringify(this.props.elem));
             return null;
         }
-        return(
-        React.createElement("div", {
-            className: "action"}, " ", this.props.elem, 
-            
-            React.createElement("span", {
-                className: "time"}, " -", this.props.time
-                
-            )
-        ) )
+        return (
+            <div
+                className="action"> {this.props.elem
+            }
+            <span
+                className="time"> -{this.props.time
+            }
+            </span>
+            </div> )
     },
 
     renderlogevent: function (item) {
         return (
-        React.createElement("div", {
-            className: "textrow logevent"}, " ", item.line
-            
-        ) );
+            <div
+                className="textrow logevent"> {item.line
+            }
+            </div> );
     }
 
 });

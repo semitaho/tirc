@@ -113,9 +113,11 @@
 		<resources>
 			<resource>
 				<directory>www</directory>
+				<targetPath>static</targetPath>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
+
 			</resource>
 		</resources>
 
