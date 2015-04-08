@@ -1,6 +1,12 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
+var react = require('gulp-react');
 var watchfiles = 'src/main/webapp/*.jade';
+
+var webrootdir = 'www';
+var htmlfiles = 'src/main/webapp/**/*.html';
+var cssfiles = 'src/main/webapp/css/**/*.css';
+var jsfiles = 'src/main/webapp/js/**/*.js';
 
 gulp.task('templates', function() {
 	  var YOUR_LOCALS = {};
@@ -9,17 +15,37 @@ gulp.task('templates', function() {
 	  	 .pipe(jade({
 	  		 pretty: true
 	  	 	}))
-	    .pipe(gulp.dest('src/main/webapp/'))
+	    .pipe(gulp.dest(webrootdir))
 	});
 
 var webserver = require('gulp-webserver');
 
 gulp.task('build', ['templates']);
 
-gulp.task('default', function() {
+gulp.task('copyhtml', function(){
+	return gulp.src(htmlfiles).
+		pipe(gulp.dest(webrootdir));
+
+});
+
+gulp.task('compilejs', function(){
+	return gulp.src(jsfiles)
+		.pipe(react())
+		.pipe(gulp.dest(webrootdir+'/js'));
+})
+
+gulp.task('copycss', function(){
+	return gulp.src(cssfiles).
+		pipe(gulp.dest(webrootdir+'/css'));
+
+});
+gulp.task('default', ['copyhtml', 'copycss', 'compilejs'], function() {
 	
-	gulp.watch(watchfiles, ['templates']);
-   gulp.src('src/main/webapp').pipe(webserver({
+	gulp.watch(htmlfiles, ['copyhtml']);
+	gulp.watch(cssfiles, ['copycss']);
+	gulp.watch(jsfiles, ['compilejs']);
+
+	gulp.src(webrootdir).pipe(webserver({
       livereload: true,
       open: 'http://0.0.0.0:9001/index.html',
       port: 9001,

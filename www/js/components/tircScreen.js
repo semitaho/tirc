@@ -1,4 +1,4 @@
-var TircScreen = React.createClass({
+var TircScreen = React.createClass({displayName: "TircScreen",
 
     componentWillMount: function () {
         console.log('TircScreen: willMount');
@@ -10,10 +10,10 @@ var TircScreen = React.createClass({
         var visible = this.props.visible;
         var classStr = 'tirc_screen';
 
-        return <div ref="screen" className={classStr}>{  dataall.map(function (item) {
+        return React.createElement("div", {ref: "screen", className: classStr},   dataall.map(function (item) {
             id++;
-            return ( <Textrow key={id}  elem={item}  /> )
-        }) }</div>
+            return ( React.createElement(Textrow, {key: id, elem: item}) )
+        }) )
     },
 
     componentDidMount: function () {

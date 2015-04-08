@@ -1,4 +1,4 @@
-var Messagebox = React.createClass({
+var Messagebox = React.createClass({displayName: "Messagebox",
 
 
     say: function () {
@@ -89,15 +89,15 @@ var Messagebox = React.createClass({
     },
     render: function () {
         return (
-            <div>
-                <div className="attach">
-                    <button id="attach">Liitä kuva</button>
-                </div>
-                <div>
-                    <input type="text" name="text" value={this.props.text} onChange={this.updateText}  onBlur={this.onBlur} id="textline" className="message_box"
-                        placeholder="say something..."  onKeyUp={this.onPress}></input>
-                </div>
-            </div>
+            React.createElement("div", null, 
+                React.createElement("div", {className: "attach"}, 
+                    React.createElement("button", {id: "attach"}, "Liitä kuva")
+                ), 
+                React.createElement("div", null, 
+                    React.createElement("input", {type: "text", name: "text", value: this.props.text, onChange: this.updateText, onBlur: this.onBlur, id: "textline", className: "message_box", 
+                        placeholder: "say something...", onKeyUp: this.onPress})
+                )
+            )
         );
     }
 });

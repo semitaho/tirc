@@ -1,4 +1,4 @@
-var Mainpanel = React.createClass({
+var Mainpanel = React.createClass({displayName: "Mainpanel",
 
     componentDidMount: function () {
         console.log('mainScreen - mounted');
@@ -33,15 +33,15 @@ var Mainpanel = React.createClass({
         }
 
         return (
-            <div id="tirc_main" className={clazz}>
-                <div className="relative">
-                    <TopicPanel topic={this.props.topic} index={index} />
-                    <div className="tirc_main_panel_middle" id={idindex}>
-                        <TircScreen index={index}  visible={visible} connectdata={this.props.connectdata} currentdata={this.props.currentdata} />
-                        <Nickpanel users={this.props.users} tircusers={this.props.tircusers} />
-                    </div>
-                </div>
-            </div> )
+            React.createElement("div", {id: "tirc_main", className: clazz}, 
+                React.createElement("div", {className: "relative"}, 
+                    React.createElement(TopicPanel, {topic: this.props.topic, index: index}), 
+                    React.createElement("div", {className: "tirc_main_panel_middle", id: idindex}, 
+                        React.createElement(TircScreen, {index: index, visible: visible, connectdata: this.props.connectdata, currentdata: this.props.currentdata}), 
+                        React.createElement(Nickpanel, {users: this.props.users, tircusers: this.props.tircusers})
+                    )
+                )
+            ) )
 
     }
 });

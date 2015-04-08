@@ -15,7 +15,7 @@ var Tirc = React.createClass({
             var actionpanelId = 'action_panel_'+id;
             return (
             <div className={className} >
-            <Mainpanel index={id} topic={data.mainpanel.topic} tircusers={data.mainpanel.tircusers}  users={data.mainpanel.users} connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata} />
+            <Mainpanel index={id} topic={data.mainpanel.topic} tircusers={data.mainpanel.tircusers} visible={data.mainpanel.visible} users={data.mainpanel.users} connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata} />
             <footer  className="tirc_action_panel" id={actionpanelId}>
                 <Messagebox text={data.text} />
             </footer>
