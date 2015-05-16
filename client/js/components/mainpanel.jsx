@@ -1,4 +1,8 @@
-var Mainpanel = React.createClass({
+var React = require('react'),
+    TopicPanel = require('./topicPanel'),
+    TircScreen = require('./tircScreen.jsx'),
+    Nickpanel = require('./nickpanel');
+module.exports = React.createClass({
 
     componentDidMount: function () {
         console.log('mainScreen - mounted');

@@ -1,8 +1,13 @@
-var Messagebox = React.createClass({
+var React = require('react'),
+    Config = require('../services/ConfigService'),
+//   TircBackend = require('../services/TircBackend'),
+    TircState = require('../TircStore');
+
+module.exports= React.createClass({
 
 
     say: function () {
-        TircBackend.say(Config.loadUser('taho'), this.props.text, this.saysuccess);
+     //   TircBackend.say(Config.loadUser('taho'), this.props.text, this.saysuccess);
         TircState.onstatechange(TircState.settext, '');
     },
 
@@ -12,7 +17,6 @@ var Messagebox = React.createClass({
 
     componentWillMount: function () {
         console.log('messagebox: willmount');
-        GeoService.init(this.geosuccess, this.geoerror);
     },
 
     componentDidMount: function () {
@@ -41,25 +45,6 @@ var Messagebox = React.createClass({
     },
 
 
-    geosuccess: function (location) {
-   //     TircBackend.sayWelcome(Config.loadUser('taho'), location, this.successWelcome);
-    },
-
-    geoerror: function () {
-
-    },
-
-    successWelcome: function () {
-        console.log('welcome succeeded');
-        GeoService.watch(this.watchSuccess);
-
-
-    },
-
-    watchSuccess: function (location) {
-        TircBackend.updateLocation(Config.loadUser('taho'), location);
-    },
-
     onPress: function (event) {
         if (event.which === 13) {
             this.say();
@@ -74,7 +59,7 @@ var Messagebox = React.createClass({
         var previousState = this.typestate.state;
         this.typestate = {time: new Date(), state: state};
         if (state !== previousState) {
-            TircBackend.changeState(Config.loadUser(), state);
+      //      TircBackend.changeState(Config.loadUser(), state);
         }
     },
 
@@ -102,4 +87,3 @@ var Messagebox = React.createClass({
     }
 });
 
-//React.render(<Messagebox backend={TircBackend} />, document.getElementById('action_panel'));

@@ -1,7 +1,4 @@
-
-
-
-var NotifyService =  (function(){
+module.exports  =  (function(){
 	
 	var focus = true;
 	

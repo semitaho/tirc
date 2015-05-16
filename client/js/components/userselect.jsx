@@ -1,4 +1,8 @@
-var Userselect = React.createClass({
+var React = require('react'),
+    Config = require('../services/ConfigService.js'),
+    TircState = require('../TircStore');
+
+module.exports = React.createClass({
 
     onchange: function (event) {
         var oldnick = Config.loadUser('taho');

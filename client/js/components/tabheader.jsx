@@ -1,4 +1,5 @@
-var Tabheader = React.createClass({
+var React = require('react');
+module.exports = React.createClass({
 
 
    selectTab : function(nick){

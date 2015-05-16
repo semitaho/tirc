@@ -1,4 +1,9 @@
+var TircState = require('../TircStore'),
+    Config = require('./ConfigService');
+
 var TircBackend = (function () {
+
+
     var BASE_DOMAIN = location.hostname + ":" + location.port;
     if (BASE_DOMAIN === ':') {
         BASE_DOMAIN = 'localhost:8880';
@@ -118,8 +123,6 @@ var TircBackend = (function () {
         var users = [{nick: 'semitaho', idleTime: 13}];
         var date = new Date();
         var date2 = new Date(date.getTime() + 222);
-        console.log('date1:' + date);
-        console.log('date2:' + date2);
         var tircusers = [{nick: 'taho', time: date, state: 'connected'}, {
             nick: 'mcw',
             time: date2,
@@ -135,10 +138,9 @@ var TircBackend = (function () {
             tircusers: tircusers,
             topic: 'tahotuskunto'
         };
-        stateobj.text = 'plooah';
+        stateobj.text = 'ploodah';
         stateobj.users = [];
-        TircState.onstatechange(TircState.setconnectdata, stateobj);
-
+        $(document).trigger('statechange', ['setconnectdata', stateobj]);
     };
 
     return {
@@ -158,8 +160,8 @@ var TircBackend = (function () {
 
         say: function (nick, text, callback) {
             var target = null;
-            if (TircState.getActiveName() !== 'tirc'){
-                console.log('active is: '+TircState.getActiveName());
+            if (TircState.getActiveName() !== 'tirc') {
+                console.log('active is: ' + TircState.getActiveName());
                 target = TircState.getActiveName();
             }
 
@@ -248,7 +250,7 @@ var TircBackend = (function () {
         listen: function (id, successCallback, errorCallback) {
             var subscriber = Config.loadUser();
             $.ajax({
-                url: URL + 'listen/' + id+'/'+subscriber,
+                url: URL + 'listen/' + id + '/' + subscriber,
                 crossDomain: true,
                 type: "GET"
             }).done(successCallback).error(function (err) {
@@ -259,3 +261,4 @@ var TircBackend = (function () {
     };
 })
 ();
+module.exports = TircBackend;

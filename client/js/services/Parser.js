@@ -1,4 +1,4 @@
-var Parser = (function(){ 
+module.exports = (function(){
 
 	var images = ['gif', 'jpg', 'jpeg', 'png','tiff', 'tif'];	
 	return {

@@ -1,4 +1,6 @@
-var Textrow = React.createClass({
+var React = require('react'),
+    Config = require('../services/ConfigService.js');
+module.exports= React.createClass({
 
     getClassName: function (text) {
         if (this.isJoinOrPart(text)) {

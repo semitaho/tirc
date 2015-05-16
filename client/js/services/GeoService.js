@@ -1,4 +1,4 @@
-var GeoService = (function(){
+module.exports  = (function(){
 	var watchId = null;
 	var currentPositionDone = function(position, successcallback, error){
 		var geocoder = new google.maps.Geocoder();

@@ -1,4 +1,8 @@
-var TircScreen = React.createClass({
+var React = require('react'),
+    Textrow = require('./textrow'),
+    Resizer = require('../resize');
+require('../TircStore');
+module.exports = React.createClass({
 
     componentWillMount: function () {
         console.log('TircScreen: willMount');
@@ -24,7 +28,7 @@ var TircScreen = React.createClass({
             link.embedly({
                 done: function () {
                     Resizer.resize(index);
-                    TircState.onstatechange(TircState.setvisibility, true);
+                    TircState.onstatechange(TircStore.setvisibility, true);
                 }
             });
 

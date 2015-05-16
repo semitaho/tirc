@@ -1,5 +1,10 @@
-var Tirc = React.createClass({
+var React = require('react'),
+    Tabheader = require('./tabheader'),
+    Userselect = require('./userselect'),
+    Mainpanel = require('./mainpanel'),
+    Messagebox = require('./messagebox');
 
+module.exports = React.createClass({
 
 
     render: function () {
@@ -22,6 +27,7 @@ var Tirc = React.createClass({
                 </div>
             )
         };
+
         return (
            <div className="tirc_content">
              <div className="table">
@@ -32,14 +38,9 @@ var Tirc = React.createClass({
              </div>
              {tabs.map(tabcontent) }
            </div>)
-        //.table
-        // header.row.tirc_header_panel
-        // h1.cell tIrc
-        //				#userselect(class="cell")
-//
-        //      #tirc_main
-        //    footer.tirc_action_panel(id="action_panel")
+
     }
+
 
 });
 

@@ -1,5 +1,8 @@
-//alert(TircBackend);
-var Nickpanel = React.createClass({
+var React = require('react'),
+    Config = require('../services/ConfigService.js'),
+    TircState = require('../TircStore.js');
+
+module.exports = React.createClass({
     componentWillMount: function () {
         this.statemap = {typing: 'kirjoittaa...', fixing: 'korjaa...', connected: 'yhdistänyt', idle: 'idlaa'};
 
