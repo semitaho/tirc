@@ -1,4 +1,4 @@
-var Resizer = (function(){
+module.exports= (function(){
 	
 	var doScroll = function(index){
 		var elem  =$('.tirc_screen')[index];
@@ -14,7 +14,7 @@ var Resizer = (function(){
 	
 	var resize = function(lastHeight){
 		if (lastHeight === undefined || !_.isNumber(lastHeight)){
-			lastHeight = TircState.getActiveIndex();
+			lastHeight = 0;
 		}
 		var elem  =$('#tirc_main_panel_middle_'+lastHeight);
 		var tabpanel = $('#tab_panel_'+lastHeight);

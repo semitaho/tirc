@@ -1,7 +1,7 @@
 var React = require('react'),
-    TopicPanel = require('./topicPanel'),
+    TopicPanel = require('./topicPanel.jsx'),
     TircScreen = require('./tircScreen.jsx'),
-    Nickpanel = require('./nickpanel');
+    Nickpanel = require('./nickpanel.jsx');
 module.exports = React.createClass({
 
     componentDidMount: function () {
@@ -33,19 +33,32 @@ module.exports = React.createClass({
         var clazz = 'hide';
         if (visible){
             clazz='';
-
         }
-
         return (
             <div id="tirc_main" className={clazz}>
                 <div className="relative">
+
                     <TopicPanel topic={this.props.topic} index={index} />
                     <div className="tirc_main_panel_middle" id={idindex}>
                         <TircScreen index={index}  visible={visible} connectdata={this.props.connectdata} currentdata={this.props.currentdata} />
                         <Nickpanel users={this.props.users} tircusers={this.props.tircusers} />
                     </div>
                 </div>
-            </div> )
+            </div>
+        )
+        /*
+        return (
+            <div id="tirc_main" className={clazz}>
+                <div className="relative">
 
+                    <TopicPanel topic={this.props.topic} index={index} />
+                    <div className="tirc_main_panel_middle" id={idindex}>
+                        <TircScreen index={index}  visible={visible} connectdata={this.props.connectdata} currentdata={this.props.currentdata} />
+                        <Nickpanel users={this.props.users} tircusers={this.props.tircusers} />
+                    </div>
+
+                </div>
+            </div> )
+*/
     }
 });

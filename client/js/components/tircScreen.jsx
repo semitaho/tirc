@@ -1,7 +1,6 @@
 var React = require('react'),
-    Textrow = require('./textrow'),
-    Resizer = require('../resize');
-require('../TircStore');
+    Textrow = require('./textrow.jsx'),
+    Resizer = require('../resize.js');
 module.exports = React.createClass({
 
     componentWillMount: function () {
@@ -9,6 +8,7 @@ module.exports = React.createClass({
     },
 
     render: function () {
+
         var dataall = this.props.connectdata.concat(this.props.currentdata);
         var id = 0;
         var visible = this.props.visible;
@@ -18,6 +18,7 @@ module.exports = React.createClass({
             id++;
             return ( <Textrow key={id} elem={item}/> )
         }) }</div>
+
     },
 
     componentDidMount: function () {
@@ -28,7 +29,8 @@ module.exports = React.createClass({
             link.embedly({
                 done: function () {
                     Resizer.resize(index);
-                    TircState.onstatechange(TircStore.setvisibility, true);
+                    console.log('tircScreen - componentdidMount link embedly...');
+                    $(document).trigger('statechange', ["setvisibility", true]);
                 }
             });
 

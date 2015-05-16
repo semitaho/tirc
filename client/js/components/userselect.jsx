@@ -1,6 +1,5 @@
 var React = require('react'),
-    Config = require('../services/ConfigService.js'),
-    TircState = require('../TircStore');
+    Config = require('../services/ConfigService.js');
 
 module.exports = React.createClass({
 
@@ -8,7 +7,7 @@ module.exports = React.createClass({
         var oldnick = Config.loadUser('taho');
         var newnick = event.target.value;
         Config.saveUser(event.target.value);
-        TircState.onstatechange(TircState.setnick,newnick);
+        $(document).trigger('statechange', ['setnick', newnick]);
         TircBackend.changeNick(oldnick, newnick);
     },
 
@@ -17,7 +16,7 @@ module.exports = React.createClass({
     },
 
     onconfigloaded: function (data) {
-        TircState.onstatechange(TircState.setusersdata,data);
+        $(document).trigger('statechange', ['setusersdata', data]);
 
 
 
@@ -38,7 +37,3 @@ module.exports = React.createClass({
             </div>)
     }
 });
-
-
-//React.render(<Userselect />, document.getElementById('userselect'));
-

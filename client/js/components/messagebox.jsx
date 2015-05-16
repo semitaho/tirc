@@ -1,6 +1,6 @@
 var React = require('react'),
     Config = require('../services/ConfigService'),
-//   TircBackend = require('../services/TircBackend'),
+   TircBackend = require('../services/TircBackend'),
     TircState = require('../TircStore');
 
 module.exports= React.createClass({

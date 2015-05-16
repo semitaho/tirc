@@ -1,4 +1,6 @@
-var TircDispatcher = (function () {
+
+var state = require('./TircStore');
+module.exports = (function () {
     _listencallbacks = {
         onconnectfail: function () {
             console.log('error connecting...');

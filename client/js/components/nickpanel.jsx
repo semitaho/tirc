@@ -1,6 +1,5 @@
 var React = require('react'),
-    Config = require('../services/ConfigService.js'),
-    TircState = require('../TircStore.js');
+    Config = require('../services/ConfigService.js');
 
 module.exports = React.createClass({
     componentWillMount: function () {
@@ -23,7 +22,7 @@ module.exports = React.createClass({
             user.idleTime = newIdletime;
             return user;
         });
-        TircState.onstatechange(TircState.setusers, idleusers);
+        $(document).trigger('statechange', ['setusers', idleusers]);
     },
 
 

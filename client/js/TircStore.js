@@ -1,6 +1,15 @@
-var TircState = (function () {
+var React = require('react'),
+    Tirc = require('./components/tirc.jsx'),
+    Config = require('./services/ConfigService.js');
+
+
+module.exports = (function () {
     var _state = {tabs: [{name: 'tirc'}]};
     _state.active = _state.tabs[0];
+
+    $(document).on('onstatechange', function(data){
+       console.log('kuunnellaas...:'+data);
+    });
     return {
         getInitialState: function () {
             return _state;
@@ -14,7 +23,7 @@ var TircState = (function () {
             var index = -1;
             var activeName = this.getActiveName();
             _.find(_state.tabs, function (tab, ind) {
-                if (tab.name === activeName){
+                if (tab.name === activeName) {
                     index = ind;
                 }
             });
@@ -25,6 +34,7 @@ var TircState = (function () {
         onstatechange: function (callback, val) {
             callback(val);
             console.log('rendering react...');
+
             React.render(
                 React.createElement(Tirc, {data: _state}),
                 document.getElementById('tirc_content')
@@ -84,21 +94,7 @@ var TircState = (function () {
             var date2 = new Date();
             //
             _state.active = _state.tabs[0];
-            /*
-             _state.tabs.push({"name" : 'jsystem',  mainpanel : {visible: false, topic: 'housut',tircusers: [{nick: 'taho', time: date, state: 'connected'}, {
-             nick: 'hasu',
-             time: date2,
-             state: 'fixing'
-             }], connectdata: [], users:[], currentdata: [ {
-             nick: 'sysse',
-             type: 'comment',
-             time: '23:05:34',
-             line: 'tasa-arvokysymys sekin. naiset pyörittää mitä vain nuorina seksuaalisen valtansa turvin, mutta sit alkaa biologinen kello tikittää'
-             }]  } })
-             */
-            console.log('tab data:' + JSON.stringify(_state));
-        }
-        ,
+        },
 
         setusersdata: function (data) {
             var users = data[0].users;
@@ -151,5 +147,4 @@ var TircState = (function () {
 
     }
 
-})
-();
+})();

@@ -1,8 +1,8 @@
 var React = require('react'),
-    Tabheader = require('./tabheader'),
-    Userselect = require('./userselect'),
-    Mainpanel = require('./mainpanel'),
-    Messagebox = require('./messagebox');
+    Tabheader = require('./tabheader.jsx'),
+    Userselect = require('./userselect.jsx'),
+    Mainpanel = require('./mainpanel.jsx'),
+    Messagebox = require('./messagebox.jsx');
 
 module.exports = React.createClass({
 
@@ -22,7 +22,7 @@ module.exports = React.createClass({
             <div className={className} >
             <Mainpanel index={id} topic={data.mainpanel.topic} tircusers={data.mainpanel.tircusers} visible={data.mainpanel.visible} users={data.mainpanel.users} connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata} />
             <footer  className="tirc_action_panel" id={actionpanelId}>
-                <Messagebox text={data.text} />
+              <Messagebox text={data.text} />
             </footer>
                 </div>
             )
