@@ -13,7 +13,7 @@ module.exports = (function () {
         },
 
         loadUser: function () {
-            if (localStorage && localStorage.getItem(KEY) !== null) {
+            if (localStorage !== undefined && localStorage.getItem(KEY) !== null) {
                 return localStorage.getItem(KEY);
             }
             return 'taho';

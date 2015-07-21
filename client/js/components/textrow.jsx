@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     Config = require('../services/ConfigService.js');
 module.exports= React.createClass({
 

@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     Tabheader = require('./tabheader.jsx'),
     Userselect = require('./userselect.jsx'),
     Mainpanel = require('./mainpanel.jsx'),

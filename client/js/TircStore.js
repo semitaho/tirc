@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     Tirc = require('./components/tirc.jsx'),
     Config = require('./services/ConfigService.js');
 
@@ -7,9 +7,6 @@ module.exports = (function () {
     var _state = {tabs: [{name: 'tirc'}]};
     _state.active = _state.tabs[0];
 
-    $(document).on('onstatechange', function(data){
-       console.log('kuunnellaas...:'+data);
-    });
     return {
         getInitialState: function () {
             return _state;

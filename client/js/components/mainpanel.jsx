@@ -1,4 +1,4 @@
-var React = require('react'),
+var React = require('react/addons'),
     TopicPanel = require('./topicPanel.jsx'),
     TircScreen = require('./tircScreen.jsx'),
     Nickpanel = require('./nickpanel.jsx');
