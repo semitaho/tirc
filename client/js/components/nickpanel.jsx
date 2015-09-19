@@ -3,17 +3,22 @@ var React = require('react/addons'),
 
 module.exports = React.createClass({
   componentWillMount: function () {
+    this.increaseIdle.bind(this);
     this.statemap = {typing: 'kirjoittaa...', fixing: 'korjaa...', connected: 'yhdistänyt', idle: 'idlaa'};
 
   },
   componentDidMount: function () {
     console.log('Nickpanel: mount');
     var that = this;
-    this.interval = setInterval(this.increaseIdle, 1000);
+    this.interval = setInterval(that.increaseIdle, 1000);
   },
 
   increaseIdle: function () {
     var users = this.props.users;
+    if (users.length === 0){
+      return;
+    }
+    console.log('got some users', users);
     var that = this;
     var idleusers = users.map(function (user) {
       var newIdletime = user.idleTime + 1;
@@ -46,24 +51,16 @@ module.exports = React.createClass({
 
   },
 
-  componentWillReceiveProps: function (nextProps) {
-
-    var users = nextProps.users;
-    var tircusers = nextProps.tircusers;
+  fillIdletime: function (users) {
     var that = this;
     var idleusers = users.map(function (user) {
       var idle = that.formatToMinutes(user.idleTime);
       user.idle = idle;
       return user;
     });
-    var state = {};
-    // if (tircusers !== null && tircusers.length > 0){
-    // 	state.tircusers = tircusers;
-    // }
-    // if (idleusers !== null && idleusers.length > 0){
-    // 	state.users = idleusers;
-    // }
-    // this.setState(state);
+    return idleusers;
+   // $(document).trigger('statechange', ['setusers', idleusers]);
+
 
   },
 
@@ -74,12 +71,12 @@ module.exports = React.createClass({
 
 
   render: function () {
-    var users = this.props.users;
+    var users =  this.fillIdletime(this.props.users);
     var tircusers = this.props.tircusers;
-    var users = users.map(function (user) {
+    users = users.map(function (user) {
       return <div>
         <div className="nick">{user.nick}</div>
-        <div className="idle">{user.idle}</div>
+        <div className="idle small">{user.idle}</div>
       </div>
     });
 
@@ -87,11 +84,11 @@ module.exports = React.createClass({
     var statemap = this.statemap;
     var that = this;
     var tircusers = tircusers.map(function (user) {
-      var clazz = 'idle';
+      var clazz = 'small idle';
       if ('connected' === user.state) {
-        clazz = 'connected';
+        clazz = 'small connected';
       } else if ('typing' === user.state || 'fixing' === user.state) {
-        clazz = 'typing';
+        clazz = 'small typing';
       }
       var current = Config.loadUser();
       var stateclass = '';
@@ -113,7 +110,7 @@ module.exports = React.createClass({
     });
 
 
-    return <div className="tirc_info_panel">{
+    return <div className="tirc_info_panel panel-body col-md-2">{
       tircusers.concat(<hr />).concat(users)
     }
 

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -77,7 +78,9 @@ public class TircRestService {
         List<TircLine> dayChangeStartLogs = LogFileParser
                 .addDayChange(logsWithStart);
         connectData.setLogsData(dayChangeStartLogs);
-        connectData.setCurrentData(bus.getCurrentLines());
+        // haetaan vain #test1-data connectiin
+        List<TircLine> test1Data = bus.getCurrentLines();
+        connectData.setCurrentData(test1Data);
         connectData.setId(TircIdGenerator.generateId());
         connectData.setUsers(bus.getIrcUsers());
         if (bus.getTopic() != null) {
@@ -159,7 +162,7 @@ public class TircRestService {
     @RequestMapping(method = RequestMethod.POST, value = "/say")
     public void say(@RequestBody MessageBody message) {
         String text = message.getText();
-        log.debug("text is: "+text);
+        log.debug("text is: "+text+", target: "+message.getTarget());
         String nick = message.getNick();
         TircLine tircLine = new TircLine(Source.TIRC);
         tircLine.setType("comment");
@@ -174,7 +177,7 @@ public class TircRestService {
     }
 
     @RequestMapping(value = "/saywelcome", method = RequestMethod.POST)
-    public void sayWelcome(HttpServletRequest request,
+    public void     sayWelcome(HttpServletRequest request,
                            @RequestBody MessageBody message) {
         String location = message.getLocation().getLocation();
         String nick = message.getNick();

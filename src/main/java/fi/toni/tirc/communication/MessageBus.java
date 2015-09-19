@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fi.toni.tirc.communication;
 
@@ -18,131 +18,132 @@ import fi.toni.tirc.server.TircListenerThread;
 
 /**
  * @author Toni
- *
  */
 @Component
 public class MessageBus {
 
-	static Logger log = org.apache.log4j.Logger.getLogger(MessageBus.class);
-	private List<TircLine> logs;
-	private List<TircLine> newLines;
-	private ChannelTopic channelTopic;
-	private IrcUsers ircUsers;
+    static Logger log = org.apache.log4j.Logger.getLogger(MessageBus.class);
+    private List<TircLine> logs;
+    private List<TircLine> newLines;
+    private ChannelTopic channelTopic;
+    private IrcUsers ircUsers;
 
-	@Autowired
-	private TircUsers tircUsers;
-	
-	@Autowired
-	private TircListenerThread listenerThread;
+    @Autowired
+    private TircUsers tircUsers;
 
-	@PostConstruct
-	public void postCreate() {
-		logs = new ArrayList<TircLine>();
-		newLines = new ArrayList<TircLine>();
-		channelTopic = new ChannelTopic(0);
-		ircUsers = new IrcUsers(0);
-	}
+    @Autowired
+    private TircListenerThread listenerThread;
 
-	public List<TircLine> getLogs() {
-		return logs;
-	}
+    @PostConstruct
+    public void postCreate() {
+        logs = new ArrayList<TircLine>();
+        newLines = new ArrayList<TircLine>();
+        channelTopic = new ChannelTopic(0);
+        ircUsers = new IrcUsers(0);
+    }
 
-	public void setLogs(List<TircLine> logs) {
-		this.logs = logs;
-	}
+    public List<TircLine> getLogs() {
+        return logs;
+    }
 
-	public void clearCurrent() {
-		this.newLines.clear();
-	}
+    public void setLogs(List<TircLine> logs) {
+        this.logs = logs;
+    }
 
-	public void clearLogs() {
-		this.logs.clear();
-	}
+    public void clearCurrent() {
+        this.newLines.clear();
+    }
 
-	/**
-	 * @long id timestamp
-	 * @return the newLines
-	 */
-	public TircLine getNewLine(long searchId) {
-		List<TircLine> copyLines = new ArrayList<TircLine>(this.newLines);
-		Optional<TircLine> firstNewLine = copyLines.stream()
-				.filter(line -> line != null && line.getId() >= searchId)
-				.findFirst();
-		if (firstNewLine.isPresent()) {
-			return firstNewLine.get();
-		}
-		return null;
-	}
+    public void clearLogs() {
+        this.logs.clear();
+    }
 
-	/**
-	 * @long id timestamp
-	 * @return the newLines
-	 */
-	public List<TircLine> getCurrentLines() {
-		List<TircLine> lines = new ArrayList<>(newLines);
-		return lines;
-	}
+    /**
+     * @return the newLines
+     * @long id timestamp
+     */
+    public TircLine getNewLine(long searchId) {
+        List<TircLine> copyLines = new ArrayList<TircLine>(this.newLines);
+        Optional<TircLine> firstNewLine = copyLines.stream()
+                .filter(line -> line != null && line.getId() >= searchId)
+                .findFirst();
+        if (firstNewLine.isPresent()) {
+            return firstNewLine.get();
+        }
+        return null;
+    }
 
-	public void addNewLine(TircLine line) {
-		this.newLines.add(line);
-		listenerThread.receive(line);
-	}
+    /**
+     * @return the newLines
+     * @long id timestamp
+     */
+    public List<TircLine> getCurrentLines() {
+        List<TircLine> lines = new ArrayList<>(newLines);
+        return lines;
+    }
 
-	public ChannelTopic getTopic() {
-		return channelTopic;
-	}
+    public void addNewLine(TircLine line) {
+        if (line.getTarget() == null) {
+            this.newLines.add(line);
+        }
+        listenerThread.receive(line);
+    }
 
-	public void setTopic(long nanotime, String topic) {
-		channelTopic.setId(nanotime);
-		channelTopic.setTopic(topic);
-	}
+    public ChannelTopic getTopic() {
+        return channelTopic;
+    }
 
-	public void flushTopic() {
-		channelTopic.flushTopic();
-	}
+    public void setTopic(long nanotime, String topic) {
+        channelTopic.setId(nanotime);
+        channelTopic.setTopic(topic);
+    }
 
-	/**
-	 * @return the tircUsers
-	 */
-	public IrcUsers getIrcUsers() {
-		return ircUsers;
+    public void flushTopic() {
+        channelTopic.flushTopic();
+    }
 
-	}
+    /**
+     * @return the tircUsers
+     */
+    public IrcUsers getIrcUsers() {
+        return ircUsers;
 
-	/**
-	 * @return the tircUsers
-	 */
-	public Map<String, IrcUser> getUsers() {
-		return ircUsers.getUsers();
-	}
+    }
 
-	public void registerWithNick(String nick) {
-		tircUsers.registerUser(nick);
-		listenerThread.receive(tircUsers);
-	}
+    /**
+     * @return the tircUsers
+     */
+    public Map<String, IrcUser> getUsers() {
+        return ircUsers.getUsers();
+    }
 
-	public void changeState(String nick, String state) {
-		tircUsers.changeState(nick, state);
-		listenerThread.receive(tircUsers);
-	}
+    public void registerWithNick(String nick) {
+        tircUsers.registerUser(nick);
+        listenerThread.receive(tircUsers);
+    }
 
-	public TircUsers getTircUsers() {
-		return tircUsers;
-	}
+    public void changeState(String nick, String state) {
+        tircUsers.changeState(nick, state);
+        listenerThread.receive(tircUsers);
+    }
 
-	public void refreshTopic(String topicStr) {
-		channelTopic.setTopic(topicStr);
-		listenerThread.receive(channelTopic);
-	}
-	
-	public void refreshIrcUsers(){
-		listenerThread.receive(ircUsers);
-	}
-	
-	public void refreshIrcUsers(Map<String, IrcUser> tircUserMap){
-		ircUsers.setUsers(tircUserMap);
-		listenerThread.receive(ircUsers);
-		
-	}
+    public TircUsers getTircUsers() {
+        return tircUsers;
+    }
+
+    public void refreshTopic(String topicStr) {
+        channelTopic.setTopic(topicStr);
+        listenerThread.receive(channelTopic);
+    }
+
+    public void refreshIrcUsers() {
+        listenerThread.receive(ircUsers);
+    }
+
+    public void refreshIrcUsers(Map<String, IrcUser> tircUserMap) {
+        ircUsers.setUsers(tircUserMap);
+        listenerThread.receive(ircUsers);
+
+    }
 
 }

@@ -23,9 +23,9 @@ describe('topic panel with text', function () {
     var renderedPanel = TestUtils.renderIntoDocument(<Topicpanel topic="<b>pahapaha</b>" index="3" />);
     var renderedTopicpanel = TestUtils.findRenderedDOMComponentWithClass(renderedPanel, 'tab_panel');
     expect(renderedTopicpanel.getDOMNode().textContent).toEqual('<b>pahapaha</b>');
-
-
   });
+
+
 
 
 });

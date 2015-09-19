@@ -1,13 +1,15 @@
 var React = require('react/addons'),
   Config = require('../services/ConfigService'),
   TircBackend = require('../services/TircBackend'),
-  TircState = require('../TircStore');
+  TircState = require('../TircStore'),
+  UIService = require('../services/UIService.js');
 
 module.exports = React.createClass({
 
   say: function () {
-    TircBackend.say(Config.loadUser('taho'), this.props.text, this.saysuccess);
-    $(document).trigger('statechange', ['settext', '']);
+    console.log('sayt', this.props.text);
+    UIService.fireBackendCall(['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
+    UIService.fireStateChange(['settext', '']);
 
   },
 
@@ -71,19 +73,14 @@ module.exports = React.createClass({
   },
 
   updateText: function (event) {
-    $(document).trigger('statechange', ['settext', event.target.value]);
+    UIService.fireStateChange(['settext', event.target.value]);
   },
   render: function () {
     return (
-      <div>
-        <div className="attach">
-          <button id="attach">Liitä kuva</button>
-        </div>
-        <div>
+      <div className="col-md-12">
           <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
-                 id="textline" className="message_box"
+                 id="textline" className="input-lg form-control message_box"
                  placeholder="say something..." onKeyUp={this.onPress}></input>
-        </div>
       </div>
     );
   }

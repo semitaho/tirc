@@ -1,46 +1,35 @@
 /** Example rules used by the template application (remove for your app) */
 body {
-	color: white;
-	margin-right: 0;
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	position: fixed;
-	width: 100%;
+    color: white;
+    margin-right: 0;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    position: fixed;
+    width: 100%;
 }
-
-
 
 .sendButton {
-	display: block;
-	font-size: 16pt;
-}
-
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-	width: 400px;
-}
-
-.dialogVPanel {
-	margin: 5px; 
+    display: block;
+    font-size: 16pt;
 }
 
 .serverResponseLabelError {
-	color: red;
+    color: red;
 }
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-	margin: 15px 6px 6px;
+    margin: 15px 6px 6px;
 }
 
 .tirc_content {
-	width: 100%;
-	height: 100%;
-	position:relative;
+    width: 100%;
+    height: 100%;
 }
 
 .tirc_content .hidden {
-    display:none;
+    display: none;
 }
 
 .hide {
@@ -48,738 +37,690 @@ body {
 }
 
 h1 {
-	font-size: 3.2em;
-	font-weight: bold;
-	margin: 0;
-	top: 0;
-	padding: 0;
-	display: block;
-	float: left;
+    font-size: 3.2em;
+    font-weight: bold;
+    margin: 0;
+    top: 0;
+    padding: 0;
+    display: block;
+    float: left;
 }
 
 .tab_panel {
-	background: none repeat scroll 0 0 #4179AD;
-	color: #EAEAEA;
-	font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
-	width: 100%;
-	z-index: 10;
-	height:auto;
-	font-size: 15px;
+    background: none repeat scroll 0 0 #4179AD;
+    color: #EAEAEA;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+    z-index: 10;
+    height: auto;
+    font-size: 15px;
 }
 
 .tab_panel div {
-	margin-left: .5em;
-	vertical-align: middle;
-	height: auto;
-	font-size : 2em;
-	overflow-y: auto;
-	z-index: 10;
-	font-weight: bold;
+    vertical-align: middle;
+    height: auto;
+    font-size: 2em;
+    overflow-y: auto;
+    z-index: 10;
+    font-weight: bold;
 }
 
 .tirc_header_panel {
-	height:auto;
-	width: 100%;
-	display:table-row;
-	top:0;
+    height: auto;
+    width: 100%;
 }
 
 .tirc_main_panel_middle {
-	width: 100%;
- 	padding: 0;
- 	position:absolute; 	
-	border-bottom: 2px solid #ccc;
-	border-width: 0px 1px 1px;
-	overflow-y:auto;
+    width: 100%;
+    overflow-y: auto;
 }
 
 selector:-webkit-full-screen {
-  display: block; // displays the element only when in fullscreen
+    display: block;
+/ / displays the element only when in fullscreen
 }
 
 selector {
-  display: none; // hides the element when not in fullscreen mode
+    display: none;
+/ / hides the element when not in fullscreen mode
 }
 
 .text-animate.ng-enter {
-	-webkit-transition: 0.5s linear all; /* Chrome */
-	transition: 0.5s linear all;
-	opacity: 0;
+    -webkit-transition: 0.5s linear all; /* Chrome */
+    transition: 0.5s linear all;
+    opacity: 0;
 }
 
 .text-animate.ng-enter.ng-enter-active {
-	opacity: 1;
+    opacity: 1;
 }
 
 .tirc_info_panel {
-	border-color: #ccc;
-	padding-left: 1em;
-	left: 80%;
-	overflow-y: auto;
+    border-color: #ccc;
+    overflow-y: auto;
 }
 
 .tirc_info_panel .tircuser {
-	margin-bottom: .6em;
+    margin-bottom: .6em;
 }
+
 .tirc_info_panel .tircuser .nick {
-	font-size: 2em;
+    font-size: 2em;
 }
 
 .tirc_info_panel .tircuser .nick a {
-	color: #ffffff;
+    color: #ffffff;
 }
 
-.tirc_info_panel .guest:hover{
-	background: gray;
-	cursor: pointer;
+.tirc_info_panel .guest:hover {
+    background: gray;
+    cursor: pointer;
 }
 
-
-.tirc_info_panel .guest .nick{
-	text-decoration: underline;
+.tirc_info_panel .guest .nick {
+    text-decoration: underline;
 }
 
 .tirc_info_panel .tircuser .idle {
-	display: none;
+    display: none;
 }
 
-
 .tirc_info_panel .user {
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 .table {
-	display: table;
-	width:100%;
+    display: table;
+    width: 100%;
 }
-.row {
-	display: table-row;
-	width: 100%;
-} 
 
 .cell {
-	vertical-align: middle;
-	display: table-cell;
+    vertical-align: middle;
+    display: table-cell;
 }
+
 .tirc_info_panel div {
-	width: 100%;
-	font-size: 1.1em;
-	position: relative;
-	margin-bottom: 0;
-}
-
-.tirc_info_panel .nick {
-	
-}
-
-.tirc_info_panel .idle {
-	font-size: .9em;
+    width: 100%;
+    margin-bottom: 0;
 }
 
 .tirc_info_panel .typing {
-	color:yellow;
+    color: yellow;
 }
 
 .tirc_info_panel .connected {
-	color: violet;
+    color: violet;
 }
 
 .tirc_screen {
-	float:left;
-	width: 80%;         
-	border-bottom: .5px solid #ccc;
-	vertical-align: bottom;
-	overflow-y: auto;
-	bottom: 3em;
+    border-bottom: .5px solid #ccc;
+    vertical-align: bottom;
+    overflow-y: auto;
 }
 
-.tirc_screen,.tirc_info_panel{
-	overflow-y:auto;
-	height:100%;
+.tirc_screen, .tirc_info_panel {
+    overflow-y: auto;
+    height: 100%;
 }
 
 .tirc_screen .joinOrPart {
-	color: red;
+    color: red;
 }
 
 .tirc_screen .me {
-	color:gray;
+    color: gray;
 }
 
-.tirc_screen .star{
-	background: violet;
-	font-weight: bold;
-
-}
-.tirc_screen .star .time{
-	color: black;
+.tirc_screen .star {
+    background: violet;
+    font-weight: bold;
 
 }
 
-.tirc_screen .action, .tirc_screen .star{
-	padding: 0.5em;
-	color: black;
-	text-align: center;
+.tirc_screen .star .time {
+    color: black;
+
+}
+
+.tirc_screen .action, .tirc_screen .star {
+    padding: 0.5em;
+    color: black;
+    text-align: center;
 }
 
 .tirc_screen .logevent {
-	text-align: center;
-	border-bottom: 2px dashed #B8CB99;
-	border-top: 2px dashed #B8CB99;
-	font-weight: bold;
-	background: green;
-	font-size: 2em;
-	padding-top: .5em;
-	padding-bottom: .5em;
+    text-align: center;
+    border-bottom: 2px dashed #B8CB99;
+    border-top: 2px dashed #B8CB99;
+    font-weight: bold;
+    background: green;
+    font-size: 2em;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
-
-
 .tirc_screen .action {
-	font-weight: normal;
-	background: darkorange;
-	padding: 0.5em;
+    font-weight: normal;
+    background: darkorange;
+    padding: 0.5em;
 }
 
 .tirc_screen .textrow .action .time {
-	color: black;
+    color: black;
 }
 
 .tirc_screen .action .embed {
-	padding-top: 0;
-	padding-bottom:0;
-	margin-top: 0;
-	margin-bottom: 0;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
 }
 
-.tirc_screen .action .embed img{
-	width: 25%;
+.tirc_screen .action .embed img {
+    width: 25%;
 }
 
 .tirc_screen .own {
-	color: white;
+    color: white;
 }
 
 .tirc_screen .quit {
-	padding: 0.5em;
-	color: black;
-	font-weight: bold;
-	text-align: center;
-	background: #949596;
+    padding: 0.5em;
+    color: black;
+    font-weight: bold;
+    text-align: center;
 }
 
 .tirc_screen .day_changed {
-	color: lightcyan;
+    color: lightcyan;
 }
 
 .tirc_screen .mode {
-	color: green;
+    color: green;
 }
 
 .tirc_screen div {
-	bottom: 0;
-	color: yellow;
-	word-wrap: break-word;
-	font-size: 1.1em;
+    bottom: 0;
+    word-wrap: break-word;
+    font-size: 1.1em;
 }
 
-.tirc_screen div a,.tirc_screen div a:visited {
-	color: #4179AD;
+.tirc_screen div a, .tirc_screen div a:visited {
+    color: #4179AD;
 }
+
 .test_box {
-	position:fixed;
-	left:0;
-	width: 100%;
-	height: 10em;
-	right:0;
-	bottom:0;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 10em;
+    right: 0;
+    bottom: 0;
 }
 
 .tirc_action_panel {
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	padding: 0;
-	z-index: 100;	
-	margin: 0;
-}
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
 
-.tirc_action_panel div {
-	display: inline;
-	height: 100%;
 }
 
 .said {
-	color: yellow;
+    color: yellow;
 }
 
 .say_button {
-	margin: 0;
-	padding: 0;
-	/*position: absolute;
-	right: -10;
-	bottom:0; */
-	height: 100%;
-	width: 100%;
+    margin: 0;
+    padding: 0;
+    /*position: absolute;
+    right: -10;
+    bottom:0; */
+    height: 100%;
+    width: 100%;
 }
 
 .tirc_window {
-	padding-left: 5px;
-	width: 100%;
-	height: 100%;
-	font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
-	}
+    padding-left: 5px;
+    width: 100%;
+    height: 100%;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+}
 
 .tirc_scroll_window {
-	background: #292a2c;
-	background-color: #292a2c;
-	color: yellow;
-	border-right: 1px solid red;
-	width: 100%;
-	height: 100%;
+    background: #292a2c;
+    background-color: #292a2c;
+    color: yellow;
+    border-right: 1px solid red;
+    width: 100%;
+    height: 100%;
 }
 
 .v-panel-content-tirc_scroll_window {
-	background: #292a2c;
+    background: #292a2c;
 }
 
 .nick_list_scroll {
-	width: 20%;
-	background-color: #292a2c;
-	height: 100%;
-}
-
-.v-panel-content-nick_list_scroll {
-	background-color: black;
+    width: 20%;
+    background-color: #292a2c;
+    height: 100%;
 }
 
 .nick_list {
-	height: 100%;
-	padding: 5px;
-	background: #292a2c;
-	font-size: 11px;
-	color: white;
-	font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+    height: 100%;
+    padding: 5px;
+    background: #292a2c;
+    font-size: 11px;
+    color: white;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
 }
 
 .message_box {
-	width: 100%;
-	height: 100%;
-	background: black;
-	color: white;
-	font-size: 2em;
-	padding: 0;
-	border: 0;
-	border-right: none;
-	outline:none;
+    height: 100%;
+    background: black;
+    color: white;
 }
 
 .text_left_channel {
-	color: gray;
+    color: gray;
 }
 
 .text_quit_channel {
-	color: red;
+    color: red;
 }
 
 .private {
-	color: white;
-	font-size: medium;
+    color: white;
+    font-size: medium;
 }
 
 .tagged_row {
-	background-color: white;
-	color: black;
+    background-color: white;
+    color: black;
 }
 
 .TircLoginPanel {
-	padding: 10px;
-	padding-top: 0;
-	float: right;
-	margin-bottom: 10px;
-	/*
-	border: 1px solid black;
-	*/
+    padding: 10px;
+    padding-top: 0;
+    float: right;
+    margin-bottom: 10px;
+    /*
+    border: 1px solid black;
+    */
 }
 
 .TircLoginPanel .gwt-TextBox {
-	width: 145px;
-	padding: 2px 1px;
+    width: 145px;
+    padding: 2px 1px;
 }
 
 .TircLoginPanel .gwt-Label {
-	font-weight: bold;
-	padding-right: 10px;
+    font-weight: bold;
+    padding-right: 10px;
 }
 
 .TircLoginPanel .gwt-Button {
-	float: right;
+    float: right;
 }
 
 .login_panel_header {
-	color: #3B382D;
-	background-color: #EFEFEF;
-	border-bottom: 1px solid #D4D4D4;
+    color: #3B382D;
+    background-color: #EFEFEF;
+    border-bottom: 1px solid #D4D4D4;
 }
 
 #stockList {
-	background: black;
-	width: 100%;
-	height: 100%;
+    background: black;
+    width: 100%;
+    height: 100%;
 }
 
-#stocklist>table {
-	width: 100%;
+#stocklist > table {
+    width: 100%;
 }
 
 .tirc_list_box {
-	padding: 5px 4px;
-	width: 100%;
-	background: black;
-	color: white;
+    padding: 5px 4px;
+    width: 100%;
+    background: black;
+    color: white;
 }
 
 .operator {
-	font-style: italic;
+    font-style: italic;
 }
 
 .idle {
-	font-size: 8px;
-	color: #ff6a13;
+    color: #ff6a13;
 }
 
 .gwt-DatePicker table tr td {
-	font-family: Helvetica, Verdana;
+    font-family: Helvetica, Verdana;
 }
 
 .gwt-TabPanel .gwt-TabPanelBottom {
-	padding: 0;
-	width: 100%;
-	height: 100%;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .gwt-TabPanel {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
-
 
 .tirc_tab_item {
-	font-weight: bold;
-	font-size: 1.1em;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
-.tirc_window a,.tirc_window a:visited {
-	color: lightBlue;
+.tirc_window a, .tirc_window a:visited {
+    color: lightBlue;
 }
 
 .tirc_pic {
-	margin-left: 2px;
-	margin-right: 4px;
+    margin-left: 2px;
+    margin-right: 4px;
 }
 
-body,html,.tirc_panel_content {
-	width: 100% height: 100%;
+body, html, .tirc_panel_content {
+    width: 100% height : 100 %;
 }
 
 html {
-	height: 100%;
-	position: relative;
-	background: black;
+    height: 100%;
+    background: black;
 }
 
 body {
-	height: 100%;
-	background: black;
+    height: 100%;
+    background: black;
 }
 
-.tirc_left_panel,.tirc_right_panel {
-	width: 100%;
-	height: 100%;
+.tirc_left_panel, .tirc_right_panel {
+    width: 100%;
+    height: 100%;
 }
 
 .gwt-SuggestBox {
-	width: 100%;
+    width: 100%;
 }
 
 .tirc_title {
-	color: white;
-	line-height: normal;
-	background: black;
-	font-size: 36px;
-	font-weight: bold;
-	margin: 0px 0px 40px;
-	text-align: left;
+    color: white;
+    line-height: normal;
+    background: black;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0px 0px 40px;
+    text-align: left;
 }
 
 .tirc_line {
-	background: black;
-	color: yellow;
+    background: black;
+    color: yellow;
 }
 
-.v-generated-body,.tirc {
-	background: black;
+.v-generated-body, .tirc {
+    background: black;
 }
-
 
 .user_panel .title {
-	display: inline;
-	display: table-cell;
-	padding-right: 2em;
-	text-align: left;
+    display: inline;
+    display: table-cell;
+    padding-right: 2em;
+    text-align: left;
 }
 
-
-
 .current_date {
-	display: table-cell;	
+    display: table-cell;
 }
 
 .user_panel .value {
-	display: table-cell;
-	text-align: left;
+    display: table-cell;
+    text-align: left;
 }
 
 .user_panel .value input {
-	width: 100%;  
+    width: 100%;
 }
 
 .current_user a {
-	color: white;
+    color: white;
 }
+
 .message_container_full, .message_container_part {
-	position:absolute;
-	left:0;
-	bottom:0;
-	top:0;
-	border: none;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border: none;
 }
+
 .message_container_full {
-	width: 100%;
+    width: 100%;
 }
 
 .message_container_part {
-	right: 1em;
-	
+    right: 1em;
+
 }
+
 .accept {
-	height: 4em;
-	width:  1em;
-	position: absolute;
-	right: 0;
-	border: none;
-	bottom: 0;
-	top: 0;
-	color: white;
-	text-decoration: none;
-	font-size: 3em;
-	text-align: center;
-	font-weight: bold;
-	padding-left: 0;
+    height: 4em;
+    width: 1em;
+    position: absolute;
+    right: 0;
+    border: none;
+    bottom: 0;
+    top: 0;
+    color: white;
+    text-decoration: none;
+    font-size: 3em;
+    text-align: center;
+    font-weight: bold;
+    padding-left: 0;
 }
 
 a.ng-click-active {
-	background: blue;
+    background: blue;
 }
 
 .location {
-	display: inline;
+    display: inline;
 }
 
 @media screen and (max-width: 850px) {
 
-	
-	.tirc_info_panel div {
-		font-size: 1em;
-	}
-	.tirc_screen div {
-		font-size: 0.9em;
-	}
-	
-	.tirc_screen .mode, .tirc_screen .quit, .tirc_screen .joinOrPart {
-		font-size: 0.9em;
-	}
-	
-	
-	
+    .tirc_screen .mode, .tirc_screen .quit, .tirc_screen .joinOrPart {
+        font-size: 0.9em;
+    }
+
 }
 
 @media screen and (max-width: 480px) {
-	.tirc_info_panel {
-		display: none;
-	}
-	.tirc_screen {
-		width: 100%;
-	}
+    .tirc_info_panel {
+        display: none;
+    }
+
+    .tirc_screen {
+        width: 100%;
+    }
 }
 
 @media screen and (max-height: 700px) {
-	h1 {
-		font-size: 2.5em;
-	}
-	.user_panel {
-		font-size: .8em;
-	}
-	
-	
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .user_panel {
+        font-size: .8em;
+    }
+
 }
 
 @media screen and (max-height: 600px) {
-	h1 {
-		font-size: 2.3em;
-	}
-	.user_panel {
-		font-size: .7em;
-	}
-	
+    h1 {
+        font-size: 2.3em;
+    }
+
+    .user_panel {
+        font-size: .7em;
+    }
+
 }
 
 @media screen and (max-width: 1024px) {
-	.say_button {
-		display: none;
-	}
-	.message_container {
-		width: 100%;
-	}
-	body {
-		margin-left: auto;
-		margin-right: auto;
-		width: 98%;
-	}
+    .say_button {
+        display: none;
+    }
+
+    .message_container {
+        width: 100%;
+    }
+
+    body {
+        margin-left: auto;
+        margin-right: auto;
+        width: 98%;
+    }
 }
 
 .topicandmiddle {
-	display: table-row;
+    display: table-row;
+}
+
+.text {
+    color: yellow;
 }
 
 .textrow {
-	display: table;
-	table-layout: fixed;
-	width: 100%;
-	
-	border-bottom: 1px solid #ccc;
-	animation: myfirst 1s linear all;
-	-webkit-animation: myfirst 1s linear;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    border-bottom: 1px solid #ccc;
+    animation: myfirst 1s linear all;
+    -webkit-animation: myfirst 1s linear;
 }
 
 .comment {
-	padding-top: .5em;
-	padding-bottom: .5em;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
-#tirc_main {
-	height: 100%;	
-	margin-bottom : -12em;
+.tirc_main {
+    height: 100%;
+    margin-bottom: -12em;
 
 }
 
 .relative {
-	height: 100%;
+    height: 100%;
 }
 
 @-webkit-keyframes myfirst {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Standard syntax */
 @keyframes myfirst {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-
-
 .textrow .nick {
-	width: 25%;
-	display: table-cell;
-	text-align: right;
-	font-weight: bold;
-	vertical-align: top;
-	color: white;
-	padding-right: 1em;
+    width: 25%;
+    display: table-cell;
+    text-align: right;
+    font-weight: bold;
+    vertical-align: top;
+    color: white;
+    padding-right: 1em;
 }
 
 .own .nick {
-	color: #00a651;
-	
+    color: #00a651;
+
 }
 
 .textrow .text img {
-	display: block;
-	max-width: 40%;
-	height: auto;
+    display: block;
+    max-width: 40%;
+    height: auto;
 }
-
 
 .textrow .nicktext {
-	width: 75%;
-	display: table-cell;
+    width: 75%;
+    display: table-cell;
 }
+
 .textrow .nicktext .text {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 .textrow .time {
-	font-size: 80%;
-	color: red;
-}
-
-#userselect {
-	text-align:right;
+    font-size: 80%;
+    color: red;
 }
 
 .embed {
-	max-width: 60%;
-	height: auto;
-	display: block;
-	padding: 1em;
-	border-right: 1px solid #B8CB99;
-	border-left: 1px solid #B8CB99;
+    max-width: 60%;
+    height: auto;
+    display: block;
+    padding: 1em;
+    border-right: 1px solid #B8CB99;
+    border-left: 1px solid #B8CB99;
 
-	margin: 1em;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+    margin: 1em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 .embed iframe {
-	width: auto;
-	height: auto; 
+    width: auto;
+    height: auto;
 }
 
 .attach, #attach {
-	display: none;
-	outline: none;
-	height: 100%;
-	margin-right: 1em;
-	font-size: 1.5em;
-	background: orange;
+    display: none;
+    outline: none;
+    height: 100%;
+    margin-right: 1em;
+    font-size: 1.5em;
+    background: orange;
 }
 
 .embed .description {
-	color: orange;
-	font-size: 80%;
+    color: orange;
+    font-size: 80%;
 }
 
 .tab {
-	color: white;
-	font-size: 2em;
-	float: left;
-	padding: 10px 20px;
-	text-decoration: none;
-	border-radius: 5px 5px 0 0;
-	border-bottom: .4px solid black;
+    color: white;
+    font-size: 2em;
+    float: left;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px 5px 0 0;
+    border-bottom: .4px solid black;
 }
 
 .tab.active {
-	font-weight: bold;
-	background: none repeat scroll 0 0 #4179AD;
+    font-weight: bold;
+    background: none repeat scroll 0 0 #4179AD;
 }
 
 

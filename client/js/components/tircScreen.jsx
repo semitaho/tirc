@@ -13,7 +13,7 @@ module.exports = React.createClass({
     var dataall = this.props.connectdata.concat(this.props.currentdata);
     var id = 0;
     var visible = this.props.visible;
-    var classStr = 'tirc_screen';
+    var classStr = 'tirc_screen panel-body col-md-10';
 
     return <div className={classStr}>{  dataall.map(function (item) {
       id++;
@@ -29,6 +29,7 @@ module.exports = React.createClass({
     var index = this.props.index;
     if (link.length > 0) {
       UIService.embedly(link, function () {
+        console.log('resizible index: '+index);
         Resizer.resize(index);
         console.log('tircScreen - componentdidMount link embedly...');
         $(document).trigger('statechange', ["setvisibility", true]);
@@ -40,7 +41,8 @@ module.exports = React.createClass({
 
   shouldComponentUpdate: function (nextProps, nextState) {
     var props = this.props;
-    if (!_.isEqual(props, nextProps)) {
+    var isEqual =  _.isEqual(props, nextProps);
+    if (!isEqual) {
       return true;
     }
     return false;
@@ -51,6 +53,8 @@ module.exports = React.createClass({
     console.log('tircScreen: on did update')
     var index = prevProps.index;
     console.log('TircScreen: didUpdate');
+    console.log('resizible index update: '+index);
+
     var link = $(this.getDOMNode()).find('a').not($('.embed a'));
     if (link.length === 0) {
       Resizer.resize(index);

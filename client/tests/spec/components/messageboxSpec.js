@@ -1,9 +1,12 @@
 describe('messagebox input tests', function () {
-  var React, TestUtils;
+  var jsFilesPath = '../../../js';
+
+  var React, TestUtils, uiService;
 
   beforeEach(function () {
-    React = require('react/addons');
-    TestUtils = React.addons.TestUtils;
+    React = require('react/addons'),
+      TestUtils = React.addons.TestUtils,
+      uiService = require(jsFilesPath+'/services/UIService.js');
   });
 
   it('tests rendering messagebox and initial state', function () {
@@ -37,15 +40,19 @@ describe('messagebox input tests', function () {
     var configService = require('../../../js/services/ConfigService.js'),
       TircBackend = require('../../../js/services/TircBackend.js');
     configService.loadUser = jest.genMockFunction();
-    TircBackend.say = jest.genMockFunction();
 
     var Messagebox = require('../../../js/components/messagebox.jsx');
+    var mockFunctionBackend = jest.genMockFunction();
+    var mockFunctionStateChange = jest.genMockFunction();
+
+    uiService.fireBackendCall = mockFunctionBackend;
+    uiService.fireStateChange =mockFunctionStateChange;
+
     var renderedbox = TestUtils.renderIntoDocument(<Messagebox text="kukkaa kakassa"/>);
     var domInput = TestUtils.findRenderedDOMComponentWithTag(renderedbox, "input");
     TestUtils.Simulate.keyUp(domInput, {which: 13});
-    expect(TircBackend.say.mock.calls.length).toBe(1);
-    expect(configService.loadUser.mock.calls.length).toBe(1);
-    expect(TircBackend.say.mock.calls[0][1]).toBe('kukkaa kakassa');
+    expect(mockFunctionBackend).toBeCalled();
+    expect(mockFunctionStateChange).toBeCalled();
 
   });
 });

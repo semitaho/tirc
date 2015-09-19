@@ -1,64 +1,54 @@
 var React = require('react/addons'),
-    TopicPanel = require('./topicPanel.jsx'),
-    TircScreen = require('./tircScreen.jsx'),
-    Nickpanel = require('./nickpanel.jsx');
+  TopicPanel = require('./topicPanel.jsx'),
+  TircScreen = require('./tircScreen.jsx'),
+  Nickpanel = require('./nickpanel.jsx'),
+  Resizer = require('../resize.js');
 module.exports = React.createClass({
 
-    componentDidMount: function () {
-        console.log('mainScreen - mounted');
-        $(window).unload(this.destroy);
-    },
+  componentDidMount: function () {
+    console.log('mainScreen - mounted');
+    $(window).unload(this.destroy);
+  },
 
-    destroy: function () {
-        GeoService.unwatch();
-        TircBackend.sayGoodbye(Config.loadUser('taho'));
-    },
-
-
-    onconnecterror: function (err) {
-        console.log('error:' + JSON.stringify(err));
-        this.produceMockdata();
-    },
+  destroy: function () {
+    GeoService.unwatch();
+    TircBackend.sayGoodbye(Config.loadUser('taho'));
+  },
 
 
-    render: function () {
-        this.props.tircusers.sort(function (user1, user2) {
-            return user2.time - user1.time;
-        });
-        var index = this.props.index;
-        console.log('index: '+index);
-        var idindex = 'tirc_main_panel_middle_'+index;
+  onconnecterror: function (err) {
+    console.log('error:' + JSON.stringify(err));
+    this.produceMockdata();
+  },
 
-        var visible = this.props.visible;
-        var clazz = 'hide';
-        if (visible){
-            clazz='';
-        }
-        return (
-            <div id="tirc_main" className={clazz}>
-                <div className="relative">
 
-                    <TopicPanel topic={this.props.topic} index={index} />
-                    <div className="tirc_main_panel_middle" id={idindex}>
-                        <TircScreen index={index}  visible={visible} connectdata={this.props.connectdata} currentdata={this.props.currentdata} />
-                        <Nickpanel users={this.props.users} tircusers={this.props.tircusers} />
-                    </div>
-                </div>
-            </div>
-        )
-        /*
-        return (
-            <div id="tirc_main" className={clazz}>
-                <div className="relative">
+  render: function () {
+    this.props.tircusers.sort(function (user1, user2) {
+      return user2.time - user1.time;
+    });
+    var index = this.props.index;
+    var idindex = 'tirc_main_panel_middle_' + index;
 
-                    <TopicPanel topic={this.props.topic} index={index} />
-                    <div className="tirc_main_panel_middle" id={idindex}>
-                        <TircScreen index={index}  visible={visible} connectdata={this.props.connectdata} currentdata={this.props.currentdata} />
-                        <Nickpanel users={this.props.users} tircusers={this.props.tircusers} />
-                    </div>
+    var visible = this.props.visible;
+    var clazz = 'tirc_main  panel-default';
+    if (visible){
+      Resizer.resize(index);
 
-                </div>
-            </div> )
-*/
     }
+
+    return (
+      <div className={clazz}>
+
+          <TopicPanel topic={this.props.topic} index={index}/>
+
+          <div className="tirc_main_panel_middle  row" id={idindex}>
+            <TircScreen index={index} visible={visible} connectdata={this.props.connectdata}
+                        currentdata={this.props.currentdata}/>
+            <Nickpanel users={this.props.users} tircusers={this.props.tircusers}/>
+          </div>
+
+      </div>
+    )
+
+  }
 });

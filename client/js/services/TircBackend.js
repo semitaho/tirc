@@ -1,5 +1,7 @@
 var TircState = require('../TircStore'),
-  Config = require('./ConfigService');
+  Config = require('./ConfigService'),
+  Parser = require('./Parser'),
+  NotifyService = require('./NotificationService');
 
 var TircBackend = (function () {
 
@@ -49,7 +51,7 @@ var TircBackend = (function () {
 
   };
 
-  var onconnectsuccess = function (data) {
+  var onconnectsuccess = function (data, callback) {
     var arr = Parser.formatusers(data.users.users);
     console.log('connecting with data:' + data);
     var stateobj = {
@@ -63,6 +65,9 @@ var TircBackend = (function () {
 
     TircState.onstatechange(TircState.setconnectdata, state);
     TircBackend.listen(data.id, onmessage, onlistenerror);
+    if (callback) {
+      callback();
+    }
   };
 
 
@@ -156,14 +161,16 @@ var TircBackend = (function () {
     },
 
 
-    connect: function (nick, success, errorCallback) {
+    connect: function (nick, success) {
       $.ajax({
         url: URL + 'connect/' + nick,
         type: "GET"
-      }).done(onconnectsuccess).error(onconnecterror);
+      }).done(function (data) {
+        onconnectsuccess(data, success);
+      }).error(onconnecterror);
     },
 
-    getMockedData : _getMockedData,
+    getMockedData: _getMockedData,
 
 
     say: function (nick, text, callback) {

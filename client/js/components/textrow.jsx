@@ -141,7 +141,7 @@ module.exports= React.createClass({
         return ( <div
             className="textrow">
             <div
-                className="quit"> {item.nick} poistui
+                className="bg-danger quit"> {item.nick} poistui
                 kokonaan
                 ircistä: {
                     item.line
@@ -154,9 +154,9 @@ module.exports= React.createClass({
     },
     renderjoin: function (item) {
         return ( <div
-            className="textrow">
+            className="textrow bg-info">
             <div
-                className="quit">{item.nick} saapui kanavalle - {item.time}</div>
+                className="bg-info quit">{item.nick} saapui kanavalle - {item.time}</div>
 
         </div>
         )
@@ -165,13 +165,12 @@ module.exports= React.createClass({
     renderpart: function (item) {
         return ( <div
             className="textrow">
-            <div className="quit"> {item.nick} jätti kanavan - {item.time}</div>
+            <div className="bg-warning quit"> {item.nick} jätti kanavan - {item.time}</div>
         </div>
         )
     },
     render: function () {
         if (this['render' + this.props.elem.type]) {
-            console.log('type is: ' + this.props.elem.type);
             return this['render' + this.props.elem.type](this.props.elem);
         } else {
             console.log('ERROR! method: render' + this.props.elem.type + ' cannot be found, row: ' + JSON.stringify(this.props.elem));
