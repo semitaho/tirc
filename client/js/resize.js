@@ -1,32 +1,34 @@
 var $ = require('jquery');
 module.exports = (function () {
 
-  var doScroll = function (index) {
-    console.log('do scroll');
-    var elem = $('#tirc_screen_'+index);
-    var height = $('#tirc_screen_'+index).height();
-    console.log('elem height', height);
-    console.log('scrolltop', elem.scrollTop());
-    var scrollHeight = elem.prop('scrollHeight')
-    console.log('scrollheight', scrollHeight);
-    console.log('outerheight', elem.outerHeight());
+  var doScroll = function (index, interval) {
+    var elem = $('#tirc_screen_' + index);
+    elem.scroll(function (ee) {
 
-    if (scrollHeight - elem.scrollTop() === elem.outerHeight() || elem.scrollTop() === 0){
-      console.log('go bottom');
+    });
+    var height = $('#tirc_screen_' + index).height();
+    var scrollHeight = elem.prop('scrollHeight');
+
+    if (!interval) {
       elem.scrollTop(scrollHeight);
-      }
+    } else {
+      setTimeout(function () {
+        console.log('in interval');
+        elem = $('#tirc_screen_' + index);
+        scrollHeight = elem.prop('scrollHeight');
+        elem.scrollTop(scrollHeight);
+      }, interval);
 
+    }
 
 
   };
-  var scroll = function (index) {
-    setTimeout(function () {
-      doScroll(index);
-    }, 500);
+  var scroll = function (index, intervall) {
+    doScroll(index, intervall);
   };
 
 
-  var resize = function (lastHeight) {
+  var resize = function (lastHeight, interval) {
     if (lastHeight === undefined || !_.isNumber(lastHeight)) {
       lastHeight = 0;
     }
@@ -42,15 +44,11 @@ module.exports = (function () {
     var boxHeight = box.height();
     var currentHeight = $(window).height();
     elem.css('height', currentHeight - startY - boxHeight);
-    scroll(lastHeight);
+    scroll(lastHeight, interval);
+
   };
 
   $(window).resize(resize);
-
-  $(window).scroll(function () {
-    console.log('someone is scrolling...');
-
-  });
 
 
   return {

@@ -14,7 +14,7 @@ module.exports = React.createClass({
     var that = this;
     var itemFunction = function (item) {
       var badgeStr = '';
-      var className = 'tab';
+      var className = 'tab btn';
       if (item.name === active) {
         className += ' active';
       }
@@ -29,7 +29,7 @@ module.exports = React.createClass({
     };
 
     var header = items.map(itemFunction);
-    return <div className="tabs col-md-11 col-xs-9 col-sm-9">{header}</div>;
+    return <div className="tabs col-md-11 col-xs-9 col-sm-9 btn-group">{header}</div>;
 
   }
 });

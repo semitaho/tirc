@@ -23,7 +23,7 @@ module.exports = React.createClass({
       var actionpanelId = 'action_panel_' + id;
       return (
         <div className={className}>
-          <Mainpanel index={id} topic={data.mainpanel.topic} tircusers={data.mainpanel.tircusers}
+          <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded} tircusers={data.mainpanel.tircusers}
                      visible={isVisible} users={data.mainpanel.users}
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
           <div className="tirc_action_panel row" id={actionpanelId}>

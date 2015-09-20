@@ -33,7 +33,6 @@ module.exports = React.createClass({
     if (link.length > 0) {
       UIService.embedly(link, function () {
         console.log('resizible index: '+index);
-        Resizer.resize(index);
         console.log('tircScreen - componentdidMount link embedly...');
         $(document).trigger('statechange', ["setvisibility", true]);
       });
@@ -53,18 +52,21 @@ module.exports = React.createClass({
 
 
   componentDidUpdate: function (prevProps, prevState) {
-    console.log('tircScreen: on did update')
+    console.log('tircScreen: on did update', this.scrolling)
     var index = prevProps.index;
     console.log('TircScreen: didUpdate');
     console.log('resizible index update: '+index);
-
+    var scrolling = this.scrolling;
     var link = $(this.getDOMNode()).find('a').not($('.embed a'));
     if (link.length === 0) {
+      console.log('did update - link length 0');
       Resizer.resize(index);
     }
     else {
       UIService.embedly(link, function () {
         {
+          console.log('did update - link length >  0');
+
           Resizer.resize(index);
         }
       });

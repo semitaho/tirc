@@ -73,7 +73,7 @@ public class TircRestService {
         bus.registerWithNick(nick);
         //
         TircConnectData connectData = new TircConnectData();
-        List<TircLine> todayLogs = new ArrayList<>();  //  db.readLogs();
+        List<TircLine> todayLogs = db.readLogs();
         List<TircLine> logsWithStart = LogFileParser.addLogStart(todayLogs);
         List<TircLine> dayChangeStartLogs = LogFileParser
                 .addDayChange(logsWithStart);
@@ -89,7 +89,7 @@ public class TircRestService {
         Collection<TircUser> tircUsers = bus.getTircUsers().getUsers().values();
         connectData.setTircusers(tircUsers);
         TircLine tircLine = TircUtil.mapToJoinLine(nick);
-  //      bus.addNewLine(tircLine);
+        bus.addNewLine(tircLine);
         return connectData;
     }
 
@@ -162,7 +162,7 @@ public class TircRestService {
     @RequestMapping(method = RequestMethod.POST, value = "/say")
     public void say(@RequestBody MessageBody message) {
         String text = message.getText();
-        log.debug("text is: "+text+", target: "+message.getTarget());
+        log.debug("text is: " + text + ", target: " + message.getTarget());
         String nick = message.getNick();
         TircLine tircLine = new TircLine(Source.TIRC);
         tircLine.setType("comment");
@@ -177,7 +177,7 @@ public class TircRestService {
     }
 
     @RequestMapping(value = "/saywelcome", method = RequestMethod.POST)
-    public void     sayWelcome(HttpServletRequest request,
+    public void sayWelcome(HttpServletRequest request,
                            @RequestBody MessageBody message) {
         String location = message.getLocation().getLocation();
         String nick = message.getNick();
@@ -190,7 +190,7 @@ public class TircRestService {
         String lineStr = line.getLine();
         line.setLine(formattedLine);
         bus.addNewLine(line);
-        cthread.writeLine("PRIVMSG "+cthread.getChannel()+" :\u0001ACTION saapui paikalle nickillä "+nick+" "+lineStr);
+        cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION saapui paikalle nickillä " + nick + " " + lineStr);
     }
 
     @RequestMapping(value = "/saygoodbye", method = RequestMethod.POST)
@@ -198,7 +198,7 @@ public class TircRestService {
         String nick = message.getNick();
         TircLine tircLineGoodbye = TircMessageParser.parseGoodbye(nick);
         bus.addNewLine(tircLineGoodbye);
-        cthread.writeLine("PRIVMSG "+cthread.getChannel()+" :\u0001ACTION poistui paikalta nickillä "+nick);
+        cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION poistui paikalta nickillä " + nick);
     }
 
     @RequestMapping(value = "/updatelocation", method = RequestMethod.POST)

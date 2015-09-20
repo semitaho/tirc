@@ -36,8 +36,8 @@ module.exports = (function () {
     }
   };
 
-  var isActive = function(tab){
-    return _.isEqual(_state.active.name,tab.name);
+  var isActive = function (tab) {
+    return _.isEqual(_state.active.name, tab.name);
   };
 
 
@@ -51,7 +51,6 @@ module.exports = (function () {
     getActiveName: function () {
       return _state.active.name;
     },
-
 
 
     getActiveIndex: function () {
@@ -93,7 +92,6 @@ module.exports = (function () {
       console.log('setting message...');
       var selectedtab = _state.tabs[0];
       if (data.target !== null && data.target !== undefined) {
-        console.log('suunnattu keskusteluviesti...')
         var foundTab = _.find(_state.tabs, function (tab) {
           return tab.name === data.target || tab.name === data.nick;
         });
@@ -105,6 +103,7 @@ module.exports = (function () {
             topic: 'privakeskustelu: ' + data.nick,
             tircusers: [{nick: Config.loadUser()}, {nick: data.nick}],
             users: [],
+            screenloaded: true,
             connectdata: [],
             currentdata: [],
             unread: 0
@@ -119,8 +118,7 @@ module.exports = (function () {
       var newCurrentData = selectedtab.mainpanel.currentdata.slice();
       newCurrentData.push(data);
       selectedtab.mainpanel.currentdata = newCurrentData;
-      if (!isActive(selectedtab)){
-        console.log('ei active');
+      if (!isActive(selectedtab)) {
         selectedtab.unread += 1;
       }
       store();
@@ -142,7 +140,6 @@ module.exports = (function () {
     },
 
     settext: function (value) {
-      console.log('text::'+value);
       _state.active.text = value;
     },
     setnick: function (newnick) {
@@ -160,6 +157,7 @@ module.exports = (function () {
           topic: 'privakeskustelu: ' + nick,
           tircusers: [{nick: Config.loadUser()}, {nick: nick}],
           users: [],
+          screenloaded: true,
           connectdata: [],
           currentdata: [],
         };
@@ -182,6 +180,7 @@ module.exports = (function () {
     setvisibility: function (visible) {
       var activetab = _state.active;
       activetab.mainpanel.visible = true;
+      activetab.mainpanel.screenloaded = true;
     }
 
   }

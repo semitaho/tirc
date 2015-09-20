@@ -30,25 +30,34 @@ module.exports = React.createClass({
     var idindex = 'tirc_main_panel_middle_' + index;
 
     var visible = this.props.visible;
-    var clazz = 'tirc_main  panel-default';
-    if (visible){
-      //Resizer.resize(index);
+    var clazz = 'tirc_main  panel-default hidden';
+    var screenloaded = this.props.screenloaded;
+    if (screenloaded) {
+      clazz = 'tirc_main panel-default';
 
     }
+
 
     return (
       <div className={clazz}>
 
-          <TopicPanel topic={this.props.topic} index={index}/>
+        <TopicPanel topic={this.props.topic} index={index}/>
 
-          <div className="tirc_main_panel_middle  row" id={idindex}>
-            <TircScreen index={index} visible={visible} connectdata={this.props.connectdata}
-                        currentdata={this.props.currentdata}/>
-            <Nickpanel users={this.props.users} tircusers={this.props.tircusers}/>
-          </div>
+        <div className="tirc_main_panel_middle  row" id={idindex}>
+          <TircScreen index={index} visible={visible} connectdata={this.props.connectdata}
+                      currentdata={this.props.currentdata}/>
+          <Nickpanel users={this.props.users} tircusers={this.props.tircusers}/>
+        </div>
 
       </div>
     )
+
+  },
+  componentWillUpdate: function (nextProps) {
+    if (nextProps.screenloaded && !this.props.screenloaded) {
+      console.log('loaded all')
+      Resizer.resize(nextProps.index, 1000);
+    }
 
   }
 });

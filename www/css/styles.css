@@ -136,11 +136,6 @@ selector {
     display: table-cell;
 }
 
-.tirc_info_panel div {
-    width: 100%;
-    margin-bottom: 0;
-}
-
 .tirc_info_panel .typing {
     color: yellow;
 }
@@ -169,9 +164,7 @@ selector {
 }
 
 .tirc_screen .star {
-    background: violet;
     font-weight: bold;
-
 }
 
 .tirc_screen .star .time {
@@ -180,7 +173,6 @@ selector {
 }
 
 .tirc_screen .action, .tirc_screen .star {
-    padding: 0.5em;
     color: black;
     text-align: center;
 }
@@ -189,14 +181,11 @@ selector {
     text-align: center;
     font-weight: bold;
     font-size: 2em;
-    padding-top: .5em;
-    padding-bottom: .5em;
+
 }
 
 .tirc_screen .action {
     font-weight: normal;
-    background: darkorange;
-    padding: 0.5em;
 }
 
 .tirc_screen .textrow .action .time {
@@ -204,18 +193,24 @@ selector {
 }
 
 .tirc_screen .action .embed {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     max-width: 100%;
 }
 
-.tirc_screen .action .embed img {
-    width: 25%;
+.embed img {
+    max-width: 75%;
+    display: block;
+
+}
+
+.thumbnail{
+    background-color: darkorange;
+
+}
+
+.thumbnail .caption img {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tirc_screen .own {
@@ -223,7 +218,6 @@ selector {
 }
 
 .tirc_screen .quit {
-    padding: 0.5em;
     color: black;
     font-weight: bold;
     text-align: center;
@@ -237,23 +231,8 @@ selector {
     color: green;
 }
 
-.tirc_screen div {
-    bottom: 0;
-    word-wrap: break-word;
-    font-size: 1.1em;
-}
-
 .tirc_screen div a, .tirc_screen div a:visited {
     color: #4179AD;
-}
-
-.test_box {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 10em;
-    right: 0;
-    bottom: 0;
 }
 
 .tirc_action_panel {
@@ -289,9 +268,6 @@ selector {
     background: #292a2c;
     background-color: #292a2c;
     color: yellow;
-    border-right: 1px solid red;
-    width: 100%;
-    height: 100%;
 }
 
 .v-panel-content-tirc_scroll_window {
@@ -299,7 +275,6 @@ selector {
 }
 
 .nick_list_scroll {
-    width: 20%;
     background-color: #292a2c;
     height: 100%;
 }
@@ -317,14 +292,6 @@ selector {
     height: 100%;
     background: black;
     color: white;
-}
-
-.text_left_channel {
-    color: gray;
-}
-
-.text_quit_channel {
-    color: red;
 }
 
 .private {
@@ -367,16 +334,7 @@ selector {
     border-bottom: 1px solid #D4D4D4;
 }
 
-#stockList {
-    background: black;
-    width: 100%;
-    height: 100%;
-}
-
-#stocklist > table {
-    width: 100%;
-}
-
+ß
 .tirc_list_box {
     padding: 5px 4px;
     width: 100%;
@@ -390,21 +348,6 @@ selector {
 
 .idle {
     color: #ff6a13;
-}
-
-.gwt-DatePicker table tr td {
-    font-family: Helvetica, Verdana;
-}
-
-.gwt-TabPanel .gwt-TabPanelBottom {
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.gwt-TabPanel {
-    width: 100%;
-    height: 100%;
 }
 
 .tirc_tab_item {
@@ -440,20 +383,6 @@ body {
     height: 100%;
 }
 
-.gwt-SuggestBox {
-    width: 100%;
-}
-
-.tirc_title {
-    color: white;
-    line-height: normal;
-    background: black;
-    font-size: 36px;
-    font-weight: bold;
-    margin: 0px 0px 40px;
-    text-align: left;
-}
-
 .tirc_line {
     background: black;
     color: yellow;
@@ -461,13 +390,6 @@ body {
 
 .v-generated-body, .tirc {
     background: black;
-}
-
-.user_panel .title {
-    display: inline;
-    display: table-cell;
-    padding-right: 2em;
-    text-align: left;
 }
 
 .current_date {
@@ -545,28 +467,6 @@ a.ng-click-active {
     }
 }
 
-@media screen and (max-height: 700px) {
-    h1 {
-        font-size: 2.5em;
-    }
-
-    .user_panel {
-        font-size: .8em;
-    }
-
-}
-
-@media screen and (max-height: 600px) {
-    h1 {
-        font-size: 2.3em;
-    }
-
-    .user_panel {
-        font-size: .7em;
-    }
-
-}
-
 @media screen and (max-width: 1024px) {
     .say_button {
         display: none;
@@ -592,23 +492,13 @@ a.ng-click-active {
 }
 
 .textrow {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-
     border-bottom: 1px solid #ccc;
     animation: myfirst 1s linear all;
     -webkit-animation: myfirst 1s linear;
 }
 
-.comment {
-    padding-top: .5em;
-    padding-bottom: .5em;
-}
-
 .tirc_main {
     height: 100%;
-    margin-bottom: -12em;
 
 }
 
@@ -642,7 +532,6 @@ a.ng-click-active {
     font-weight: bold;
     vertical-align: top;
     color: white;
-    padding-right: 1em;
 }
 
 .own .nick {
@@ -650,34 +539,14 @@ a.ng-click-active {
 
 }
 
-.textrow .text img {
-    display: block;
-    max-width: 40%;
-    height: auto;
-}
-
-.textrow .nicktext {
-    width: 75%;
-    display: table-cell;
-}
-
-.textrow .nicktext .text {
-    font-size: 1em;
-}
-
-.textrow .time {
+.row .time {
     color: red;
 }
 
 .embed {
-    max-width: 60%;
     height: auto;
     display: block;
-    padding: 1em;
-    border-right: 1px solid #B8CB99;
-    border-left: 1px solid #B8CB99;
 
-    margin: 1em;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -706,14 +575,11 @@ a.ng-click-active {
     color: white;
     font-size: 2em;
     float: left;
-    padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px 5px 0 0;
-    border-bottom: .4px solid black;
 }
 
 .tab.active {
-    font-weight: bold;
     background: none repeat scroll 0 0 #4179AD;
 }
 
