@@ -13,6 +13,7 @@ module.exports = (function () {
     },
 
     fireStateChange: function (paramArray) {
+      console.log('ui firer', paramArray);
       $(document).trigger('statechange', paramArray);
     }
 

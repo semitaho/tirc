@@ -52,13 +52,11 @@ h1 {
     font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
     z-index: 10;
     height: auto;
-    font-size: 15px;
 }
 
 .tab_panel div {
     vertical-align: middle;
     height: auto;
-    font-size: 2em;
     overflow-y: auto;
     z-index: 10;
     font-weight: bold;
@@ -189,10 +187,7 @@ selector {
 
 .tirc_screen .logevent {
     text-align: center;
-    border-bottom: 2px dashed #B8CB99;
-    border-top: 2px dashed #B8CB99;
     font-weight: bold;
-    background: green;
     font-size: 2em;
     padding-top: .5em;
     padding-bottom: .5em;
@@ -671,7 +666,6 @@ a.ng-click-active {
 }
 
 .textrow .time {
-    font-size: 80%;
     color: red;
 }
 

@@ -73,7 +73,7 @@ public class TircRestService {
         bus.registerWithNick(nick);
         //
         TircConnectData connectData = new TircConnectData();
-        List<TircLine> todayLogs = db.readLogs();
+        List<TircLine> todayLogs = new ArrayList<>();  //  db.readLogs();
         List<TircLine> logsWithStart = LogFileParser.addLogStart(todayLogs);
         List<TircLine> dayChangeStartLogs = LogFileParser
                 .addDayChange(logsWithStart);
@@ -89,7 +89,7 @@ public class TircRestService {
         Collection<TircUser> tircUsers = bus.getTircUsers().getUsers().values();
         connectData.setTircusers(tircUsers);
         TircLine tircLine = TircUtil.mapToJoinLine(nick);
-        bus.addNewLine(tircLine);
+  //      bus.addNewLine(tircLine);
         return connectData;
     }
 

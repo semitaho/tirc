@@ -67,6 +67,7 @@ module.exports = (function () {
     },
 
     onstatechange: function (callback, val) {
+
       callback(val);
       React.render(
         React.createElement(Tirc, {data: _state}),
@@ -119,6 +120,7 @@ module.exports = (function () {
       newCurrentData.push(data);
       selectedtab.mainpanel.currentdata = newCurrentData;
       if (!isActive(selectedtab)){
+        console.log('ei active');
         selectedtab.unread += 1;
       }
       store();

@@ -7,9 +7,11 @@ var React = require('react/addons'),
 module.exports = React.createClass({
 
   say: function () {
-    console.log('sayt', this.props.text);
-    UIService.fireBackendCall(['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
-    UIService.fireStateChange(['settext', '']);
+   // UIService.fireBackendCall(['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
+    $(document).trigger('backendcall',['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
+    $(document).trigger('statechange', ['settext', '']);
+
+//    UIService.fireStateChange(['settext', '']);
 
   },
 
@@ -59,11 +61,10 @@ module.exports = React.createClass({
   },
 
   statechange: function (state) {
-    console.log('on state change...');
     var previousState = this.typestate.state;
     this.typestate = {time: new Date(), state: state};
     if (state !== previousState) {
-      //      TircBackend.changeState(Config.loadUser(), state);
+      $(document).trigger('backendcall',['changeState', Config.loadUser(), state]);
     }
   },
 
@@ -73,14 +74,16 @@ module.exports = React.createClass({
   },
 
   updateText: function (event) {
-    UIService.fireStateChange(['settext', event.target.value]);
+    console.log('said', event.target.value);
+    $(document).trigger('statechange', ['settext', event.target.value]);
+   // UIService.fireStateChange(['settext', event.target.value]);
   },
   render: function () {
     return (
       <div className="col-md-12">
-          <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
-                 id="textline" className="input-lg form-control message_box"
-                 placeholder="say something..." onKeyUp={this.onPress}></input>
+        <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
+               id="textline" className="input-lg form-control message_box"
+               placeholder="say something..." onKeyUp={this.onPress}></input>
       </div>
     );
   }

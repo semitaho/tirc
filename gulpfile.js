@@ -76,6 +76,6 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs'], function () {
     }, {source: '/backend/say', target: 'http://localhost:8080/backend/say'}, {
       source: '/backend/listen',
       target: 'http://localhost:8080/backend/listen'
-    }]
+    },{source: '/backend/changestate', target: 'http://localhost:8080/backend/changestate'}]
   }));
 });

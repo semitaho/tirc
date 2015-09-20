@@ -32,7 +32,7 @@ module.exports = React.createClass({
     var visible = this.props.visible;
     var clazz = 'tirc_main  panel-default';
     if (visible){
-      Resizer.resize(index);
+      //Resizer.resize(index);
 
     }
 

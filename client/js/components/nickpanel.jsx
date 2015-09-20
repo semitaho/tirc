@@ -18,7 +18,6 @@ module.exports = React.createClass({
     if (users.length === 0){
       return;
     }
-    console.log('got some users', users);
     var that = this;
     var idleusers = users.map(function (user) {
       var newIdletime = user.idleTime + 1;
@@ -110,7 +109,7 @@ module.exports = React.createClass({
     });
 
 
-    return <div className="tirc_info_panel panel-body col-md-2">{
+    return <div className="tirc_info_panel panel-body col-md-2 hidden-xs hidden-sm">{
       tircusers.concat(<hr />).concat(users)
     }
 

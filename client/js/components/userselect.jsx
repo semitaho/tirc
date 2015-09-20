@@ -24,7 +24,7 @@ module.exports = React.createClass({
   render: function () {
     var that = this;
     return (
-      <div id="userselect" className="col-md-1 text-right">
+      <div id="userselect" className="col-md-1 col-sm-3 col-xs-3 text-right">
         <select className="form-control" name="userlist" onChange={this.onchange} value={this.props.chosen}>
           {this.props.users.map(function (user) {
             return (<option key={user}>{user}</option>)

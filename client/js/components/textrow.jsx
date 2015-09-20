@@ -114,7 +114,7 @@ module.exports= React.createClass({
                 className="action"
                 dangerouslySetInnerHTML={
                 {
-                    __html: item.nick + ' saapui paikalle ' + item.line + '<span class="time"> - ' + item.time + '</span>'
+                    __html: '<div className="caption" >'+ item.nick + ' saapui paikalle ' + item.line + '</div><span class="time small"> - ' + item.time + '</span>'
                 }
                     }
                 ></div>
@@ -190,7 +190,7 @@ module.exports= React.createClass({
     renderlogevent: function (item) {
         return (
             <div
-                className="textrow logevent"> {item.line
+                className="textrow logevent alert alert-warning"> {item.line
             }
             </div> );
     }

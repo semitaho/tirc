@@ -13,21 +13,23 @@ module.exports = React.createClass({
 
     var that = this;
     var itemFunction = function (item) {
+      var badgeStr = '';
       var className = 'tab';
       if (item.name === active) {
         className += ' active';
       }
       if (item.unread && item.unread > 0){
-        className += ' unread';
+      badgeStr = <span className="badge">{item.unread}</span>
       }
 
       return (
-        <a className={className} onClick={that.selectTab.bind(that, item.name)} href="#">{item.name}</a>
+        <a className={className} onClick={that.selectTab.bind(that, item.name)}
+           href="#">{item.name} {badgeStr}</a>
       )
     };
 
     var header = items.map(itemFunction);
-    return <div className="tabs col-md-11">{header}</div>;
+    return <div className="tabs col-md-11 col-xs-9 col-sm-9">{header}</div>;
 
   }
 });

@@ -1,5 +1,3 @@
-require('./components/tircScreen.jsx');
-require('./components/mainpanel.jsx');
 var backend = require('./services/TircBackend.js'),
   geoservice = require('./services/GeoService.js'),
   config = require('./services/ConfigService.js'),
@@ -12,8 +10,7 @@ $(document).on('statechange', function (event, eventAction, data) {
 
 // backend kuuntelija
 $(document).on('backendcall', function (event, method, data1, data2, callback) {
-  console.log('receiving backend call: ' + method);
-  console.log('data: ', data1);
+
   if (data1 && data2) {
     backend[method](data1, data2, callback);
   } else {

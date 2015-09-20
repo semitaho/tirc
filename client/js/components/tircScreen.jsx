@@ -13,9 +13,12 @@ module.exports = React.createClass({
     var dataall = this.props.connectdata.concat(this.props.currentdata);
     var id = 0;
     var visible = this.props.visible;
-    var classStr = 'tirc_screen panel-body col-md-10';
+    var classStr = 'tirc_screen panel-body col-md-10 col-xs-12';
+    var index = this.props.index;
+    var screenindex = 'tirc_screen_'+index;
 
-    return <div className={classStr}>{  dataall.map(function (item) {
+    return <div className={classStr} id={screenindex}>{  dataall.map(function (item) {
+
       id++;
       return ( <Textrow key={id} elem={item}/> )
     }) }</div>

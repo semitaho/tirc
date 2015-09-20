@@ -2,8 +2,22 @@ var $ = require('jquery');
 module.exports = (function () {
 
   var doScroll = function (index) {
-    var elem = $('.tirc_screen')[index];
-    elem.scrollTop = elem.scrollHeight;
+    console.log('do scroll');
+    var elem = $('#tirc_screen_'+index);
+    var height = $('#tirc_screen_'+index).height();
+    console.log('elem height', height);
+    console.log('scrolltop', elem.scrollTop());
+    var scrollHeight = elem.prop('scrollHeight')
+    console.log('scrollheight', scrollHeight);
+    console.log('outerheight', elem.outerHeight());
+
+    if (scrollHeight - elem.scrollTop() === elem.outerHeight() || elem.scrollTop() === 0){
+      console.log('go bottom');
+      elem.scrollTop(scrollHeight);
+      }
+
+
+
   };
   var scroll = function (index) {
     setTimeout(function () {
@@ -32,6 +46,12 @@ module.exports = (function () {
   };
 
   $(window).resize(resize);
+
+  $(window).scroll(function () {
+    console.log('someone is scrolling...');
+
+  });
+
 
   return {
     resize: resize,
