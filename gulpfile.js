@@ -72,10 +72,10 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs'], function () {
     host: '0.0.0.0',
     proxies: [{
       source: '/backend/connect',
-      target: 'http://localhost:8080/backend/connect'
-    }, {source: '/backend/say', target: 'http://localhost:8080/backend/say'}, {
+      target: 'http://localhost:8880/backend/connect'
+    }, {source: '/backend/say', target: 'http://localhost:8880/backend/say'}, {
       source: '/backend/listen',
-      target: 'http://localhost:8080/backend/listen'
-    },{source: '/backend/changestate', target: 'http://localhost:8080/backend/changestate'}]
+      target: 'http://localhost:8880/backend/listen'
+    },{source: '/backend/changestate', target: 'http://localhost:8880/backend/changestate'}]
   }));
 });

@@ -166,7 +166,7 @@ public class TircRestService {
         String nick = message.getNick();
         TircLine tircLine = new TircLine(Source.TIRC);
         tircLine.setType("comment");
-        tircLine.setLine(TircMessageFormatter.formatComment(text));
+        tircLine.setLine(message.getText());
         tircLine.setNick(nick);
         tircLine.setTarget(message.getTarget());
         bus.addNewLine(tircLine);

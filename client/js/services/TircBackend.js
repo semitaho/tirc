@@ -144,7 +144,7 @@ var TircBackend = (function () {
       tircusers: tircusers,
       topic: 'tahotuskunto'
     };
-    stateobj.text = 'ploodah';
+    stateobj.text = '';
     stateobj.users = [];
     return stateobj;
   };
@@ -174,7 +174,7 @@ var TircBackend = (function () {
     getMockedData: _getMockedData,
 
 
-    say: function (nick, text, callback) {
+    say: function (nick, text, callback, htmltext) {
       var target = null;
       if (TircState.getActiveName() !== 'tirc') {
         console.log('active is: ' + TircState.getActiveName());
@@ -184,8 +184,10 @@ var TircBackend = (function () {
       var message = {
         nick: nick,
         text: text,
+        htmltext: htmltext,
         target: target
       };
+      console.log('message',message);
       $.ajax({
         type: "POST",
         url: URL + 'say',

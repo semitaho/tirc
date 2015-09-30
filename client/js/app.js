@@ -9,9 +9,14 @@ $(document).on('statechange', function (event, eventAction, data) {
 });
 
 // backend kuuntelija
-$(document).on('backendcall', function (event, method, data1, data2, callback) {
+$(document).on('backendcall', function (event, method, data1, data2, data3, callback) {
+  if (data1 && data2 && data3) {
+    console.log('data3',callback);
+    backend[method](data1, data2, data3, callback);
 
-  if (data1 && data2) {
+  }
+
+  else if (data1 && data2) {
     backend[method](data1, data2, callback);
   } else {
     backend[method](data1, callback);

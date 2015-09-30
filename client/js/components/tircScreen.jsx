@@ -15,7 +15,7 @@ module.exports = React.createClass({
     var visible = this.props.visible;
     var classStr = 'tirc_screen panel-body col-md-10 col-xs-12';
     var index = this.props.index;
-    var screenindex = 'tirc_screen_'+index;
+    var screenindex = 'tirc_screen_' + index;
 
     return <div className={classStr} id={screenindex}>{  dataall.map(function (item) {
 
@@ -27,23 +27,12 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     console.log('TircScreen: didMount');
-    var dom = $(this.getDOMNode());
-    var link = dom.find('a').not($('.embed a'));
-    var index = this.props.index;
-    if (link.length > 0) {
-      UIService.embedly(link, function () {
-        console.log('resizible index: '+index);
-        console.log('tircScreen - componentdidMount link embedly...');
-        $(document).trigger('statechange', ["setvisibility", true]);
-      });
-
-    }
-
+    $(document).trigger('statechange', ["setvisibility", true]);
   },
 
   shouldComponentUpdate: function (nextProps, nextState) {
     var props = this.props;
-    var isEqual =  _.isEqual(props, nextProps);
+    var isEqual = _.isEqual(props, nextProps);
     if (!isEqual) {
       return true;
     }
@@ -55,22 +44,8 @@ module.exports = React.createClass({
     console.log('tircScreen: on did update', this.scrolling)
     var index = prevProps.index;
     console.log('TircScreen: didUpdate');
-    console.log('resizible index update: '+index);
-    var scrolling = this.scrolling;
-    var link = $(this.getDOMNode()).find('a').not($('.embed a'));
-    if (link.length === 0) {
-      console.log('did update - link length 0');
-      Resizer.resize(index);
-    }
-    else {
-      UIService.embedly(link, function () {
-        {
-          console.log('did update - link length >  0');
-
-          Resizer.resize(index,1000);
-        }
-      });
-    }
+    console.log('resizible index update: ' + index);
+    Resizer.resize(index);
   }
 
 

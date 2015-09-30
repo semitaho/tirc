@@ -7,8 +7,15 @@ var React = require('react/addons'),
 module.exports = React.createClass({
 
   say: function () {
-   // UIService.fireBackendCall(['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
-    $(document).trigger('backendcall',['say', Config.loadUser('taho'), this.props.text, this.saysuccess]);
+    console.log('text', this.props.text);
+    var selftext = this.props.text;
+    if (UIService.hasLink(this.props.text)) {
+      UIService.embedlyText(this.props.text, function (done) {
+        $(document).trigger('backendcall', ['say', Config.loadUser('taho'), selftext, this.saysuccess, done]);
+      });
+    } else {
+      $(document).trigger('backendcall', ['say', Config.loadUser('taho'), this.props.text, this.saysuccess, this.props.text]);
+    }
     $(document).trigger('statechange', ['settext', '']);
 
 //    UIService.fireStateChange(['settext', '']);
@@ -16,6 +23,7 @@ module.exports = React.createClass({
   },
 
   saysuccess: function () {
+    console.log('success said.');
   },
 
   componentWillMount: function () {
@@ -63,7 +71,7 @@ module.exports = React.createClass({
     var previousState = this.typestate.state;
     this.typestate = {time: new Date(), state: state};
     if (state !== previousState) {
-      $(document).trigger('backendcall',['changeState', Config.loadUser(), state]);
+      $(document).trigger('backendcall', ['changeState', Config.loadUser(), state]);
     }
   },
 
@@ -73,8 +81,9 @@ module.exports = React.createClass({
   },
 
   updateText: function (event) {
+    console.log('said', event.target.value);
     $(document).trigger('statechange', ['settext', event.target.value]);
-   // UIService.fireStateChange(['settext', event.target.value]);
+    // UIService.fireStateChange(['settext', event.target.value]);
   },
   render: function () {
     return (
