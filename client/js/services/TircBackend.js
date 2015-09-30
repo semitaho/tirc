@@ -59,6 +59,7 @@ var TircBackend = (function () {
       connectdata: data.logsData,
       topic: data.topic,
       users: arr,
+      unread: 0,
       tircusers: data.tircusers
     };
     var state = {mainpanel: stateobj};

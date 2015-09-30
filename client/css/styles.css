@@ -93,30 +93,13 @@ selector {
 }
 
 .tirc_info_panel {
-    border-color: #ccc;
     overflow-y: auto;
 }
 
-.tirc_info_panel .tircuser {
-    margin-bottom: .6em;
+.guest h3.list-group-item-heading  {
+    color: white;
 }
 
-.tirc_info_panel .tircuser .nick {
-    font-size: 2em;
-}
-
-.tirc_info_panel .tircuser .nick a {
-    color: #ffffff;
-}
-
-.tirc_info_panel .guest:hover {
-    background: gray;
-    cursor: pointer;
-}
-
-.tirc_info_panel .guest .nick {
-    text-decoration: underline;
-}
 
 .tirc_info_panel .tircuser .idle {
     display: none;
@@ -581,6 +564,11 @@ a.ng-click-active {
 
 .tab.active {
     background: none repeat scroll 0 0 #4179AD;
+}
+
+.list-group-item{
+    background-color: black;
+    border: none;
 }
 
 

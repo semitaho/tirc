@@ -64,7 +64,6 @@ module.exports = React.createClass({
   },
 
   onuserclick: function (nick) {
-    console.log('on click: ' + nick);
     $(document).trigger('statechange', ['addtab', nick]);
   },
 
@@ -73,9 +72,9 @@ module.exports = React.createClass({
     var users =  this.fillIdletime(this.props.users);
     var tircusers = this.props.tircusers;
     users = users.map(function (user) {
-      return <div>
-        <div className="nick">{user.nick}</div>
-        <div className="idle small">{user.idle}</div>
+      return <div className="list-group-item">
+        <h4 className="nick list-group-item-heading">{user.nick}</h4>
+        <div className="idle small list-group-item-text">{user.idle}</div>
       </div>
     });
 
@@ -83,28 +82,28 @@ module.exports = React.createClass({
     var statemap = this.statemap;
     var that = this;
     var tircusers = tircusers.map(function (user) {
-      var clazz = 'small idle';
+      var clazz = 'small idle  list-group-item-text';
       if ('connected' === user.state) {
         clazz = 'small connected';
       } else if ('typing' === user.state || 'fixing' === user.state) {
-        clazz = 'small typing';
+        clazz = 'small typing list-group-item-text';
       }
       var current = Config.loadUser();
       var stateclass = '';
 
       if (current !== user.nick) {
-        return (<div className="tircuser guest">
-          <div className="nick" onClick={that.onuserclick.bind(that, user.nick)}
-               title="Aloita privakeskustelu">{user.nick}</div>
+        return (<a className="tircuser list-group-item guest">
+          <h3 className="nick list-group-item-heading" onClick={that.onuserclick.bind(that, user.nick)}
+               title="Aloita privakeskustelu">{user.nick}</h3>
           <div className={clazz}>{statemap[user.state]}</div>
-        </div>)
+        </a>)
       }
 
       else {
-        return (<div className="tircuser">
-          <div className="nick">{user.nick}</div>
+        return (<a className="tircuser list-group-item active">
+          <h3 className="nick list-group-item-heading">{user.nick}</h3>
           <div className={clazz}>{statemap[user.state]}</div>
-        </div>)
+        </a>)
       }
     });
 

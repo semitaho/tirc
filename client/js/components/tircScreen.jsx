@@ -67,7 +67,7 @@ module.exports = React.createClass({
         {
           console.log('did update - link length >  0');
 
-          Resizer.resize(index);
+          Resizer.resize(index,1000);
         }
       });
     }

@@ -13,7 +13,6 @@ module.exports = (function () {
       elem.scrollTop(scrollHeight);
     } else {
       setTimeout(function () {
-        console.log('in interval');
         elem = $('#tirc_screen_' + index);
         scrollHeight = elem.prop('scrollHeight');
         elem.scrollTop(scrollHeight);

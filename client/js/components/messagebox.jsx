@@ -16,7 +16,6 @@ module.exports = React.createClass({
   },
 
   saysuccess: function () {
-    console.log('success said.');
   },
 
   componentWillMount: function () {
@@ -74,7 +73,6 @@ module.exports = React.createClass({
   },
 
   updateText: function (event) {
-    console.log('said', event.target.value);
     $(document).trigger('statechange', ['settext', event.target.value]);
    // UIService.fireStateChange(['settext', event.target.value]);
   },
