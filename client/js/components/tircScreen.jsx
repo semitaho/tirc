@@ -28,6 +28,8 @@ module.exports = React.createClass({
   componentDidMount: function () {
     console.log('TircScreen: didMount');
     $(document).trigger('statechange', ["setvisibility", true]);
+    Resizer.resize(this.props.index);
+
   },
 
   shouldComponentUpdate: function (nextProps, nextState) {
@@ -46,6 +48,7 @@ module.exports = React.createClass({
     console.log('TircScreen: didUpdate');
     console.log('resizible index update: ' + index);
     Resizer.resize(index);
+
   }
 
 
