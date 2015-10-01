@@ -56,7 +56,7 @@ module.exports = React.createClass({
   componentWillUpdate: function (nextProps) {
     if (nextProps.screenloaded && !this.props.screenloaded) {
       console.log('loaded all')
-      Resizer.resize(nextProps.index, 1000);
+      Resizer.resize(nextProps.index);
     }
 
   }

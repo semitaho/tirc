@@ -14,6 +14,7 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class MongoTest {
 	
 	@Test
 	public void testFindLatestLocationsByNick(){
-		List<DBObject> findLatestLocationsByNick = mongo.findLatestLocationsByNick("taho", "Chrome");
+		List<Document> findLatestLocationsByNick = mongo.findLatestLocationsByNick("taho", "Chrome");
 		assertTrue(findLatestLocationsByNick.size() > 0);
 		System.out.println(findLatestLocationsByNick);
 		
@@ -56,17 +57,17 @@ public class MongoTest {
 	
 	@Test
 	public void testLoadConfigurationDev(){
-		BasicDBObject dbObject = mongo.loadConfiguration("dev");
+		Document dbObject = mongo.loadConfiguration("dev");
 		Assert.assertNotNull(dbObject);
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_NICK_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_HOST_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_USER_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_CHANNEL_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_JOIN_MESSAGE_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_QUIT_MESSAGE_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_INTERVAL_NAMES));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_INTERVAL_WHOIS));
-		Assert.assertTrue("server property does not exists",dbObject.containsField("host"));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_NICK_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_HOST_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_USER_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_CHANNEL_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_JOIN_MESSAGE_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_QUIT_MESSAGE_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_INTERVAL_NAMES));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_INTERVAL_WHOIS));
+		Assert.assertTrue("server property does not exists",dbObject.containsKey("host"));
 	}
 	@Test
 	public void testReadLogs(){
@@ -109,7 +110,6 @@ public class MongoTest {
 	@After
 	public void tearDown(){
 		System.out.println("deleting logs...");
-		mongo.deleteLogs(LocalDate.of(2010, 5, 13));
 		mongo.deleteLogs(LocalDate.of(2004, 11, 11));
 		System.out.println("Done.");
 
@@ -120,25 +120,25 @@ public class MongoTest {
 	
 	@Test
 	public void testLoadConfigurationProd(){
-		BasicDBObject dbObject = mongo.loadConfiguration("prod");
+		Document dbObject = mongo.loadConfiguration("prod");
 		Assert.assertNotNull(dbObject);
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_NICK_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_HOST_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_USER_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_CHANNEL_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_JOIN_MESSAGE_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_SERVER_QUIT_MESSAGE_KEY));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_INTERVAL_NAMES));
-		Assert.assertTrue(dbObject.containsField(TircConfiguration.TIRC_INTERVAL_WHOIS));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_NICK_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_HOST_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_USER_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_CHANNEL_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_JOIN_MESSAGE_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_SERVER_QUIT_MESSAGE_KEY));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_INTERVAL_NAMES));
+		Assert.assertTrue(dbObject.containsKey(TircConfiguration.TIRC_INTERVAL_WHOIS));
 
-		Assert.assertTrue("server property does not exists",dbObject.containsField("host"));
+		Assert.assertTrue("server property does not exists",dbObject.containsKey("host"));
 
 
 	}
 	
 	@Test
 	public void testLoadConfigurationNotExists(){
-		BasicDBObject dbObject = mongo.loadConfiguration("devaaa");
+		Document dbObject = mongo.loadConfiguration("devaaa");
 		Assert.assertNull(dbObject);
 	}
 	

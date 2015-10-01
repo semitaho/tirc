@@ -73,7 +73,8 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs'], function () {
     proxies: [{
       source: '/backend/connect',
       target: 'http://localhost:8880/backend/connect'
-    }, {source: '/backend/say', target: 'http://localhost:8880/backend/say'}, {
+    }, {source: '/backend/saywelcome', target: 'http://localhost:8880/backend/saywelcome'}
+      , {source: '/backend/say', target: 'http://localhost:8880/backend/say'}, {
       source: '/backend/listen',
       target: 'http://localhost:8880/backend/listen'
     },{source: '/backend/changestate', target: 'http://localhost:8880/backend/changestate'}]

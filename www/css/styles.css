@@ -194,6 +194,7 @@ selector {
 .thumbnail .caption img {
     margin-left: auto;
     margin-right: auto;
+    display: block;
 }
 
 .tirc_screen .own {

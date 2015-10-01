@@ -174,7 +174,7 @@ var TircBackend = (function () {
     getMockedData: _getMockedData,
 
 
-    say: function (nick, text, callback, htmltext) {
+    say: function (nick, text, htmltext, callback) {
       var target = null;
       if (TircState.getActiveName() !== 'tirc') {
         console.log('active is: ' + TircState.getActiveName());

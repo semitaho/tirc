@@ -21,6 +21,8 @@ public class MessageBody {
 
 	private String text;
 
+	private String htmltext;
+
 	private Location location;
 
 	public String getNickold() {
@@ -71,4 +73,12 @@ public class MessageBody {
 		this.state = state;
 	}
 
+
+	public String getHtmltext() {
+		return htmltext;
+	}
+
+	public void setHtmltext(String htmltext) {
+		this.htmltext = htmltext;
+	}
 }

@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package fi.toni.tirc.db;
+
+import static com.mongodb.client.model.Filters.*;
 
 import java.net.UnknownHostException;
 import java.time.LocalDate;
@@ -12,8 +14,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.print.Doc;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import org.apache.log4j.Logger;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.BasicDBObject;
@@ -33,164 +42,165 @@ import fi.toni.tirc.communication.TircLine;
 
 /**
  * @author taho
- *
  */
 @Service
 public class Mongo {
 
-	static Logger log = Logger.getLogger(Mongo.class);
 
-	public static final String COLLECTION_LOCATION = "location";
-	public static final String COLLECTION_LOGS = "logs";
-	public static final String COLLECTION_CONFIGURATION = "configuration";
+    static Logger log = Logger.getLogger(Mongo.class);
 
-	public static final Integer DAYS_LOGS_SUBTRACT = 2;
-	public static final Integer LOCATION_LAST_POINTS_COUNT = 30;
-	private DB tircDb;
+    public static final String COLLECTION_LOCATION = "location";
+    public static final String COLLECTION_LOGS = "logs";
+    public static final String COLLECTION_CONFIGURATION = "configuration";
 
-	private final List<String> SKIP_TYPE_LIST = Arrays
-			.asList("welcome", "quit");
+    public static final Integer DAYS_LOGS_SUBTRACT = 2;
+    public static final Integer LOCATION_LAST_POINTS_COUNT = 30;
+    private MongoDatabase tircDb;
 
-	@PostConstruct
-	public void postCreate() {
-		String textUri = "mongodb://tircuser:tirc123@ds037451.mongolab.com:37451/tirc";
-		try {
-			MongoClientURI mongoClientURI = new MongoClientURI(textUri);
-			MongoClient mongoClient = new MongoClient(mongoClientURI);
-			tircDb = mongoClient.getDB("tirc");
-		} catch (UnknownHostException e) {
-			log.error("error on post create", e);
-			throw new RuntimeException(e);
-		}
-	}
+    private final List<String> SKIP_TYPE_LIST = Arrays
+            .asList("welcome", "quit");
 
-	public List<DBObject> findLatestLocationsByNick(String nick, String browser) {
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
-		QueryBuilder builder = QueryBuilder.start("nick").is(nick);
-		DBCursor cursor = collection.find(builder.get()).sort(
-				new BasicDBObject("ts", -1));
-		java.util.List<DBObject> elems = new ArrayList<DBObject>();
+    @PostConstruct
+    public void postCreate() {
+        String textUri = "mongodb://tircuser:tirc123@ds037451.mongolab.com:37451/tirc";
+        MongoClientURI mongoClientURI = new MongoClientURI(textUri);
+        MongoClient mongoClient = new MongoClient(mongoClientURI);
+        tircDb = mongoClient.getDatabase("tirc");
 
-		while (cursor.hasNext()) {
-			elems.add(0, cursor.next());
-		}
-		return elems;
-	}
+    }
 
-	public void saveLocation(MessageBody message, String useragent) {
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
-		String nick = message.getNick();
+    public List<Document> findLatestLocationsByNick(String nick, String browser) {
 
-		Location location = message.getLocation();
-		BasicDBObject basicDBObject = new BasicDBObject("nick", nick)
-				.append("browser", useragent)
-				.append("place", location.getLocation())
-				.append("location",
-						new BasicDBObject("latitude", location.getLat())
-								.append("longitude", location.getLon()))
-				.append("ts", new Date());
-		collection.insert(basicDBObject);
-		deleteOld(nick, useragent);
-	}
+        MongoCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
+        Document query = new Document("nick", nick);
+        FindIterable<Document> it = collection.find(query).sort(
+                new Document("ts", -1));
+        java.util.List<Document> elems = new ArrayList<>();
+        MongoCursor<Document> cursor = it.iterator();
 
-	public void deleteOld(String nick, String useragent) {
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
-		QueryBuilder builder = QueryBuilder.start("nick").is(nick);
-		DBCursor cursor = collection.find(builder.get()).sort(
-				new BasicDBObject("ts", -1));
-		Integer index = 0;
-		int removed = 0;
-		while (cursor.hasNext()) {
-			index++;
-			DBObject dbobject = cursor.next();
-			if (index > LOCATION_LAST_POINTS_COUNT) {
-				collection.remove(dbobject, WriteConcern.UNACKNOWLEDGED);
-				removed++;
-			}
-		}
-		log.debug("DONE removing items: " + removed);
-	}
+        while (cursor.hasNext()) {
+            elems.add(0, cursor.next());
+        }
+        return elems;
+    }
 
-	public List<TircLine> readLogs(LocalDate date) {
+    public void saveLocation(MessageBody message, String useragent) {
+        MongoCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
+        String nick = message.getNick();
 
-		List<TircLine> lines = new ArrayList<TircLine>();
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOGS);
+        Location location = message.getLocation();
+        Document basicDBObject = new Document("nick", nick)
+                .append("browser", useragent)
+                .append("place", location.getLocation())
+                .append("location",
+                        new BasicDBObject("latitude", location.getLat())
+                                .append("longitude", location.getLon()))
+                .append("ts", new Date());
+        collection.insertOne(basicDBObject);
+        deleteOld(nick, useragent);
+    }
 
-		DBObject dbQueryObject = QueryBuilder.start("datetime").greaterThanEquals(TircUtil.localDateToDate(date)).lessThan(TircUtil.localDateToDate(date.plusDays(1))).get();
-		DBCursor cursor = collection.find(dbQueryObject)
-				.sort(new BasicDBObject("datetime", 1));
-		while (cursor.hasNext()) {
-			BasicDBObject dbObject = (BasicDBObject) cursor.next();
-			if (SKIP_TYPE_LIST.contains(dbObject.getString("type"))) {
-				continue;
-			}
-			TircLine tircLine = TircUtil.mapToTircLine(dbObject);
-			lines.add(tircLine);
-		}
-		return lines;
-	}
-	
-	/**
-	 * Lukee logit
-	 * @return
-	 */
-	public List<TircLine> readLogs() {
+    public void deleteOld(String nick, String useragent) {
+        MongoCollection collection = tircDb.getCollection(COLLECTION_LOCATION);
+        Document doc = new Document("nick", nick);
+        FindIterable<Document> fi = collection.find(doc).sort(
+                new Document("ts", -1));
+        Integer index = 0;
+        int removed = 0;
+        MongoCursor<Document> cursor = fi.iterator();
+        while (cursor.hasNext()) {
+            index++;
 
-		List<TircLine> lines = new ArrayList<TircLine>();
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOGS);
-		Calendar cal = Calendar.getInstance();
-		Calendar cal2 = Calendar.getInstance(); 
-		cal2.add(Calendar.DATE, -DAYS_LOGS_SUBTRACT);
+            Document dbobject = cursor.next();
+            if (index > LOCATION_LAST_POINTS_COUNT) {
+                collection.deleteOne(dbobject);
+                removed++;
+            }
+        }
 
-		DBObject dbQueryObject = QueryBuilder.start("datetime").greaterThanEquals(cal2.getTime()).lessThanEquals(cal.getTime()).get();
-		DBCursor cursor = collection.find(dbQueryObject)
-				.sort(new BasicDBObject("datetime", 1));
-		while (cursor.hasNext()) {
-			BasicDBObject dbObject = (BasicDBObject) cursor.next();
-			if (SKIP_TYPE_LIST.contains(dbObject.getString("type"))) {
-				continue;
-			}
-			TircLine tircLine = TircUtil.mapToTircLine(dbObject);
-			lines.add(tircLine);
-		}
-		log.debug("got log lines: " + lines.size());
-		return lines;
-	}
+        log.debug("DONE removing items: " + removed);
+    }
 
-	public void deleteLogs(LocalDate day) {
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOGS);
-		
-		DBObject dbQueryObject = QueryBuilder.start("datetime").greaterThanEquals(TircUtil.localDateToDate(day)).lessThan(TircUtil.localDateToDate(day.plusDays(1))).get();
+    public List<TircLine> readLogs(LocalDate date) {
 
-		DBCursor cursor = collection.find(dbQueryObject);
-		while (cursor.hasNext()) {
-			DBObject next = cursor.next();
-			collection.remove(next, WriteConcern.UNACKNOWLEDGED);
-		}
-	}
-	
+        List<TircLine> lines = new ArrayList<TircLine>();
+        MongoCollection collection = tircDb.getCollection(COLLECTION_LOGS);
 
-	public void storeLogs(List<TircLine> lines) {
-		DBCollection collection = tircDb.getCollection(COLLECTION_LOGS);
-		List<DBObject> objectsInserting = new ArrayList<DBObject>();
-		for (TircLine tircline : lines) {
-			if (SKIP_TYPE_LIST.contains(tircline.getType())) {
-				continue;
-			}
-			if (tircline.getTarget() != null){
-				continue;
-			}
+        Bson criteria = and(gte("datetime", TircUtil.localDateToDate(date)), lt("datetime", TircUtil.localDateToDate(date.plusDays(1))));
 
-			objectsInserting.add(TircUtil.mapToDBModel(tircline));
-		}
-		collection.insert(objectsInserting);
-	}
+        FindIterable<Document> iterable = collection.find(criteria)
+                .sort(new Document("datetime", 1));
+        MongoCursor<Document> cursor = iterable.iterator();
+        while (cursor.hasNext()) {
+            Document dbObject = (Document) cursor.next();
+            if (SKIP_TYPE_LIST.contains(dbObject.getString("type"))) {
+                continue;
+            }
+            TircLine tircLine = TircUtil.mapToTircLine(dbObject);
+            lines.add(tircLine);
+        }
+        return lines;
+    }
 
-	public BasicDBObject loadConfiguration(String env) {
-		DBCollection collection = tircDb
-				.getCollection(COLLECTION_CONFIGURATION);
-		BasicDBObject dbObject = (BasicDBObject) collection
-				.findOne(new BasicDBObject("_id", env));
-		return dbObject;
-	}
+    /**
+     * Lukee logit
+     *
+     * @return
+     */
+    public List<TircLine> readLogs() {
+
+        List<TircLine> lines = new ArrayList<TircLine>();
+        MongoCollection<Document> collection = tircDb.getCollection(COLLECTION_LOGS);
+
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.DATE, -DAYS_LOGS_SUBTRACT);
+
+        DBObject dbQueryObject = QueryBuilder.start("datetime").greaterThanEquals(cal2.getTime()).lessThanEquals(cal.getTime()).get();
+
+        FindIterable<Document> iterables = collection.find(and(gte("datetime", cal2.getTime()), lte("datetime", cal.getTime())));
+        MongoCursor<Document> cursor = iterables.iterator();
+
+        while (cursor.hasNext()) {
+            Document dbObject = (Document) cursor.next();
+            if (SKIP_TYPE_LIST.contains(dbObject.getString("type"))) {
+                continue;
+            }
+            TircLine tircLine = TircUtil.mapToTircLine(dbObject);
+            lines.add(tircLine);
+        }
+        log.debug("got log lines: " + lines.size());
+        return lines;
+    }
+
+    public void deleteLogs(LocalDate day) {
+        MongoCollection<Document> collection = tircDb.getCollection(COLLECTION_LOGS);
+        collection.deleteMany(and(gte("datetime", TircUtil.localDateToDate(day)), lt("datetime", TircUtil.localDateToDate(day.plusDays(1)))));
+    }
+
+
+    public void storeLogs(List<TircLine> lines) {
+        MongoCollection<Document> collection = tircDb.getCollection(COLLECTION_LOGS);
+        List<Document> objectsInserting = new ArrayList<>();
+        for (TircLine tircline : lines) {
+            if (SKIP_TYPE_LIST.contains(tircline.getType())) {
+                continue;
+            }
+            if (tircline.getTarget() != null) {
+                continue;
+            }
+
+            objectsInserting.add(TircUtil.mapToDBModel(tircline));
+        }
+
+        collection.insertMany(objectsInserting);
+    }
+
+    public Document loadConfiguration(String env) {
+        MongoCollection<Document> collection = tircDb
+                .getCollection(COLLECTION_CONFIGURATION);
+        Document doc = collection.find(eq("_id", env)).first();
+        return doc;
+
+    }
 }

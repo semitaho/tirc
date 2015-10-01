@@ -8,13 +8,14 @@ module.exports = React.createClass({
 
   say: function () {
     console.log('text', this.props.text);
+    var self = this;
     var selftext = this.props.text;
     if (UIService.hasLink(this.props.text)) {
       UIService.embedlyText(this.props.text, function (done) {
-        $(document).trigger('backendcall', ['say', Config.loadUser('taho'), selftext, this.saysuccess, done]);
+        $(document).trigger('backendcall', ['say', Config.loadUser('taho'), selftext,  done,self.saysuccess]);
       });
     } else {
-      $(document).trigger('backendcall', ['say', Config.loadUser('taho'), this.props.text, this.saysuccess, this.props.text]);
+      $(document).trigger('backendcall', ['say', Config.loadUser('taho'), this.props.text,  this.props.text,this.saysuccess]);
     }
     $(document).trigger('statechange', ['settext', '']);
 

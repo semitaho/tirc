@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import fi.toni.tirc.dto.MessageBody;
 import fi.toni.tirc.dto.TircType;
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -166,7 +167,7 @@ public class TircRestService {
         String nick = message.getNick();
         TircLine tircLine = new TircLine(Source.TIRC);
         tircLine.setType("comment");
-        tircLine.setLine(message.getText());
+        tircLine.setLine(message.getHtmltext());
         tircLine.setNick(nick);
         tircLine.setTarget(message.getTarget());
         bus.addNewLine(tircLine);
@@ -184,9 +185,9 @@ public class TircRestService {
         log.debug("current location: " + location);
         String browser = TircUtil.resolveUserAgent(request);
         db.saveLocation(message, browser);
-        List<DBObject> locations = db.findLatestLocationsByNick(nick, browser);
+        List<Document> locations = db.findLatestLocationsByNick(nick, browser);
         TircLine line = TircMessageParser.parseArrived(locations);
-        String formattedLine = TircMessageFormatter.formatComment(line.getLine());
+        String formattedLine = TircMessageFormatter.formatImage(line.getLine());
         String lineStr = line.getLine();
         line.setLine(formattedLine);
         bus.addNewLine(line);

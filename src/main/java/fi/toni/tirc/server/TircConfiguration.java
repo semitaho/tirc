@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.apache.log4j.Logger;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +32,7 @@ public class TircConfiguration {
 
 	private String configuration;
 	
-	private BasicDBObject configurationModel;
+	private Document configurationModel;
 
 	@Autowired
 	private Mongo mongo;
