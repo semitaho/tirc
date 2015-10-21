@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import fi.toni.tirc.dto.MessageBody;
 import fi.toni.tirc.dto.TircType;
+import org.apache.http.protocol.HTTP;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,11 @@ public class TircRestService {
 
     }
 
-    @RequestMapping("/connect/{nick}")
-    public TircConnectData connect(@PathVariable String nick) {
+    @RequestMapping(value = "/connect", method = RequestMethod.POST)
+    public TircConnectData connect(HttpServletRequest request,
+                                   @RequestBody MessageBody message) {
 
+        String nick = message.getNick();
         bus.registerWithNick(nick);
         //
         TircConnectData connectData = new TircConnectData();
@@ -81,6 +84,10 @@ public class TircRestService {
         connectData.setLogsData(dayChangeStartLogs);
         // haetaan vain #test1-data connectiin
         List<TircLine> test1Data = bus.getCurrentLines();
+        if (message.getLocation() != null) {
+            TircLine locationLine = handleLocation(request, message);
+            test1Data.add(locationLine);
+        }
         connectData.setCurrentData(test1Data);
         connectData.setId(TircIdGenerator.generateId());
         connectData.setUsers(bus.getIrcUsers());
@@ -92,6 +99,23 @@ public class TircRestService {
         TircLine tircLine = TircUtil.mapToJoinLine(nick);
         bus.addNewLine(tircLine);
         return connectData;
+    }
+
+
+    private TircLine handleLocation(HttpServletRequest request, MessageBody message) {
+        String location = message.getLocation().getLocation();
+        String nick = message.getNick();
+        log.debug("current location: " + location);
+        String browser = TircUtil.resolveUserAgent(request);
+        db.saveLocation(message, browser);
+        List<Document> locations = db.findLatestLocationsByNick(nick, browser);
+        TircLine line = TircMessageParser.parseArrived(locations);
+        String formattedLine = TircMessageFormatter.formatImage(line.getLine());
+        String lineStr = line.getLine();
+        line.setLine(formattedLine);
+        bus.addNewLine(line);
+        cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION saapui paikalle nickillä " + nick + " " + lineStr);
+        return line;
     }
 
     @RequestMapping("/changestate")
@@ -177,22 +201,6 @@ public class TircRestService {
         }
     }
 
-    @RequestMapping(value = "/saywelcome", method = RequestMethod.POST)
-    public void sayWelcome(HttpServletRequest request,
-                           @RequestBody MessageBody message) {
-        String location = message.getLocation().getLocation();
-        String nick = message.getNick();
-        log.debug("current location: " + location);
-        String browser = TircUtil.resolveUserAgent(request);
-        db.saveLocation(message, browser);
-        List<Document> locations = db.findLatestLocationsByNick(nick, browser);
-        TircLine line = TircMessageParser.parseArrived(locations);
-        String formattedLine = TircMessageFormatter.formatImage(line.getLine());
-        String lineStr = line.getLine();
-        line.setLine(formattedLine);
-        bus.addNewLine(line);
-        cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION saapui paikalle nickillä " + nick + " " + lineStr);
-    }
 
     @RequestMapping(value = "/saygoodbye", method = RequestMethod.POST)
     public void sayGoodbye(@RequestBody MessageBody message) {

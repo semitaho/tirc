@@ -1,6 +1,7 @@
 var React = require('react/addons'),
   Tirc = require('./components/tirc.jsx'),
-  Config = require('./services/ConfigService.js');
+  Config = require('./services/ConfigService.js'),
+  Spinner = require('./components/spinner.jsx');
 
 
 module.exports = (function () {
@@ -83,6 +84,12 @@ module.exports = (function () {
 
     },
 
+    initload: function (load) {
+      console.log('valueis'+load);
+      _state.loading = load;
+
+    },
+
     settopic: function (data) {
       _state.tabs[0].mainpanel.topic = data;
     },
@@ -130,6 +137,8 @@ module.exports = (function () {
       _state.users = [];
 
       _state.active = _state.tabs[0];
+
+      _state.loading = false;
       load();
     },
 

@@ -73,7 +73,7 @@ module.exports = React.createClass({
 
 
   rendercomment: function (item) {
-    var textrowstyle = 'row comment';
+    var textrowstyle = 'row comment textrow';
     if (item.nick === Config.loadUser('taho')) {
       textrowstyle += ' own';
     }
@@ -95,7 +95,7 @@ module.exports = React.createClass({
 
   renderme: function (item) {
     return ( <div
-      className="row">
+      className="row textrow">
       <div
         className="action"
         dangerouslySetInnerHTML={
@@ -109,7 +109,7 @@ module.exports = React.createClass({
 
   renderwelcome: function (item) {
     return ( <div
-        className="row">
+        className="row textrow">
         <div
           className="action col-md-12"
           dangerouslySetInnerHTML={
@@ -124,7 +124,7 @@ module.exports = React.createClass({
 
   renderaction: function (item) {
     return ( <div
-        className="row">
+        className="row textrow">
         <div
           className="star bg-warning col-md-12"
           dangerouslySetInnerHTML={
@@ -139,7 +139,7 @@ module.exports = React.createClass({
 
   renderquit: function (item) {
     return ( <div
-        className="row">
+        className="row textrow">
         <div
           className="bg-danger col-md-12 quit"> {item.nick} poistui
           kokonaan
@@ -154,7 +154,7 @@ module.exports = React.createClass({
   },
   renderjoin: function (item) {
     return ( <div
-        className="row">
+        className="row textrow">
         <div
           className="col-md-12 bg-info quit">{item.nick} saapui kanavalle - {item.time}</div>
 
@@ -164,7 +164,7 @@ module.exports = React.createClass({
 
   renderpart: function (item) {
     return ( <div
-        className="row">
+        className="row textrow">
         <div className="bg-warning col-md-12 quit"> {item.nick} jätti kanavan - {item.time}</div>
       </div>
     )
@@ -178,7 +178,7 @@ module.exports = React.createClass({
     }
     return (
       <div
-        className="action"> {this.props.elem
+        className="action textrow"> {this.props.elem
       }
             <span
               className="time"> -{this.props.time
@@ -190,7 +190,7 @@ module.exports = React.createClass({
   renderlogevent: function (item) {
     return (
       <div
-        className="row logevent alert alert-warning"><div className="col-md-12">{item.line
+        className="textrow row logevent alert alert-warning"><div className="col-md-12">{item.line
       }</div>
       </div> );
   }

@@ -9,6 +9,7 @@ var browserify = require('gulp-browserify'),
 var webrootdir = 'www';
 var htmlfiles = 'client/**/*.html';
 var cssfiles = 'client/css/**/*.css';
+var imagefiles = 'client/images/*';
 var jsfiles = 'client/js/**/*.js';
 var jsxfiles = 'client/js/**/*.jsx';
 
@@ -47,6 +48,12 @@ gulp.task('copycss', function () {
 
 });
 
+gulp.task('copyimages', function () {
+  return gulp.src(imagefiles).
+    pipe(gulp.dest(webrootdir + '/images'));
+
+});
+
 gulp.task('test', function () {
   return gulp.src('client/tests')
     .pipe(jest({
@@ -59,7 +66,7 @@ gulp.task('test', function () {
 
 });
 
-gulp.task('default', ['copyhtml', 'copycss', 'compilejs'], function () {
+gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyimages'], function () {
 
   gulp.watch(htmlfiles, ['copyhtml']);
   gulp.watch(cssfiles, ['copycss']);

@@ -151,18 +151,14 @@ public class Mongo {
 
         List<TircLine> lines = new ArrayList<TircLine>();
         MongoCollection<Document> collection = tircDb.getCollection(COLLECTION_LOGS);
-
-        Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         cal2.add(Calendar.DATE, -DAYS_LOGS_SUBTRACT);
-
-        DBObject dbQueryObject = QueryBuilder.start("datetime").greaterThanEquals(cal2.getTime()).lessThanEquals(cal.getTime()).get();
-
-        FindIterable<Document> iterables = collection.find(and(gte("datetime", cal2.getTime()), lte("datetime", cal.getTime())));
+        FindIterable<Document> iterables = collection.find(gte("datetime", cal2.getTime())).sort(new Document("datetime", 1));
         MongoCursor<Document> cursor = iterables.iterator();
 
         while (cursor.hasNext()) {
             Document dbObject = (Document) cursor.next();
+            System.out.println(dbObject);
             if (SKIP_TYPE_LIST.contains(dbObject.getString("type"))) {
                 continue;
             }

@@ -8,6 +8,7 @@ module.exports = React.createClass({
     var newnick = event.target.value;
     Config.saveUser(event.target.value);
     $(document).trigger('statechange', ['setnick', newnick]);
+    $(document).trigger('backendcall', ['changeNick', oldnick, newnick]);
     TircBackend.changeNick(oldnick, newnick);
   },
 

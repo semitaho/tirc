@@ -11,7 +11,7 @@ $(document).on('statechange', function (event, eventAction, data) {
 // backend kuuntelija
 $(document).on('backendcall', function (event, method, data1, data2, data3, callback) {
   if (data1 && data2 && data3) {
-    console.log('data3',callback);
+    console.log('data3', callback);
     backend[method](data1, data2, data3, callback);
 
   }
@@ -23,15 +23,15 @@ $(document).on('backendcall', function (event, method, data1, data2, data3, call
 
   }
 });
+$(document).trigger('statechange', ['initload', true]);
 
-backend.connect(config.loadUser(), function () {
-  geoservice.init(function (location) {
-    backend.sayWelcome(config.loadUser(), location, function () {
-      geoservice.watch(function (locationUpdated) {
-        backend.updateLocation(config.loadUser(), locationUpdated);
-      });
-    });
+geoservice.init()
+  .then(geoservice.reverseGeocode)
+  .then(function (location) {
+    return backend.connect(config.loadUser(), location);
+  }).catch(function (err) {
+    console.log('on err', err);
+    return backend.connect(config.loadUser());
   });
-});
 
 

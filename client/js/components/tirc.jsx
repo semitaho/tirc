@@ -2,7 +2,9 @@ var React = require('react/addons'),
   Tabheader = require('./tabheader.jsx'),
   Userselect = require('./userselect.jsx'),
   Mainpanel = require('./mainpanel.jsx'),
-  Messagebox = require('./messagebox.jsx');
+  Messagebox = require('./messagebox.jsx'),
+  Resizer = require('../resize.js'),
+  Spinner = require('./spinner.jsx');
 
 module.exports = React.createClass({
 
@@ -11,6 +13,9 @@ module.exports = React.createClass({
     var tabs = this.props.data.tabs;
     var tircdata = this.props.data;
     var tabactive = tircdata.active;
+    if (this.props.data.loading && this.props.data.loading === true) {
+      return <Spinner  />
+    }
 
 
     var tabcontent = function (data, id) {
@@ -22,10 +27,13 @@ module.exports = React.createClass({
       }
       var actionpanelId = 'action_panel_' + id;
       return (
+
         <div className={className}>
-          <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded} tircusers={data.mainpanel.tircusers}
+          <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded}
+                     tircusers={data.mainpanel.tircusers}
                      visible={isVisible} users={data.mainpanel.users}
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
+
           <div className="tirc_action_panel row" id={actionpanelId}>
             <Messagebox text={data.text}/>
           </div>
@@ -35,6 +43,8 @@ module.exports = React.createClass({
 
     return (
       <div className="tirc_content">
+        <Spinner fadeout={true} />
+
         <div>
           <header className="row tirc_header_panel">
             <Tabheader items={tabs} selected={tabactive.name}/>
@@ -44,6 +54,9 @@ module.exports = React.createClass({
         {tabs.map(tabcontent) }
       </div>)
 
+  },
+  componentDidMount(){
+    console.log('tirc - doowing resize');
   }
 
 

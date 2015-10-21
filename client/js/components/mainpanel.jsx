@@ -2,7 +2,9 @@ var React = require('react/addons'),
   TopicPanel = require('./topicPanel.jsx'),
   TircScreen = require('./tircScreen.jsx'),
   Nickpanel = require('./nickpanel.jsx'),
-  Resizer = require('../resize.js');
+  GeoService = require('../services/GeoService.js'),
+  TircBackend = require('../services/TircBackend.js'),
+  Config = require('../services/ConfigService.js');
 module.exports = React.createClass({
 
   componentDidMount: function () {
@@ -12,15 +14,8 @@ module.exports = React.createClass({
 
   destroy: function () {
     GeoService.unwatch();
-    TircBackend.sayGoodbye(Config.loadUser('taho'));
+    $(document).trigger('backendcall', ['sayGoodbye', Config.loadUser('taho')]);
   },
-
-
-  onconnecterror: function (err) {
-    console.log('error:' + JSON.stringify(err));
-    this.produceMockdata();
-  },
-
 
   render: function () {
     this.props.tircusers.sort(function (user1, user2) {
@@ -28,36 +23,20 @@ module.exports = React.createClass({
     });
     var index = this.props.index;
     var idindex = 'tirc_main_panel_middle_' + index;
-
-    var visible = this.props.visible;
-    var clazz = 'tirc_main  panel-default hidden';
-    var screenloaded = this.props.screenloaded;
-    if (screenloaded) {
-      clazz = 'tirc_main panel-default';
-
-    }
-
-
+    var clazz = 'tirc_main panel-default';
     return (
       <div className={clazz}>
 
         <TopicPanel topic={this.props.topic} index={index}/>
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
-          <TircScreen index={index} visible={visible} connectdata={this.props.connectdata}
+          <TircScreen index={index} connectdata={this.props.connectdata}
                       currentdata={this.props.currentdata}/>
           <Nickpanel users={this.props.users} tircusers={this.props.tircusers}/>
         </div>
 
       </div>
     )
-
-  },
-  componentWillUpdate: function (nextProps) {
-    if (nextProps.screenloaded && !this.props.screenloaded) {
-      console.log('loaded all')
-      Resizer.resize(nextProps.index);
-    }
 
   }
 });

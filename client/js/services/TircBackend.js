@@ -51,7 +51,7 @@ var TircBackend = (function () {
 
   };
 
-  var onconnectsuccess = function (data, callback) {
+  var onconnectsuccess = function (data) {
     var arr = Parser.formatusers(data.users.users);
     console.log('connecting with data:' + data);
     var stateobj = {
@@ -66,9 +66,6 @@ var TircBackend = (function () {
 
     TircState.onstatechange(TircState.setconnectdata, state);
     TircBackend.listen(data.id, onmessage, onlistenerror);
-    if (callback) {
-      callback();
-    }
   };
 
 
@@ -162,13 +159,31 @@ var TircBackend = (function () {
     },
 
 
-    connect: function (nick, success) {
-      $.ajax({
-        url: URL + 'connect/' + nick,
-        type: "GET"
-      }).done(function (data) {
-        onconnectsuccess(data, success);
-      }).error(onconnecterror);
+    connect: function (nick, location) {
+      var message = {
+        nick: nick
+      };
+      if (location !== null && location !== undefined) {
+        message.location = location;
+      }
+
+      return new Promise(function (resolve) {
+        $.ajax({
+          url: URL + 'connect',
+          type: "POST",
+          contentType: 'application/json;charset=UTF-8',
+          data: JSON.stringify(message)
+        }).done(function (data) {
+          onconnectsuccess(data);
+          resolve("ok");
+        }).error(function (status) {
+          console.log("bad data, but still ok", status.statusText);
+          onconnecterror();
+          resolve("ok");
+        });
+      });
+
+
     },
 
     getMockedData: _getMockedData,
@@ -187,7 +202,7 @@ var TircBackend = (function () {
         htmltext: htmltext,
         target: target
       };
-      console.log('message',message);
+      console.log('message', message);
       $.ajax({
         type: "POST",
         url: URL + 'say',

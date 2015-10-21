@@ -2,15 +2,15 @@ var $ = require('jquery');
 module.exports = (function () {
 
   var doScroll = function (index, interval) {
-    var elem = $('#tirc_screen_' + index);
-    elem.scroll(function (ee) {
 
-    });
+    var elem = $('#tirc_screen_' + index);
+
     var height = $('#tirc_screen_' + index).height();
     var scrollHeight = elem.prop('scrollHeight');
 
     if (!interval) {
-      elem.scrollTop(scrollHeight);
+      console.log('no intervall...');
+      elem.scrollTop(scrollHeight)
     } else {
       setTimeout(function () {
         elem = $('#tirc_screen_' + index);

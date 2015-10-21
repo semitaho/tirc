@@ -12,7 +12,6 @@ module.exports = React.createClass({
 
     var dataall = this.props.connectdata.concat(this.props.currentdata);
     var id = 0;
-    var visible = this.props.visible;
     var classStr = 'tirc_screen panel-body col-md-10 col-xs-12';
     var index = this.props.index;
     var screenindex = 'tirc_screen_' + index;
@@ -27,9 +26,7 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     console.log('TircScreen: didMount');
-    $(document).trigger('statechange', ["setvisibility", true]);
-    Resizer.resize(this.props.index);
-
+    Resizer.resize(this.props.index, 700);
   },
 
   shouldComponentUpdate: function (nextProps, nextState) {
@@ -47,6 +44,7 @@ module.exports = React.createClass({
     var index = prevProps.index;
     console.log('TircScreen: didUpdate');
     console.log('resizible index update: ' + index);
+
     Resizer.resize(index);
 
   }
