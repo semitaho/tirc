@@ -2,9 +2,8 @@ var React = require('react/addons'),
   TopicPanel = require('./topicPanel.jsx'),
   TircScreen = require('./tircScreen.jsx'),
   Nickpanel = require('./nickpanel.jsx'),
-  GeoService = require('../services/GeoService.js'),
-  TircBackend = require('../services/TircBackend.js'),
-  Config = require('../services/ConfigService.js');
+  TircBackend = require('../services/TircBackend.js');
+
 module.exports = React.createClass({
 
   componentDidMount: function () {

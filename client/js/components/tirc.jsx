@@ -4,6 +4,8 @@ var React = require('react/addons'),
   Mainpanel = require('./mainpanel.jsx'),
   Messagebox = require('./messagebox.jsx'),
   Resizer = require('../resize.js'),
+  Config = require('../services/ConfigService.js'),
+  GeoService = require('../services/GeoService.js'),
   Spinner = require('./spinner.jsx');
 
 module.exports = React.createClass({

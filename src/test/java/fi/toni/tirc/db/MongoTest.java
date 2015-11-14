@@ -53,7 +53,7 @@ public class MongoTest {
 
     @Test
     public void testDeleteOld() {
-        mongo.deleteOld("taho", "Chrome, Mobiili");
+        mongo.deleteOld("taho");
     }
 
     @Test
