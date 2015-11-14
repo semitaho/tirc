@@ -9,12 +9,6 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     console.log('mainScreen - mounted');
-    $(window).unload(this.destroy);
-  },
-
-  destroy: function () {
-    GeoService.unwatch();
-    $(document).trigger('backendcall', ['sayGoodbye', Config.loadUser('taho')]);
   },
 
   render: function () {

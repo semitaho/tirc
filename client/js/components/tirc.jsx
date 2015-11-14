@@ -8,6 +8,10 @@ var React = require('react/addons'),
 
 module.exports = React.createClass({
 
+  destroy: function () {
+    GeoService.unwatch();
+    $(document).trigger('backendcall', ['sayGoodbye', Config.loadUser('taho')]);
+  },
 
   render: function () {
     var tabs = this.props.data.tabs;
@@ -16,7 +20,6 @@ module.exports = React.createClass({
     if (this.props.data.loading && this.props.data.loading === true) {
       return <Spinner  />
     }
-
 
     var tabcontent = function (data, id) {
       var isVisible = false;
@@ -43,7 +46,7 @@ module.exports = React.createClass({
 
     return (
       <div className="tirc_content">
-        <Spinner fadeout={true} />
+        <Spinner fadeout={true}/>
 
         <div>
           <header className="row tirc_header_panel">
@@ -57,8 +60,8 @@ module.exports = React.createClass({
   },
   componentDidMount(){
     console.log('tirc - doowing resize');
+    $(window).unload(this.destroy);
   }
-
 
 });
 
