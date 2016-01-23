@@ -1,10 +1,11 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
 require('harmonize')();
+var babelify = require("babelify");
+var source = require('vinyl-source-stream');
 
-var react = require('gulp-react');
 var watchfiles = 'client/*.jade';
-var browserify = require('gulp-browserify'),
+var browserify = require('browserify'),
   jest = require('gulp-jest');
 var webrootdir = 'www';
 var htmlfiles = 'client/**/*.html';
@@ -14,7 +15,6 @@ var jsfiles = 'client/js/**/*.js';
 var jsxfiles = 'client/js/**/*.jsx';
 
 var mainjsfile = 'client/js/app.js';
-var reactify = require('reactify');
 
 gulp.task('templates', function () {
   var YOUR_LOCALS = {};
@@ -36,11 +36,16 @@ gulp.task('copyhtml', function () {
 });
 
 gulp.task('compilejs', function () {
-  return gulp.src(mainjsfile)
-    .pipe(browserify({transform: reactify, debug: true}))
-    .pipe(gulp.dest(webrootdir + '/js'));
+  return browserify({
+    entries:  mainjsfile,
+    extensions: ['.js', '.jsx'],
+    debug: true
+  })
+    .transform(babelify, {presets: ['es2015', 'react']})
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(gulp.dest('www/js'));
 });
-
 
 gulp.task('copycss', function () {
   return gulp.src(cssfiles).
@@ -71,6 +76,7 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyimages'], functio
   gulp.watch(htmlfiles, ['copyhtml']);
   gulp.watch(cssfiles, ['copycss']);
   gulp.watch([jsfiles, jsxfiles], ['compilejs']);
+  var TARGET_URL = "http://localhost:8880";
 
   gulp.src(webrootdir).pipe(webserver({
     livereload: true,
@@ -79,11 +85,11 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyimages'], functio
     host: '0.0.0.0',
     proxies: [{
       source: '/backend/connect',
-      target: 'http://localhost:8880/backend/connect'
-    }, {source: '/backend/saywelcome', target: 'http://localhost:8880/backend/saywelcome'}
-      , {source: '/backend/say', target: 'http://localhost:8880/backend/say'}, {
-      source: '/backend/listen',
-      target: 'http://localhost:8880/backend/listen'
-    },{source: '/backend/changestate', target: 'http://localhost:8880/backend/changestate'}]
+      target: TARGET_URL + '/backend/connect'
+    }, {source: '/backend/saywelcome', target: TARGET_URL + '/backend/saywelcome'}
+      , {source: '/backend/say', target: TARGET_URL + '/backend/say'}, {
+        source: '/backend/listen',
+        target: TARGET_URL + '/backend/listen'
+      }, {source: '/backend/changestate', target: TARGET_URL + '/backend/changestate'}]
   }));
 });
