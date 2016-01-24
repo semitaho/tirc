@@ -31,8 +31,16 @@ const initTabState = [
 export default function tabsreducer(state=[], action){
 
   switch (action.type){
+    case 'RECEIVE_TOPIC':
+      let newmainpanel = Object.assign({}, state[0].mainpanel, {
+        topic: action.topic
+      });
+      let newmain = Object.assign({},state[0], {
+        mainpanel: newmainpanel
+      });
+      return [newmain, ...state.slice(1)];
+
     case 'RECEIVE_SERVER_DATA':
-      console.log('jmm', state[0]);
       return [...state.slice(0,0),
       Object.assign({}, state[0], {
         name: 'tirc',
