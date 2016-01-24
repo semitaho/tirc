@@ -1,4 +1,4 @@
-describe('UIService tests', function () {
+describe('UIService tests', () =>  {
   var jsFilesPath = '../../../js', uiService;
 
   beforeEach(function () {

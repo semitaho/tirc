@@ -67,8 +67,8 @@ gulp.task('copyimages', function () {
 gulp.task('test', function () {
   return gulp.src('client/tests')
     .pipe(jest({
-      scriptPreprocessor: 'preprocessor.js',
-      testDirectoryName: 'spec',
+      scriptPreprocessor: 'client/tests/preprocessor.js',
+      testDirectoryName: 'spec/reducers',
       modulePathIgnorePatterns: [],
       unmockedModulePathPatterns: ["react", "jquery", "components", "services", '../../node_modules', 'ReactUpdates'],
       moduleFileExtensions: ['js', 'jsx', 'json', 'react']
