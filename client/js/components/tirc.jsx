@@ -10,7 +10,7 @@ var React = require('react'),
 
 import { connect } from 'react-redux';
 
-import {connectBackend} from './../actions/tircactions.js';
+import {connectBackend, updateText} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
   destroy() {
@@ -40,7 +40,7 @@ class Tirc extends React.Component {
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox {...data.messagebox} />
+            <Messagebox {...data.messagebox} updateText={(id,text) => dispatch(updateText(id,text))} />
           </div>
         </div>
       )

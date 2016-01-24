@@ -11,9 +11,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    this.props.tircusers.sort(function (user1, user2) {
-      return user2.time - user1.time;
-    });
+    this.props.tircusers.sort((user1, user2) => user2.time - user1.time);
     var index = this.props.index;
     var idindex = 'tirc_main_panel_middle_' + index;
     var clazz = 'tirc_main panel-default';

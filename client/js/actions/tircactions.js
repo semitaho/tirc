@@ -23,6 +23,15 @@ function formatReceiveData(data){
   return data;
 }
 
+export function updateText(index,text){
+  return {
+    type: 'UPDATE_TEXT',
+    index,
+    text
+
+  };
+}
+
 export function connectBackend(user){
   return dispatch => {
     console.log('connceting to backend', user);

@@ -83,8 +83,7 @@ module.exports = React.createClass({
 
   updateText: function (event) {
     console.log('said', event.target.value);
-    $(document).trigger('statechange', ['settext', event.target.value]);
-    // UIService.fireStateChange(['settext', event.target.value]);
+    this.props.updateText(event.target.value);
   },
   render: function () {
     console.log('text', this.props.text);
