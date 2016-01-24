@@ -13,7 +13,7 @@ var cssfiles = 'client/css/**/*.css';
 var imagefiles = 'client/images/*';
 var jsfiles = 'client/js/**/*.js';
 var jsxfiles = 'client/js/**/*.jsx';
-
+var jsvendorfiles = 'client/js/vendor/**';
 var mainjsfile = 'client/js/app.js';
 
 gulp.task('templates', function () {
@@ -47,6 +47,11 @@ gulp.task('compilejs', function () {
     .pipe(gulp.dest('www/js'));
 });
 
+gulp.task('copyjs', function(){
+  return gulp.src(jsvendorfiles)
+    .pipe(gulp.dest(webrootdir+'/js/vendor'));
+});
+
 gulp.task('copycss', function () {
   return gulp.src(cssfiles).
     pipe(gulp.dest(webrootdir + '/css'));
@@ -71,7 +76,7 @@ gulp.task('test', function () {
 
 });
 
-gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyimages'], function () {
+gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyjs', 'copyimages'], function () {
 
   gulp.watch(htmlfiles, ['copyhtml']);
   gulp.watch(cssfiles, ['copycss']);

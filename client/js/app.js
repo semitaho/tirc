@@ -2,20 +2,28 @@ import backend  from './services/TircBackend.js';
 import geoservice from './services/GeoService.js';
 import config from './services/ConfigService.js';
 import state from './TircStore.js';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import $ from 'jquery';
+
 
 import tircApp from './reducers/tircreducer';
 import {render} from 'react-dom';
-
-// tilanmuutos kuuntelija
-$(document).on('statechange', function (event, eventAction, data) {
-  state.onstatechange(state[eventAction], data);
-});
+import React from 'react';
+import Tirc from './components/tirc.jsx';
 
 let tircContent = document.getElementById('tirc_content');
-import Tirc from './components/tirc.jsx';
-let store = createStore(tircApp);
+const createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware // lets us dispatch() functions
+)(createStore);
+
+let store = createStoreWithMiddleware(tircApp);
+
+console.log('state', store.getState());
+store.subscribe( () => {
+  console.log('state', store.getState());
+});
 render(<Provider store={store}><Tirc /></Provider>, tircContent);
 
 /*

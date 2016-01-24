@@ -1,4 +1,4 @@
-var React = require('react/addons'),
+var React = require('react'),
   Tabheader = require('./tabheader.jsx'),
   Userselect = require('./userselect.jsx'),
   Mainpanel = require('./mainpanel.jsx'),
@@ -8,31 +8,31 @@ var React = require('react/addons'),
   GeoService = require('../services/GeoService.js'),
   Spinner = require('./spinner.jsx');
 
-module.exports = React.createClass({
+import { connect } from 'react-redux';
 
-  destroy: function () {
+import {connectBackend} from './../actions/tircactions.js';
+
+class Tirc extends React.Component {
+  destroy() {
     GeoService.unwatch();
     $(document).trigger('backendcall', ['sayGoodbye', Config.loadUser('taho')]);
-  },
+  }
 
-  render: function () {
-    var tabs = this.props.data.tabs;
-    var tircdata = this.props.data;
-    var tabactive = tircdata.active;
-    if (this.props.data.loading && this.props.data.loading === true) {
+  render() {
+    let {tabs, userselect, loading,active} = this.props
+    if (this.props.loading && this.props.loading === true) {
       return <Spinner  />
     }
 
-    var tabcontent = function (data, id) {
+    const tabcontent = (data, id) =>  {
       var isVisible = false;
       var className = "hidden col-md-12";
-      if (data.name === tabactive.name) {
+      if (data.name === active) {
         className = '';
         isVisible = true;
       }
       var actionpanelId = 'action_panel_' + id;
       return (
-
         <div className={className}>
           <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded}
                      tircusers={data.mainpanel.tircusers}
@@ -40,7 +40,7 @@ module.exports = React.createClass({
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox text={data.text}/>
+            <Messagebox {...data.messagebox} />
           </div>
         </div>
       )
@@ -48,22 +48,37 @@ module.exports = React.createClass({
 
     return (
       <div className="tirc_content">
-        <Spinner fadeout={true}/>
-
+        {loading ? <Spinner fadeout={true}/> : ''}
         <div>
           <header className="row tirc_header_panel">
-            <Tabheader items={tabs} selected={tabactive.name}/>
-            <Userselect users={tircdata.users} chosen={tircdata.chosen}/>
+            <Tabheader items={tabs} selected={active}/>
+            <Userselect {...userselect} />
           </header>
         </div>
         {tabs.map(tabcontent) }
       </div>)
 
-  },
+  }
   componentDidMount(){
+    let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
     $(window).unload(this.destroy);
+    dispatch(connectBackend(this.props.userselect.chosen));
   }
+}
 
-});
+function select(state){
+
+  return {
+    data: state.data,
+    userselect: state.userselect,
+    tabs: state.tabs,
+    loading: state.loading,
+    active: state.active
+  };
+
+}
+
+
+export default connect(select)(Tirc);
 

@@ -28,7 +28,7 @@ module.exports = (function () {
 
 
   var resize = function (lastHeight, interval) {
-    if (lastHeight === undefined || !_.isNumber(lastHeight)) {
+    if (lastHeight === undefined || isNaN(lastHeight)) {
       lastHeight = 0;
     }
     var elem = $('#tirc_main_panel_middle_' + lastHeight);

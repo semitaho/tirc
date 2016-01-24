@@ -87,6 +87,7 @@ module.exports = React.createClass({
     // UIService.fireStateChange(['settext', event.target.value]);
   },
   render: function () {
+    console.log('text', this.props.text);
     return (
       <div className="col-md-12">
         <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
