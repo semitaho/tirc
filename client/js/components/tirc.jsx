@@ -10,7 +10,7 @@ var React = require('react'),
 
 import { connect } from 'react-redux';
 
-import {connectBackend, updateText} from './../actions/tircactions.js';
+import {connectBackend, listenBackend, changeState} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
   destroy() {
@@ -40,7 +40,7 @@ class Tirc extends React.Component {
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox {...data.messagebox} updateText={(id,text) => dispatch(updateText(id,text))} />
+            <Messagebox {...data.messagebox} changeState={(id,newstate) => dispatch(changeState(id,newstate))} />
           </div>
         </div>
       )
@@ -63,7 +63,9 @@ class Tirc extends React.Component {
     let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
     $(window).unload(this.destroy);
-    dispatch(connectBackend(this.props.userselect.chosen));
+    dispatch(connectBackend(this.props.userselect.chosen)).then(data => {
+      dispatch(listenBackend(data.id, this.props.userselect.chosen));
+    } );
   }
 }
 

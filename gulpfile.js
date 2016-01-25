@@ -1,12 +1,10 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
-require('harmonize')();
 var babelify = require("babelify");
 var source = require('vinyl-source-stream');
 
 var watchfiles = 'client/*.jade';
-var browserify = require('browserify'),
-  jest = require('gulp-jest');
+var browserify = require('browserify');
 var webrootdir = 'www';
 var htmlfiles = 'client/**/*.html';
 var cssfiles = 'client/css/**/*.css';

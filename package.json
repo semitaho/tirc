@@ -30,14 +30,15 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.4.3",
+    "expect": "^1.13.4",
     "gulp-babel": "^6.1.1",
     "mocha": "^2.3.4",
+    "react-addons-test-utils": "^0.14.6",
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha --compilers js:babel-register client/tests/spec/reducers/*.js",
+    "test": "mocha --compilers js:babel-register client/tests/spec/reducers/*.js client/tests/spec/actions/*.js",
     "test:watch": "npm test -- --watch"
-
   },
   "jest": {},
   "repository": {

@@ -194,14 +194,11 @@ class TircBackend {
       });
   }
 
-listen(id, successCallback, errorCallback) {
-      var subscriber = Config.loadUser();
-      $.ajax({
+  listen(id, subscriber) {
+    return $.ajax({
         url: this.URL + 'listen/' + id + '/' + subscriber,
         crossDomain: true,
         type: "GET"
-      }).done(successCallback).error(function (err) {
-        errorCallback(err, id);
       });
   }
 }

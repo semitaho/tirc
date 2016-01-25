@@ -99,9 +99,7 @@ module.exports = (function () {
       console.log('setting message...');
       var selectedtab = _state.tabs[0];
       if (data.target !== null && data.target !== undefined) {
-        var foundTab = _.find(_state.tabs, function (tab) {
-          return tab.name === data.target || tab.name === data.nick;
-        });
+        var foundTab = _.find(_state.tabs, tab => tab.name === data.target || tab.name === data.nick);
         if (foundTab) {
           selectedtab = foundTab;
         } else {

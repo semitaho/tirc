@@ -11,15 +11,6 @@ function userselectreducer(state=userselectstate, action){
   return state;
 }
 
-function tabreducers(state={}, action){
-  switch (action.type){
-    case 'RECEIVE_SERVER_DATA':
-
-    default:
-      return state;  
-  }
-  return state;
-}
 
 export default combineReducers({
   tabs: tabsreducers,

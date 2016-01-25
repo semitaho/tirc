@@ -1,17 +1,14 @@
 module.exports  =  (function(){
 	
 	var focus = true;
-	
 	window.onfocus = function () { 
 		  focus = true; 
-	}; 
+		}; 
 
-	window.onblur = function () { 
-		console.log('not focuses');
-	  focus = false; 
-	}; 
-
-	
+		window.onblur = function () { 
+			console.log('not focuses');
+	  	focus = false; 
+		}; 
 	
 // check for notifications support
 // you can omit the 'window' keyword
