@@ -2,7 +2,10 @@ var React = require('react/addons'),
   Textrow = require('./textrow.jsx'),
   Resizer = require('../resize.js'),
   UIService = require('../services/UIService.js');
+
+import Phantomrow from './phantomrow.jsx';
 module.exports = React.createClass({
+
 
   componentWillMount: function () {
     console.log('TircScreen: willMount');
@@ -16,11 +19,16 @@ module.exports = React.createClass({
     var index = this.props.index;
     var screenindex = 'tirc_screen_' + index;
 
-    return <div className={classStr} id={screenindex}>{  dataall.map(function (item) {
+    var mappedTextrowData = dataall.map(item => {
 
       id++;
       return ( <Textrow key={id} elem={item}/> )
-    }) }</div>
+    });
+
+    var mappedPhantomrowData = this.props.activedata.map(item => <Phantomrow {...item} />);
+    let mappedData = mappedTextrowData.concat(mappedPhantomrowData);
+
+    return <div className={classStr} id={screenindex}>{mappedData}</div>
 
   },
 

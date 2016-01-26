@@ -20,7 +20,8 @@ const initTabState = [
             time: '23:05:34',
             line: 'tasa-arvokysymys sekin. naiset pyörittää mitä vain nuorina seksuaalisen valtansa turvin, mutta sit alkaa biologinen kello tikittää'
           }
-        ]
+        ],
+        activedata: [{}, {}]
       },
       messagebox: {
         text: 'joo tällänen se on'
@@ -51,6 +52,15 @@ export default function tabsreducer(state=[], action){
         mainpanel: newmainpanel
       });
       return [newmain, ...state.slice(1)];
+
+    case 'RECEIVE_ACTIVE_DATA':
+      newmainpanel = Object.assign({}, state[0].mainpanel, {
+        activedata: action.items
+      });
+      newmain = Object.assign({},state[0], {
+        mainpanel: newmainpanel
+      });
+      return [newmain, ...state.slice(1)];   
    
     case 'RECEIVE_TIRC_USERS':
       newmainpanel = Object.assign({}, state[0].mainpanel, {
@@ -88,6 +98,7 @@ export default function tabsreducer(state=[], action){
           topic: action.serverdata.topic,
           users: action.serverdata.users,
           tircusers: action.serverdata.tircusers,
+          activedata: []
         },
         messagebox: ''
 

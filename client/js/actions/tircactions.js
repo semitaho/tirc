@@ -85,6 +85,16 @@ function handleUsers(dispatch, data){
 
 function handleTircUsers(dispatch, data){
   dispatch(receiveTircUsers(data));
+  let activeItems =  data.filter(item => item.state === 'fixing' || item.state === 'typing');
+  console.log('active', activeItems); 
+  dispatch(receiveActiveData(activeItems));
+}
+
+export function receiveActiveData(items){
+  return {
+    type: 'RECEIVE_ACTIVE_DATA',
+    items
+  }
 }
 
 export function receiveUsers(users){

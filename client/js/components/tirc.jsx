@@ -34,11 +34,9 @@ class Tirc extends React.Component {
       var actionpanelId = 'action_panel_' + id;
       return (
         <div className={className}>
-          <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded}
-                     tircusers={data.mainpanel.tircusers}
-                     visible={isVisible} users={data.mainpanel.users}
-                     receiveUsers={users => dispatch(receiveUsers(users))}
-                     connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
+          <Mainpanel index={id} {...data.mainpanel}                  
+                     visible={isVisible} 
+                     receiveUsers={users => dispatch(receiveUsers(users))} />
 
           <div className="tirc_action_panel row" id={actionpanelId}>
             <Messagebox {...data.messagebox} updateText={text => dispatch(updateText(id,text))}  sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))} changeState={(newstate) => dispatch(changeState(this.props.userselect.chosen,newstate))} />
