@@ -29,13 +29,51 @@ const initTabState = [
 ];
 
 export default function tabsreducer(state=[], action){
+  let newmain,newmainpanel;
 
   switch (action.type){
+
+    case 'RECEIVE_MESSAGE':
+      newmainpanel = Object.assign({}, state[action.index].mainpanel, {
+        currentdata: [...state[action.index].mainpanel.currentdata, action.message]
+      });
+      console.log('coming message...', newmainpanel);
+
+      newmain = Object.assign({},state[action.index], {
+        mainpanel: newmainpanel
+      });
+      return [...state.slice(0,action.index), newmain, ...state.slice(action.index+1)];
+    case 'RECEIVE_USERS':
+      newmainpanel = Object.assign({}, state[0].mainpanel, {
+        users: action.users
+      });
+      newmain = Object.assign({},state[0], {
+        mainpanel: newmainpanel
+      });
+      return [newmain, ...state.slice(1)];
+   
+    case 'RECEIVE_TIRC_USERS':
+      newmainpanel = Object.assign({}, state[0].mainpanel, {
+        tircusers: action.tircusers
+      });
+      newmain = Object.assign({},state[0], {
+        mainpanel: newmainpanel
+      });
+      return [newmain, ...state.slice(1)];
+
+    case 'UPDATE_TEXT':
+      let newstate = Object.assign({}, state[action.index], {
+        messagebox: {
+          text: action.text
+        }
+      });
+      return [...state.slice(0,action.index), newstate, ...state.slice(action.index+1)];
+
     case 'RECEIVE_TOPIC':
-      let newmainpanel = Object.assign({}, state[0].mainpanel, {
+      newmainpanel = Object.assign({}, state[0].mainpanel, {
         topic: action.topic
       });
-      let newmain = Object.assign({},state[0], {
+      newmain = Object.assign({},state[0], {
         mainpanel: newmainpanel
       });
       return [newmain, ...state.slice(1)];

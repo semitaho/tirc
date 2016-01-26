@@ -4,7 +4,7 @@ $.embedly.defaults.query = {
   chars: 400,
     autoplay: false
   };
-var urlRe = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+const urlRe = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 class UIService {
   embedly(link, success) {
   }

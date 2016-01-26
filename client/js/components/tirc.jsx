@@ -10,16 +10,16 @@ var React = require('react'),
 
 import { connect } from 'react-redux';
 
-import {connectBackend, listenBackend, changeState} from './../actions/tircactions.js';
+import {connectBackend, listenBackend, changeState, sendText, updateText, receiveUsers, sayGoodbye} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
   destroy() {
-    GeoService.unwatch();
-    $(document).trigger('backendcall', ['sayGoodbye', Config.loadUser('taho')]);
+    //GeoService.unwatch();
+    this.props.dispatch(sayGoodbye(this.props.userselect.chosen));
   }
 
   render() {
-    let {tabs, userselect, loading,active} = this.props
+    let {tabs, userselect, loading,active, dispatch} = this.props
     if (this.props.loading && this.props.loading === true) {
       return <Spinner  />
     }
@@ -37,10 +37,11 @@ class Tirc extends React.Component {
           <Mainpanel index={id} topic={data.mainpanel.topic} screenloaded={data.mainpanel.screenloaded}
                      tircusers={data.mainpanel.tircusers}
                      visible={isVisible} users={data.mainpanel.users}
+                     receiveUsers={users => dispatch(receiveUsers(users))}
                      connectdata={data.mainpanel.connectdata} currentdata={data.mainpanel.currentdata}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox {...data.messagebox} changeState={(id,newstate) => dispatch(changeState(id,newstate))} />
+            <Messagebox {...data.messagebox} updateText={text => dispatch(updateText(id,text))}  sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))} changeState={(newstate) => dispatch(changeState(this.props.userselect.chosen,newstate))} />
           </div>
         </div>
       )
@@ -62,7 +63,7 @@ class Tirc extends React.Component {
   componentDidMount(){
     let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
-    $(window).unload(this.destroy);
+    $(window).unload(() =>  this.destroy());
     dispatch(connectBackend(this.props.userselect.chosen)).then(data => {
       dispatch(listenBackend(data.id, this.props.userselect.chosen));
     } );

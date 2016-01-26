@@ -86,13 +86,6 @@ gulp.task('default', ['copyhtml', 'copycss', 'compilejs', 'copyjs', 'copyimages'
     open: 'http://0.0.0.0:9001/index.html',
     port: 9001,
     host: '0.0.0.0',
-    proxies: [{
-      source: '/backend/connect',
-      target: TARGET_URL + '/backend/connect'
-    }, {source: '/backend/saywelcome', target: TARGET_URL + '/backend/saywelcome'}
-      , {source: '/backend/say', target: TARGET_URL + '/backend/say'}, {
-        source: '/backend/listen',
-        target: TARGET_URL + '/backend/listen'
-      }, {source: '/backend/changestate', target: TARGET_URL + '/backend/changestate'}]
+    proxies: []
   }));
 });

@@ -23,7 +23,7 @@ module.exports = React.createClass({
         <div className="tirc_main_panel_middle  row" id={idindex}>
           <TircScreen index={index} connectdata={this.props.connectdata}
                       currentdata={this.props.currentdata}/>
-          <Nickpanel users={this.props.users} tircusers={this.props.tircusers}/>
+          <Nickpanel users={this.props.users} receiveUsers={this.props.receiveUsers} tircusers={this.props.tircusers}/>
         </div>
 
       </div>

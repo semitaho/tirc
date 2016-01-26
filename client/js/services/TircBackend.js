@@ -5,7 +5,7 @@ var  Config = require('./ConfigService'),
 class TircBackend {
 
   constructor(){
-    this.URL = 'http://ec2-54-77-146-105.eu-west-1.compute.amazonaws.com:8880/backend/';
+    this.URL = 'http://localhost:8880/backend/';
   }
 
 /*
@@ -16,17 +16,8 @@ class TircBackend {
   var URL = "/backend/";
 
   var messagecallbacks = {
-    onusers: function (data) {
-      var arr = Parser.formatusers(data.users);
-      TircState.onstatechange(TircState.setusers, arr);
-    },
-    ontircusers: function (data) {
-      TircState.onstatechange(TircState.settircusers, data);
-    },
-
-    ontopic: function (data) {
-      TircState.onstatechange(TircState.settopic, data);
-    },
+    
+   
     receive: function (data) {
       if (data.type === 'comment' && 'TIRC' === data.source) {
         var text = data.line;
@@ -103,34 +94,27 @@ class TircBackend {
         });
     });
   }
-  say(nick, text, htmltext, callback) {
-      var target = null;
-      if (TircState.getActiveName() !== 'tirc') {
-        console.log('active is: ' + TircState.getActiveName());
-        target = TircState.getActiveName();
-      }
-
+  say(nick, text, htmltext, target) {
       var message = {
-        nick: nick,
-        text: text,
-        htmltext: htmltext,
-        target: target
+        nick,
+        text,
+        htmltext,
+        target
       };
       console.log('message', message);
-      $.ajax({
+      return $.ajax({
         type: "POST",
-        url: URL + 'say',
+        url: this.URL + 'say',
         contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(message),
-        success: callback
+        data: JSON.stringify(message)
       });
   }
 
   changeState(nick, state) {
     var body = {nick: nick, state: state};
-    $.ajax({
+    return $.ajax({
         type: "POST",
-        url: URL + 'changestate',
+        url: this.URL + 'changestate',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(body)
     });
@@ -172,7 +156,7 @@ class TircBackend {
         nick: nick
       };
 
-      $.ajax({
+      return $.ajax({
         type: "POST",
         url: URL + 'saygoodbye',
         contentType: 'application/json;charset=UTF-8',
@@ -188,7 +172,7 @@ class TircBackend {
       };
       $.ajax({
         type: "POST",
-        url: URL + 'changenick',
+        url: this.URL + 'changenick',
         contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(message)
       });

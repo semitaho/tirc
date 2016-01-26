@@ -26,7 +26,7 @@ module.exports = React.createClass({
       user.idleTime = newIdletime;
       return user;
     });
-    $(document).trigger('statechange', ['setusers', idleusers]);
+    this.props.receiveUsers(idleusers);
   },
 
 

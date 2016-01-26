@@ -1,9 +1,7 @@
 var React = require('react/addons'),
-  Config = require('../services/ConfigService'),
-  TircBackend = require('../services/TircBackend'),
-  TircState = require('../TircStore'),
-  UIService = require('../services/UIService.js');
+  Config = require('../services/ConfigService');
 
+import UIService  from '../services/UIService.js';
 module.exports = React.createClass({
 
   say: function () {
@@ -11,16 +9,13 @@ module.exports = React.createClass({
     var self = this;
     var selftext = this.props.text;
     if (UIService.hasLink(this.props.text)) {
-      UIService.embedlyText(this.props.text, function (done) {
-        $(document).trigger('backendcall', ['say', Config.loadUser('taho'), selftext,  done,self.saysuccess]);
+      UIService.embedlyText(this.props.text, done => {
+        this.props.sendText(selftext, done);
       });
     } else {
-      $(document).trigger('backendcall', ['say', Config.loadUser('taho'), this.props.text,  this.props.text,this.saysuccess]);
+      this.props.sendText(selftext, selftext);
     }
-    $(document).trigger('statechange', ['settext', '']);
-
-//    UIService.fireStateChange(['settext', '']);
-
+    this.props.updateText('');
   },
 
   saysuccess: function () {
@@ -51,7 +46,6 @@ module.exports = React.createClass({
       var currentTime = new Date();
       var millisecondsDiff = (currentTime.getTime() - this.typestate.time.getTime());
       if (millisecondsDiff > 60000) {
-
         this.statechange('idle');
       }
     }
@@ -72,21 +66,18 @@ module.exports = React.createClass({
     var previousState = this.typestate.state;
     this.typestate = {time: new Date(), state: state};
     if (state !== previousState) {
-      $(document).trigger('backendcall', ['changeState', Config.loadUser(), state]);
+      this.props.changeState(state);
     }
   },
 
   onBlur: function (event) {
-    console.log('bluur');
     this.statechange('idle');
   },
 
   updateText: function (event) {
-    console.log('said', event.target.value);
     this.props.updateText(event.target.value);
   },
   render: function () {
-    console.log('text', this.props.text);
     return (
       <div className="col-md-12">
         <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
