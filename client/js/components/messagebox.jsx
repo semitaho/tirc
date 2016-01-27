@@ -1,4 +1,4 @@
-var React = require('react/addons'),
+var React = require('react'),
   Config = require('../services/ConfigService');
 
 import UIService  from '../services/UIService.js';

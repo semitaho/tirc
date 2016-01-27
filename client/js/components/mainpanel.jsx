@@ -1,4 +1,4 @@
-var React = require('react/addons'),
+var React = require('react'),
   TopicPanel = require('./topicPanel.jsx'),
   TircScreen = require('./tircScreen.jsx'),
   Nickpanel = require('./nickpanel.jsx'),
@@ -21,10 +21,14 @@ module.exports = React.createClass({
         <TopicPanel topic={this.props.topic} index={index}/>
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
-          <TircScreen index={index} connectdata={this.props.connectdata}
-                      currentdata={this.props.currentdata} activedata={this.props.activedata}/>
+            <div className="col-md-12">
+              <Nickpanel users={this.props.users} receiveUsers={this.props.receiveUsers} tircusers={this.props.tircusers}/>
 
-          <Nickpanel users={this.props.users} receiveUsers={this.props.receiveUsers} tircusers={this.props.tircusers}/>
+            </div>
+            <div className="col-md-12">
+              <TircScreen index={index} connectdata={this.props.connectdata}
+                      currentdata={this.props.currentdata} activedata={this.props.activedata}/>
+            </div>
         </div>
 
       </div>

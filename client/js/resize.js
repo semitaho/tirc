@@ -31,13 +31,14 @@ module.exports = (function () {
     if (lastHeight === undefined || isNaN(lastHeight)) {
       lastHeight = 0;
     }
-    var elem = $('#tirc_main_panel_middle_' + lastHeight);
-    var tabpanel = $('#tab_panel_' + lastHeight);
-    if (tabpanel.position() === null || tabpanel.position() == undefined) {
+    var elem = $('#tirc_screen_' + lastHeight);
+    var tircnicks = $('#tirc_nicks');
+    if (tircnicks.position() === null || tircnicks.position() == undefined) {
       return;
     }
-    var tabpanelY = tabpanel.position().top;
-    var startY = tabpanelY + tabpanel.height();
+    var startY = tircnicks.offset().top + tircnicks.height();
+    console.log('y', startY);
+
     var pos = elem.position();
     var box = $('#action_panel_' + lastHeight);
     var boxHeight = box.height();

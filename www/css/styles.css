@@ -69,7 +69,6 @@ h1 {
 
 .tirc_main_panel_middle {
     width: 100%;
-    overflow-y: auto;
 }
 
 selector:-webkit-full-screen {
@@ -127,17 +126,18 @@ selector {
     color: violet;
 }
 
+.fixing, .typing {
+    padding-left: 5em;
+   /* animation: myfirst 2s linear 0s alternate none infinite;
+    -webkit-animation: myfirst 2s linear 0s alternate none infinite; */
+}
+
 .fixing {
    color: red;
-   padding-left: 5em;
-   animation: myfirst .2s linear 0s alternate none infinite;
-    -webkit-animation: myfirst .5s linear 0s alternate none infinite;
+
 }
 .typing {
-   padding-left: 5em;
-   color: yellow;   
-   animation: myfirst .2s linear 0s alternate none infinite;
-    -webkit-animation: myfirst .5s linear 0s alternate none infinite;
+   color: yellow;
 }
 
 .tirc_screen {
@@ -147,8 +147,7 @@ selector {
 }
 
 .tirc_screen, .tirc_info_panel {
-    overflow-y: auto;
-    height: 100%;
+    overflow-x: auto;
 }
 
 .tirc_screen .joinOrPart {
@@ -487,6 +486,7 @@ a.ng-click-active {
 }
 
 .textrow {
+    font-size: 1.2em;
     animation: myfirst 1s ease-in;
     -webkit-animation: myfirst 1s ease-in;
 }
@@ -593,6 +593,18 @@ a.ng-click-active {
 .spinner.fadeout {
     animation: myfirst 1.5s linear 0s reverse forwards;
     -webkit-animation: myfirst 1.5s linear 0s reverse forwards;
+}
+
+#tirc_nicks {
+    background: #205081
+}
+#tirc_nicks .tircuser{
+    vertical-align: top;
+}
+
+#tirc_nicks .active{
+    font-weight: bold;
+    color: lightsteelblue;
 }
 
 

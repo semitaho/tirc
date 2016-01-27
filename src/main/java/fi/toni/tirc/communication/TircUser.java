@@ -1,35 +1,41 @@
 /**
- * 
+ *
  */
 package fi.toni.tirc.communication;
 
 /**
  * @author taho
- *
  */
 public class TircUser {
 
-	private String nick;
+  private String nick;
 
-	private String state;
-	
-	
-	public String getNick() {
-		return nick;
-	}
+  private String state;
 
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
+  private String text;
 
-	public String getState() {
-		return state;
-	}
+  public String getNick() {
+    return nick;
+  }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+  public void setNick(String nick) {
+    this.nick = nick;
+  }
 
-	
+  public String getState() {
+    return state;
+  }
 
+  public void setState(String state) {
+    this.state = state;
+  }
+
+  public void setText(String text) {
+    this.text = text;
+  }
+
+
+  public String getText() {
+    return text;
+  }
 }

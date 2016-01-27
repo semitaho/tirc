@@ -30,5 +30,5 @@ class UIService {
   }
 }
 
-let uiService  = new UIService
+let uiService  = new UIService;
 export default uiService;

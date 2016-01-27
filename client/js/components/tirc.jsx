@@ -1,6 +1,5 @@
 var React = require('react'),
   Tabheader = require('./tabheader.jsx'),
-  Userselect = require('./userselect.jsx'),
   Mainpanel = require('./mainpanel.jsx'),
   Messagebox = require('./messagebox.jsx'),
   Resizer = require('../resize.js'),
@@ -9,8 +8,8 @@ var React = require('react'),
   Spinner = require('./spinner.jsx');
 
 import { connect } from 'react-redux';
-
-import {connectBackend, listenBackend, changeState, sendText, updateText, receiveUsers, sayGoodbye} from './../actions/tircactions.js';
+import Userselect from './userselect.jsx';
+import {connectBackend, listenBackend, changeState, sendText, updateText, receiveUsers, sayGoodbye, changeUser, loadUsers} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
   destroy() {
@@ -24,7 +23,7 @@ class Tirc extends React.Component {
       return <Spinner  />
     }
 
-    const tabcontent = (data, id) =>  {
+    const tabcontent = (data, id) => {
       var isVisible = false;
       var className = "hidden col-md-12";
       if (data.name === active) {
@@ -34,12 +33,14 @@ class Tirc extends React.Component {
       var actionpanelId = 'action_panel_' + id;
       return (
         <div className={className}>
-          <Mainpanel index={id} {...data.mainpanel}                  
-                     visible={isVisible} 
-                     receiveUsers={users => dispatch(receiveUsers(users))} />
+          <Mainpanel index={id} {...data.mainpanel}
+                     visible={isVisible}
+                     receiveUsers={users => dispatch(receiveUsers(users))}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox {...data.messagebox} updateText={text => dispatch(updateText(id,text))}  sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))} changeState={(newstate) => dispatch(changeState(this.props.userselect.chosen,newstate))} />
+            <Messagebox {...data.messagebox} updateText={text => dispatch(updateText(id,text))}
+                                             sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))}
+                                             changeState={(newstate,text ) => dispatch(changeState(this.props.userselect.chosen,newstate, text))}/>
           </div>
         </div>
       )
@@ -51,24 +52,29 @@ class Tirc extends React.Component {
         <div>
           <header className="row tirc_header_panel">
             <Tabheader items={tabs} selected={active}/>
-            <Userselect {...userselect} />
+            <Userselect {...userselect} changeUser={nick => dispatch(changeUser(nick))}/>
           </header>
         </div>
         {tabs.map(tabcontent) }
       </div>)
 
   }
-  componentDidMount(){
+
+  componentDidMount() {
     let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
     $(window).unload(() =>  this.destroy());
-    dispatch(connectBackend(this.props.userselect.chosen)).then(data => {
-      dispatch(listenBackend(data.id, this.props.userselect.chosen));
-    } );
+    dispatch(loadUsers()).then(data => {
+      dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {
+        console.log('backend fired...', backenddata);
+        dispatch(listenBackend(backenddata.id, this.props.userselect.chosen));
+      });
+    });
+
   }
 }
 
-function select(state){
+function select(state) {
 
   return {
     data: state.data,
@@ -79,7 +85,6 @@ function select(state){
   };
 
 }
-
 
 export default connect(select)(Tirc);
 

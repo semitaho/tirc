@@ -72,10 +72,10 @@ module.exports = React.createClass({
     var users =  this.fillIdletime(this.props.users);
     var tircusers = this.props.tircusers;
     users = users.map(function (user) {
-      return <div className="list-group-item">
-        <h4 className="nick list-group-item-heading">{user.nick}</h4>
+      return <li>
+        <h4 className="nick">{user.nick}</h4>
         <div className="idle small list-group-item-text">{user.idle}</div>
-      </div>
+      </li>
     });
 
 
@@ -83,36 +83,32 @@ module.exports = React.createClass({
     var that = this;
     var tircusers = tircusers.map(function (user) {
       var clazz = 'small idle  list-group-item-text';
-      if ('connected' === user.state) {
-        clazz = 'small connected';
-      } else if ('typing' === user.state || 'fixing' === user.state) {
-        clazz = 'small typing list-group-item-text';
-      }
       var current = Config.loadUser();
       var stateclass = '';
 
       if (current !== user.nick) {
-        return (<a className="tircuser list-group-item guest">
-          <h3 className="nick list-group-item-heading" onClick={that.onuserclick.bind(that, user.nick)}
-               title="Aloita privakeskustelu">{user.nick}</h3>
+        return (<li className="tircuser guest">
+          <h4 className="nick" onClick={that.onuserclick.bind(that, user.nick)}
+               title="Aloita privakeskustelu">{user.nick}</h4>
           <div className={clazz}>{statemap[user.state]}</div>
-        </a>)
+        </li>)
       }
 
       else {
-        return (<a className="tircuser list-group-item active">
-          <h3 className="nick list-group-item-heading">{user.nick}</h3>
+        return (<li className="tircuser  active">
+          <h4 className="nick">{user.nick}</h4>
           <div className={clazz}>{statemap[user.state]}</div>
-        </a>)
+        </li>)
       }
     });
 
 
-    return <div className="tirc_info_panel panel-body col-md-2 hidden-xs hidden-sm">{
-      tircusers.concat(<hr />).concat(users)
-    }
+    return <div className="col-md-12">
+      <ul id="tirc_nicks" className="tirc_info_panel list-inline">{
+      tircusers.concat(users)
+      }
 
-    </div>
+    </ul></div>
 
   }
 

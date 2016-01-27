@@ -122,8 +122,8 @@ public class MessageBus {
         listenerThread.receive(tircUsers);
     }
 
-    public void changeState(String nick, String state) {
-        tircUsers.changeState(nick, state);
+    public void changeState(String nick, String state, String text) {
+        tircUsers.changeState(nick, state, text);
         listenerThread.receive(tircUsers);
     }
 

@@ -28,14 +28,13 @@ module.exports = (function () {
       return 'taho';
     },
 
-    loadFromDb: function (onsuccess) {
+    loadFromDb: function () {
       var qCriteria = {_id: 'client'};
       var REST_URI = 'https://api.mongolab.com/api/1/databases/tirc/collections/configuration?q=' + JSON.stringify(qCriteria) + '&l=1&apiKey=' + API_KEY;
-      $.ajax({
+      return $.ajax({
         type: "GET",
         url: REST_URI,
-        contentType: 'application/json;charset=UTF-8',
-        success: onsuccess
+        contentType: 'application/json;charset=UTF-8'
       });
 
     }

@@ -2,7 +2,7 @@ import React from 'react';
 
 class PhantomRow extends React.Component {
   render(){
-    let {nick,state} = this.props;
+    let {nick,state, text} = this.props;
 
     var str = nick;
     var clazz = 'col-md-12 ';
@@ -13,7 +13,6 @@ class PhantomRow extends React.Component {
       clazz += 'typing';
       str += ' kirjoittaa...';
     }
-
     return (<div className="row">
         <div className={clazz}>{str}</div></div>);
   }

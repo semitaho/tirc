@@ -110,8 +110,8 @@ class TircBackend {
       });
   }
 
-  changeState(nick, state) {
-    var body = {nick: nick, state: state};
+  changeState(nick, state, text) {
+    var body = {nick: nick, state: state, text};
     return $.ajax({
         type: "POST",
         url: this.URL + 'changestate',
