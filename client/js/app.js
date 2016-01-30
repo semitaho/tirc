@@ -20,10 +20,6 @@ const createStoreWithMiddleware = applyMiddleware(
 
 let store = createStoreWithMiddleware(tircApp);
 
-console.log('state', store.getState());
-store.subscribe( () => {
-  console.log('state', store.getState());
-});
 render(<Provider store={store}><Tirc /></Provider>, tircContent);
 
 /*

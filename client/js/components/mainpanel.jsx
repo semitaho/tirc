@@ -14,29 +14,11 @@ module.exports = React.createClass({
 
   },
 
-  draw: function(v, back,bc, w, h) {
-    bc.drawImage(v, 0, 0, w, h);
-    // Grab the pixel data from the backing canvas
-    var stringData=back.toDataURL();
-    console.log('string', stringData);
-    setTimeout(() => { this.draw(v,back, bc, w, h); });
-
-  },
-
-
 
 
   render: function () {
     const streamMedia = e => {
-      var video = document.getElementsByTagName('video')[0];
-      console.log('width', video.offsetWidth);
-      let canvasWidth = 640;
-      let canvasHeight = 480;
-      let back = document.getElementById('video-canvas');
-      var backcontext = back.getContext('2d');
-      this.draw(video, back, backcontext, video.offsetWidth, video.offsetHeight);
-
-      console.log('on media',e);
+      this.props.shareVideo('video');
     };
 
     this.props.tircusers.sort((user1, user2) => user2.time - user1.time);
@@ -59,7 +41,7 @@ module.exports = React.createClass({
             {this.props.showvideo ?
               <div id="video_container" className="col-md-2">
                 <canvas id="video-canvas" />
-                 <Webcam  onUserMedia={streamMedia} />
+                 <Webcam audio={false} onUserMedia={streamMedia} />
               </div> : ''}
         </div>
 

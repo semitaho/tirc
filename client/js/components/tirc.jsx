@@ -10,6 +10,7 @@ var React = require('react'),
 import { connect } from 'react-redux';
 import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
+import {shareVideo, connectWebsocket} from './../actions/videoactions.js';
 import {connectBackend, listenBackend, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
@@ -31,7 +32,7 @@ class Tirc extends React.Component {
         {loading ? <Spinner fadeout={true}/> : ''}
          <div className={className}>
           <TopicPanel {...topicpanel}  {...tabs} receiveUsers={users => dispatch(receiveUsers(users))} />
-          <Mainpanel {...tabs} userselect={userselect}
+          <Mainpanel shareVideo={id => dispatch(shareVideo(id))} {...tabs} userselect={userselect}
                      visible={isVisible}  />
 
           <div className="tirc_action_panel row" id={actionpanelId}>
@@ -54,6 +55,7 @@ class Tirc extends React.Component {
     let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
     $(window).unload(() =>  this.destroy());
+    dispatch(connectWebsocket());
     dispatch(loadUsers()).then(data => {
       dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {
         console.log('backend fired...', backenddata);
