@@ -9,7 +9,8 @@ var React = require('react'),
 
 import { connect } from 'react-redux';
 import Userselect from './userselect.jsx';
-import {connectBackend, listenBackend, changeState, sendText, updateText, receiveUsers, sayGoodbye, changeUser, loadUsers} from './../actions/tircactions.js';
+import TopicPanel from './topicPanel.jsx';
+import {connectBackend, listenBackend, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
   destroy() {
@@ -18,44 +19,33 @@ class Tirc extends React.Component {
   }
 
   render() {
-    let {tabs, userselect, loading,active, dispatch} = this.props
+    let {tabs, userselect, topicpanel,loading,active, dispatch} = this.props
     if (this.props.loading && this.props.loading === true) {
       return <Spinner  />
     }
-
-    const tabcontent = (data, id) => {
-      var isVisible = false;
-      var className = "hidden col-md-12";
-      if (data.name === active) {
-        className = '';
-        isVisible = true;
-      }
-      var actionpanelId = 'action_panel_' + id;
-      return (
-        <div className={className}>
-          <Mainpanel index={id} {...data.mainpanel}
-                     visible={isVisible}
-                     receiveUsers={users => dispatch(receiveUsers(users))}/>
-
-          <div className="tirc_action_panel row" id={actionpanelId}>
-            <Messagebox {...data.messagebox} updateText={text => dispatch(updateText(id,text))}
-                                             sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))}
-                                             changeState={(newstate,text ) => dispatch(changeState(this.props.userselect.chosen,newstate, text))}/>
-          </div>
-        </div>
-      )
-    };
-
+    let className  = '';
+    let isVisible = true;
+    var actionpanelId = 'action_panel_0';
     return (
       <div className="tirc_content">
         {loading ? <Spinner fadeout={true}/> : ''}
-        <div>
-          <header className="row tirc_header_panel">
-            <Tabheader items={tabs} selected={active}/>
-            <Userselect {...userselect} changeUser={nick => dispatch(changeUser(nick))}/>
-          </header>
+         <div className={className}>
+          <TopicPanel {...topicpanel}  {...tabs} receiveUsers={users => dispatch(receiveUsers(users))} />
+          <Mainpanel {...tabs} userselect={userselect}
+                     visible={isVisible}  />
+
+          <div className="tirc_action_panel row" id={actionpanelId}>
+              <div className="col-md-11 col-sm-10 col-xs-8">
+                
+                <Messagebox {...tabs.messagebox} updateText={text => dispatch(updateText(text))}
+                                               sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))}
+                                               changeState={(newstate,text ) => dispatch(changeState(this.props.userselect.chosen,newstate, text))}/>
+              </div>
+              <div className="col-md-1 col-sm-2 col-xs-4 video-toggle text-right">
+                <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button>
+              </div>    
+          </div>
         </div>
-        {tabs.map(tabcontent) }
       </div>)
 
   }
@@ -77,11 +67,15 @@ class Tirc extends React.Component {
 function select(state) {
 
   return {
-    data: state.data,
     userselect: state.userselect,
+    data: state.data,
+    topicpanel: {
+      userselect: state.userselect,
+      users: state.tabs.users,
+      tircusers: state.tabs.tircusers
+    },
     tabs: state.tabs,
-    loading: state.loading,
-    active: state.active
+    loading: state.loading
   };
 
 }

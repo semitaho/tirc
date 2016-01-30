@@ -103,12 +103,12 @@ module.exports = React.createClass({
     });
 
 
-    return <div className="col-md-12">
+    return( 
       <ul id="tirc_nicks" className="tirc_info_panel list-inline">{
-      tircusers.concat(users)
-      }
+        tircusers.concat(users)
+        }
 
-    </ul></div>
+      </ul>)
 
   }
 

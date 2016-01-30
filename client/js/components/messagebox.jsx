@@ -5,7 +5,6 @@ import UIService  from '../services/UIService.js';
 module.exports = React.createClass({
 
   say: function () {
-    console.log('text', this.props.text);
     var self = this;
     var selftext = this.props.text;
     if (UIService.hasLink(this.props.text)) {
@@ -15,6 +14,7 @@ module.exports = React.createClass({
     } else {
       this.props.sendText(selftext, selftext);
     }
+    this.statechange('idle');
     this.props.updateText('');
   },
 
@@ -79,11 +79,9 @@ module.exports = React.createClass({
   },
   render: function () {
     return (
-      <div className="col-md-12">
         <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
                id="textline" className="input-lg form-control message_box"
                placeholder="say something..." onKeyUp={this.onPress}></input>
-      </div>
     );
   }
 });

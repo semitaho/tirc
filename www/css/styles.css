@@ -341,7 +341,7 @@ selector {
 }
 
 .idle {
-    color: #ff6a13;
+    color: #f0ad4e;
 }
 
 .tirc_tab_item {
@@ -595,16 +595,49 @@ a.ng-click-active {
     -webkit-animation: myfirst 1.5s linear 0s reverse forwards;
 }
 
-#tirc_nicks {
-    background: #205081
+h3 {
+    margin: 10px;
 }
+#tirc_nicks {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
 #tirc_nicks .tircuser{
     vertical-align: top;
+}
+h3 {
+    margin: 0;
+}
+h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+.panel-footer{
+    background: lightsteelblue;
+}
+.topic-panel {
+   background: #337ab7;
 }
 
 #tirc_nicks .active{
     font-weight: bold;
     color: lightsteelblue;
+}
+
+video {
+  width: 100%    !important;
+  height: auto   !important;
+}
+.video-toggle{
+    padding-left: 0;
+}
+
+.overflow-scroll {
+    overflow-x: auto;
 }
 
 

@@ -16,7 +16,7 @@ class Userselect extends React.Component {
       //$(document).trigger('backendcall', ['changeNick', oldnick, newnick]);
     };
     return (
-      <div id="userselect" className="col-md-1 col-sm-3 col-xs-3 text-right">
+      <div id="userselect" className="text-right">
         <select className="form-control" name="userlist" onChange={onchange} value={this.props.chosen}>
           {this.props.users.map(user => {
             return (<option key={user}>{user}</option>)

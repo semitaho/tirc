@@ -16,7 +16,7 @@ module.exports = React.createClass({
     var dataall = this.props.connectdata.concat(this.props.currentdata);
     var id = 0;
     var classStr = 'tirc_screen panel-body';
-    var index = this.props.index;
+    var index = 0;
     var screenindex = 'tirc_screen_' + index;
 
     var mappedTextrowData = dataall.map(item => {

@@ -32,17 +32,21 @@ module.exports = (function () {
       lastHeight = 0;
     }
     var elem = $('#tirc_screen_' + lastHeight);
-    var tircnicks = $('#tirc_nicks');
+    var tircnicks = $('.topic-panel');
     if (tircnicks.position() === null || tircnicks.position() == undefined) {
       return;
     }
-    var startY = tircnicks.offset().top + tircnicks.height();
-    console.log('y', startY);
+    var startY = tircnicks.offset().top + tircnicks.outerHeight();
+    console.log('tircnicks height', tircnicks.height());
+    console.log('tircnicks outer height', tircnicks.outerHeight());
 
     var pos = elem.position();
     var box = $('#action_panel_' + lastHeight);
-    var boxHeight = box.height();
-    var currentHeight = $(window).height();
+    var boxHeight = box.outerHeight();
+    console.log('action panel height', boxHeight);
+    console.log('y', box.offset().top);
+
+    var currentHeight = $(window).outerHeight();
     elem.css('height', currentHeight - startY - boxHeight);
     scroll(lastHeight, interval);
 

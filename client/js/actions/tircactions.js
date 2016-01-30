@@ -125,6 +125,13 @@ export function receiveMessage(index, message, isunread) {
 
 }
 
+export function toggleVideo(show){
+  return {
+    type: 'TOGGLE_VIDEO',
+    show
+  };
+}
+
 function handleMessage(dispatch, getState, data) {
   let selectedtab = 0;
   let state = getState();
@@ -156,10 +163,9 @@ export function sendText(user, text, formatted) {
   }
 }
 
-export function updateText(index, text) {
+export function updateText(text) {
   return {
     type: 'UPDATE_TEXT',
-    index,
     text
   };
 }
