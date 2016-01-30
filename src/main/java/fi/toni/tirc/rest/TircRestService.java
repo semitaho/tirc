@@ -31,7 +31,7 @@ import fi.toni.tirc.util.TircIdGenerator;
 import fi.toni.tirc.util.TircMessageFormatter;
 import fi.toni.tirc.util.TircMessageParser;
 import fi.toni.tirc.util.TircUtil;
-import fi.toni.tirc.db.Mongo;
+import fi.toni.tirc.db.MongoWrapper;
 import fi.toni.tirc.communication.ChannelTopic;
 import fi.toni.tirc.irc.ConnectionThread;
 import fi.toni.tirc.server.LogFileParser;
@@ -60,7 +60,7 @@ public class TircRestService {
   private MessageBus bus;
 
   @Autowired
-  private Mongo db;
+  private MongoWrapper db;
 
   @Autowired
   private TircListenerThread listenerThread;

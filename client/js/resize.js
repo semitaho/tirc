@@ -37,8 +37,6 @@ module.exports = (function () {
       return;
     }
     var startY = tircnicks.offset().top + tircnicks.outerHeight();
-    console.log('tircnicks height', tircnicks.height());
-    console.log('tircnicks outer height', tircnicks.outerHeight());
 
     var pos = elem.position();
     var box = $('#action_panel_' + lastHeight);

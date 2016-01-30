@@ -10,10 +10,16 @@ var React = require('react'),
 import { connect } from 'react-redux';
 import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
-import {shareVideo, connectWebsocket} from './../actions/videoactions.js';
+import {shareVideo, connectWebsocket, receiveFrame} from './../actions/videoactions.js';
 import {connectBackend, listenBackend, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
+
+  constructor() {
+    super();
+
+  }
+
   destroy() {
     //GeoService.unwatch();
     this.props.dispatch(sayGoodbye(this.props.userselect.chosen));
@@ -24,27 +30,27 @@ class Tirc extends React.Component {
     if (this.props.loading && this.props.loading === true) {
       return <Spinner  />
     }
-    let className  = '';
+    let className = '';
     let isVisible = true;
     var actionpanelId = 'action_panel_0';
     return (
       <div className="tirc_content">
         {loading ? <Spinner fadeout={true}/> : ''}
-         <div className={className}>
-          <TopicPanel {...topicpanel}  {...tabs} receiveUsers={users => dispatch(receiveUsers(users))} />
-          <Mainpanel shareVideo={id => dispatch(shareVideo(id))} {...tabs} userselect={userselect}
-                     visible={isVisible}  />
+        <div className={className}>
+          <TopicPanel {...topicpanel} {...tabs} receiveUsers={users => dispatch(receiveUsers(users))}/>
+          <Mainpanel shareVideo={id => dispatch(shareVideo(this.ws, id))} {...tabs} userselect={userselect}
+                     visible={isVisible}/>
 
           <div className="tirc_action_panel row" id={actionpanelId}>
-              <div className="col-md-11 col-sm-10 col-xs-8">
-                
-                <Messagebox {...tabs.messagebox} updateText={text => dispatch(updateText(text))}
+            <div className="col-md-11 col-sm-10 col-xs-8">
+
+              <Messagebox {...tabs.messagebox} updateText={text => dispatch(updateText(text))}
                                                sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))}
                                                changeState={(newstate,text ) => dispatch(changeState(this.props.userselect.chosen,newstate, text))}/>
-              </div>
-              <div className="col-md-1 col-sm-2 col-xs-4 video-toggle text-right">
-                <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button>
-              </div>    
+            </div>
+            <div className="col-md-1 col-sm-2 col-xs-4 video-toggle text-right">
+              <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button>
+            </div>
           </div>
         </div>
       </div>)
@@ -55,7 +61,17 @@ class Tirc extends React.Component {
     let dispatch = this.props.dispatch;
     console.log('tirc - doowing resize');
     $(window).unload(() =>  this.destroy());
-    dispatch(connectWebsocket());
+
+    if (!"WebSocket" in window) {
+      alert('WebSocket not supported');
+    }
+    const onmessage = (event) => {
+      console.log('got message', event);
+      dispatch(receiveFrame(event.data));
+
+    };
+    this.ws = new WebSocket("ws://localhost:8880/streaming");
+    this.ws.onmessage = onmessage;
     dispatch(loadUsers()).then(data => {
       dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {
         console.log('backend fired...', backenddata);

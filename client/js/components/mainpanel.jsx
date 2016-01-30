@@ -3,18 +3,15 @@ var React = require('react'),
   TircScreen = require('./tircScreen.jsx'),
   TircBackend = require('../services/TircBackend.js');
 
-
 import Webcam from 'react-webcam';
 import $ from 'jquery';
 module.exports = React.createClass({
 
   componentDidMount: function () {
     console.log('mainScreen - mounted');
-    console.log('width: '+$('#video_container').width());
+    console.log('width: ' + $('#video_container').width());
 
   },
-
-
 
   render: function () {
     const streamMedia = e => {
@@ -25,7 +22,7 @@ module.exports = React.createClass({
     var index = this.props.index;
     var idindex = 'tirc_main_panel_middle_' + index;
     var clazz = 'tirc_main panel-default';
-    let columns = !this.props.showvideo ? 'col-md-12' : 'col-md-10';
+    let columns = !this.props.showvideo && !this.props.srcframe ? 'col-md-12' : 'col-md-10';
     return (
       <div className={clazz}>
 
@@ -34,15 +31,17 @@ module.exports = React.createClass({
             <div className="row">
               <div className="col-md-12">
                 <TircScreen index={index} connectdata={this.props.connectdata}
-                        currentdata={this.props.currentdata} activedata={this.props.activedata}/>
+                            currentdata={this.props.currentdata} activedata={this.props.activedata}/>
               </div>
             </div>
-            </div>
-            {this.props.showvideo ?
-              <div id="video_container" className="col-md-2">
-                <canvas id="video-canvas" />
-                 <Webcam audio={false} onUserMedia={streamMedia} />
-              </div> : ''}
+          </div>
+          {this.props.showvideo || this.props.srcframe ?
+            <div id="video_container" className="col-md-2">
+              {this.props.srcframe ? <img src={this.props.srcframe}/> : ''}
+
+              <canvas id="video-canvas"/>
+              <Webcam audio={false} onUserMedia={streamMedia}/>
+            </div> : ''}
         </div>
 
       </div>

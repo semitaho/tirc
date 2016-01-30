@@ -33,11 +33,11 @@ import fi.toni.tirc.communication.TircLine;
  */
 public class MongoTest {
 
-    private fi.toni.tirc.db.Mongo mongo;
+    private fi.toni.tirc.db.MongoWrapper mongo;
 
     @Before
     public void setUp() {
-        mongo = new fi.toni.tirc.db.Mongo();
+        mongo = new fi.toni.tirc.db.MongoWrapper();
         mongo.postCreate();
     }
 

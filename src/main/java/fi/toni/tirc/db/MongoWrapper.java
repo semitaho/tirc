@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.print.Doc;
 
+import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -23,17 +24,8 @@ import com.mongodb.client.MongoDatabase;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.QueryBuilder;
-import com.mongodb.WriteConcern;
 
 import fi.toni.tirc.util.TircUtil;
 import fi.toni.tirc.rest.Location;
@@ -43,11 +35,11 @@ import fi.toni.tirc.communication.TircLine;
 /**
  * @author taho
  */
-@Service
-public class Mongo {
+@Component
+public class MongoWrapper {
 
 
-  static Logger log = Logger.getLogger(Mongo.class);
+  static Logger log = Logger.getLogger(MongoWrapper.class);
 
   public static final String COLLECTION_LOCATION = "location";
   public static final String COLLECTION_LOGS = "logs";
@@ -62,6 +54,7 @@ public class Mongo {
 
   @PostConstruct
   public void postCreate() {
+
     String textUri = "mongodb://tircuser:tirc123@ds037451.mongolab.com:37451/tirc";
     MongoClientURI mongoClientURI = new MongoClientURI(textUri);
     MongoClient mongoClient = new MongoClient(mongoClientURI);

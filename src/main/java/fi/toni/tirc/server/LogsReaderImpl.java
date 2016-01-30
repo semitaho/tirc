@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import fi.toni.tirc.db.Mongo;
+import fi.toni.tirc.db.MongoWrapper;
 import fi.toni.tirc.communication.TircLine;
 
 @Component
@@ -19,7 +19,7 @@ public class LogsReaderImpl implements LogsReader {
 
 	
 	@Autowired
-	private Mongo mongoService;
+	private MongoWrapper mongoService;
 
 	/**
 	 * @EJB
