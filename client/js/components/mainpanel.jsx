@@ -27,8 +27,8 @@ module.exports = React.createClass({
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
           {this.props.showvideo || this.props.srcframe ?
-            <div id="video_container" className="col-md-6 col-xs-6 col-sm-6 text-center col-md-offset-3 col-sm-offset-3">
-              {this.props.srcframe ? <img src={this.props.srcframe}/> : ''}
+            <div id="video_container" className="col-md-6 col-xs-6 col-sm-6 text-center col-xs-offset-3 col-md-offset-3 col-sm-offset-3">
+              {this.props.srcframe ? <img className="img-responsive"  src={this.props.srcframe}/> : ''}
               {this.props.showvideo ?
                <Webcam audio={false} onUserMedia={streamMedia}/> : ''}
             </div> : ''}

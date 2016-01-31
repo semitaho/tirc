@@ -46,7 +46,7 @@ module.exports = (function () {
     console.log('y', box.offset().top);
 
     var currentHeight = $(window).outerHeight();
-    elem.css('height', currentHeight - startY - boxHeight);
+    elem.css('height', currentHeight - startY - boxHeight- videocontainer.outerHeight());
     scroll(lastHeight, interval);
 
   };

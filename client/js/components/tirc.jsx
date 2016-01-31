@@ -68,6 +68,7 @@ class Tirc extends React.Component {
       alert('WebSocket not supported');
     }
     const onmessage = (event) => {
+      console.log('onmessage', event);
       dispatch(receiveFrame(event.data));
 
     };
