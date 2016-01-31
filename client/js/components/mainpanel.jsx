@@ -22,24 +22,23 @@ module.exports = React.createClass({
     var index = this.props.index;
     var idindex = 'tirc_main_panel_middle_0';
     var clazz = '';
-    let columns = !this.props.showvideo && !this.props.srcframe ? 'col-md-12 tirc_main panel-default' : 'tirc_main panel-default col-md-10';
+    let columns = 'col-md-12 tirc_main panel-default' ;
     return (
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
-          
+          {this.props.showvideo || this.props.srcframe ?
+            <div id="video_container" className="col-md-6 col-xs-6 col-sm-6 text-center col-md-offset-3 col-sm-offset-3">
+              {this.props.srcframe ? <img src={this.props.srcframe}/> : ''}
+              {this.props.showvideo ?
+               <Webcam audio={false} onUserMedia={streamMedia}/> : ''}
+            </div> : ''}
           <div className={columns}>
                 <TircScreen index={index} connectdata={this.props.connectdata}
                             currentdata={this.props.currentdata} activedata={this.props.activedata}/>
           </div>
             
           
-          {this.props.showvideo || this.props.srcframe ?
-            <div id="video_container" className="col-md-2">
-              {this.props.srcframe ? <img src={this.props.srcframe}/> : ''}
 
-              <canvas id="video-canvas"/>
-              <Webcam audio={false} onUserMedia={streamMedia}/>
-            </div> : ''}
         </div>
 
     )

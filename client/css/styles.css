@@ -626,8 +626,8 @@ h4 {
 }
 
 video {
-  width: 100%    !important;
-  height: auto   !important;
+  width: auto    !important;
+  height: 100%   !important;
 }
 .video-toggle{
     padding-left: 0;

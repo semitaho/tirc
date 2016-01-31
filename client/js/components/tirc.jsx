@@ -49,7 +49,9 @@ class Tirc extends React.Component {
                                                changeState={(newstate,text ) => dispatch(changeState(this.props.userselect.chosen,newstate, text))}/>
             </div>
             <div className="col-md-1 col-sm-2 col-xs-4 video-toggle text-right">
-              <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button>
+              {tabs.showvideo === true ? <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(false))}>Lopeta jako</button> : ''}
+              {!tabs.showvideo  ? <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button> : ''}
+
             </div>
           </div>
         </div>
@@ -66,11 +68,10 @@ class Tirc extends React.Component {
       alert('WebSocket not supported');
     }
     const onmessage = (event) => {
-      console.log('got message', event);
       dispatch(receiveFrame(event.data));
 
     };
-    this.ws = new WebSocket("ws://localhost:8880/streaming");
+    this.ws = new WebSocket("ws://" + location.hostname + ":8880/streaming");
     this.ws.onmessage = onmessage;
     dispatch(loadUsers()).then(data => {
       dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {

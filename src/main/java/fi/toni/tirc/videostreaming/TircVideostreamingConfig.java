@@ -26,7 +26,7 @@ public class TircVideostreamingConfig implements WebSocketConfigurer {
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
     log.debug("REGISTERING HANDLER");
-    webSocketHandlerRegistry.addHandler(myHandler(), "/streaming").setAllowedOrigins("*").setHandshakeHandler(handshakeHandler());
+    webSocketHandlerRegistry.addHandler(myHandler(), "/streaming").setAllowedOrigins("*").setHandshakeHandler(handshakeHandler()).addInterceptors(new HttpSessionHandshakeInterceptor());
   }
 
   @Bean

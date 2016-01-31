@@ -40,10 +40,11 @@ public class TircVideostreamingHandler extends TextWebSocketHandler {
   protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     Collection<WebSocketSession> values = clients.values();
     log.debug("size:" + values.size());
+    TextMessage kykkaa = new TextMessage(message.getPayload());
 
     for (WebSocketSession sessionitem : values) {
-      TextMessage kykkaa = new TextMessage(message.getPayload());
-      sessionitem.sendMessage(kykkaa);
+      if (!sessionitem.getId().equals(session.getId()))
+        sessionitem.sendMessage(kykkaa);
     }
 
   }

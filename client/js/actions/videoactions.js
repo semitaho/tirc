@@ -16,21 +16,28 @@ export function receiveFrame(data) {
     data
   };
 }
+
+
 export function shareVideo(ws, id) {
   return dispatch => {
     var video = document.getElementsByTagName(id)[0];
-    let back = document.createElement('canvas');
-    var backcontext = back.getContext('2d');
+    let canvas = document.createElement('canvas');
+    return dispatch(doShare(ws, video, canvas));
+
+  };
+}
+function doShare(ws, video, canvas) {
+  return dispatch => {
+    var backcontext = canvas.getContext('2d');
     backcontext.drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight);
     // Grab the pixel data from the backing canvas
-    var stringData = back.toDataURL();
+    var stringData = canvas.toDataURL();
     console.log('string', stringData);
-    setTimeout(()=> {
+    return setTimeout(()=> {
       ws.send(stringData);
-      dispatch(shareVideo(ws, id));
-
-    });
-  };
+      return dispatch(doShare(ws, video, canvas));
+    }, 100);
+  }
 }
 
 function draw(ws, v, back, bc, w, h) {
