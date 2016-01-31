@@ -20,21 +20,19 @@ module.exports = React.createClass({
 
     this.props.tircusers.sort((user1, user2) => user2.time - user1.time);
     var index = this.props.index;
-    var idindex = 'tirc_main_panel_middle_' + index;
-    var clazz = 'tirc_main panel-default';
-    let columns = !this.props.showvideo && !this.props.srcframe ? 'col-md-12' : 'col-md-10';
+    var idindex = 'tirc_main_panel_middle_0';
+    var clazz = '';
+    let columns = !this.props.showvideo && !this.props.srcframe ? 'col-md-12 tirc_main panel-default' : 'tirc_main panel-default col-md-10';
     return (
-      <div className={clazz}>
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
+          
           <div className={columns}>
-            <div className="row">
-              <div className="col-md-12">
                 <TircScreen index={index} connectdata={this.props.connectdata}
                             currentdata={this.props.currentdata} activedata={this.props.activedata}/>
-              </div>
-            </div>
           </div>
+            
+          
           {this.props.showvideo || this.props.srcframe ?
             <div id="video_container" className="col-md-2">
               {this.props.srcframe ? <img src={this.props.srcframe}/> : ''}
@@ -44,7 +42,6 @@ module.exports = React.createClass({
             </div> : ''}
         </div>
 
-      </div>
     )
 
   }

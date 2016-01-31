@@ -190,7 +190,7 @@ module.exports = React.createClass({
   renderlogevent: function (item) {
     return (
       <div
-        className="textrow row logevent alert alert-warning"><div className="col-md-12">{item.line
+        className="textrow row logevent alert-warning"><div className="col-md-12">{item.line
       }</div>
       </div> );
   }

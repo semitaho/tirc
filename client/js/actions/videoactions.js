@@ -19,7 +19,7 @@ export function receiveFrame(data) {
 export function shareVideo(ws, id) {
   return dispatch => {
     var video = document.getElementsByTagName(id)[0];
-    let back = document.getElementById('video-canvas');
+    let back = document.createElement('canvas');
     var backcontext = back.getContext('2d');
     backcontext.drawImage(video, 0, 0, video.offsetWidth, video.offsetHeight);
     // Grab the pixel data from the backing canvas

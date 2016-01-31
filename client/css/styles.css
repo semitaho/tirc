@@ -67,9 +67,6 @@ h1 {
     width: 100%;
 }
 
-.tirc_main_panel_middle {
-    width: 100%;
-}
 
 selector:-webkit-full-screen {
     display: block;
@@ -175,7 +172,7 @@ selector {
 .tirc_screen .logevent {
     text-align: center;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.2em;
 
 }
 
