@@ -50,7 +50,7 @@ class Tirc extends React.Component {
             </div>
             <div className="col-md-1 col-sm-2 col-xs-4 video-toggle text-right">
               {tabs.showvideo === true ? <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(false))}>Lopeta jako</button> : ''}
-              {!tabs.showvideo  ? <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button> : ''}
+              {!tabs.showvideo  || tabs.showvideo === false ? <button className="btn btn-md btn-default " onClick={() => dispatch(toggleVideo(true))}>Jaa video</button> : ''}
 
             </div>
           </div>

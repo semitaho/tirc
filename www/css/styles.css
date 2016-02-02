@@ -625,16 +625,17 @@ h4 {
     color: lightsteelblue;
 }
 
-video {
-  width: auto    !important;
-  height: 100%   !important;
-}
 .video-toggle{
     padding-left: 0;
 }
 
 .overflow-scroll {
     overflow-x: auto;
+}
+
+#tirc-video {
+    width:50%
+    height:50%;
 }
 
 

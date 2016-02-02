@@ -21,6 +21,11 @@ class UIService {
     });
   }
 
+  calculateVideoHeight(){
+    let elem = $('.tirc_main_panel_middle');
+    return elem.outerHeight() / 2;
+  }
+
   hasLink(text) {
     if (urlRe.test(text)) {
       return true;

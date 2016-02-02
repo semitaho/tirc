@@ -27,7 +27,7 @@ module.exports = (function () {
   };
 
 
-  var resize = function (lastHeight, interval) {
+  var resize = function (lastHeight, interval, unmount) {
     if (lastHeight === undefined || isNaN(lastHeight)) {
       lastHeight = 0;
     }
@@ -44,9 +44,14 @@ module.exports = (function () {
     var boxHeight = box.outerHeight();
     console.log('action panel height', boxHeight);
     console.log('y', box.offset().top);
+    let videoOuterHeight = videocontainer.outerHeight();
+    if (unmount){
+      videoOuterHeight = 0;
+    }
+    console.log('outer height', videoOuterHeight);
 
     var currentHeight = $(window).outerHeight();
-    elem.css('height', currentHeight - startY - boxHeight- videocontainer.outerHeight());
+    elem.css('height', currentHeight - startY - boxHeight- videoOuterHeight);
     scroll(lastHeight, interval);
 
   };

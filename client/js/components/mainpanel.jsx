@@ -1,9 +1,12 @@
 var React = require('react'),
   TopicPanel = require('./topicPanel.jsx'),
   TircScreen = require('./tircScreen.jsx'),
-  TircBackend = require('../services/TircBackend.js');
+  TircBackend = require('../services/TircBackend.js'),
+  Resizer = require('../resize.js');
 
-import Webcam from 'react-webcam';
+import TircWebcam from './tircwebcam.jsx';
+import TircVideo from './tircvideo.jsx';
+import uiService from './../services/UIService.js';
 import $ from 'jquery';
 module.exports = React.createClass({
 
@@ -15,6 +18,7 @@ module.exports = React.createClass({
 
   render: function () {
     const streamMedia = e => {
+      console.log('got video',e);
       this.props.shareVideo('video');
     };
 
@@ -22,15 +26,16 @@ module.exports = React.createClass({
     var index = this.props.index;
     var idindex = 'tirc_main_panel_middle_0';
     var clazz = '';
+    let height =  uiService.calculateVideoHeight();
     let columns = 'col-md-12 tirc_main panel-default' ;
     return (
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
           {this.props.showvideo || this.props.srcframe ?
             <div id="video_container" className="col-md-6 col-xs-6 col-sm-6 text-center col-xs-offset-3 col-md-offset-3 col-sm-offset-3">
-              {this.props.srcframe ? <img className="img-responsive"  src={this.props.srcframe}/> : ''}
-              {this.props.showvideo ?
-               <Webcam audio={false} onUserMedia={streamMedia}/> : ''}
+              {this.props.srcframe ? <TircVideo src={this.props.srcframe} /> : ''}
+              {this.props.showvideo  && this.props.showvideo === true?
+               <TircWebcam audio={false} width="ff" height={height} onUserMedia={streamMedia}/> : ''}
             </div> : ''}
           <div className={columns}>
                 <TircScreen index={index} connectdata={this.props.connectdata}
