@@ -20,9 +20,8 @@ module.exports = React.createClass({
     var screenindex = 'tirc_screen_' + index;
 
     var mappedTextrowData = dataall.map(item => {
-
       id++;
-      return ( <Textrow key={id} elem={item}/> )
+      return ( <Textrow key={id} toggleEmotion={(type) =>  this.props.toggleEmotion(type,item.date) } elem={item}/> )
     });
 
     var mappedPhantomrowData = this.props.activedata.map(item => <Phantomrow {...item} />);
@@ -52,7 +51,6 @@ module.exports = React.createClass({
     var index = prevProps.index;
     console.log('TircScreen: didUpdate');
     console.log('resizible index update: ' + index);
-
     Resizer.resize(index);
 
   }

@@ -1,5 +1,8 @@
-var React = require('react/addons'),
+var React = require('react'),
   Config = require('../services/ConfigService.js');
+
+
+import Emotion from './emotion.jsx';
 module.exports = React.createClass({
 
   getClassName: function (text) {
@@ -80,14 +83,12 @@ module.exports = React.createClass({
     return (<div className={textrowstyle}>
         <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
         <div className="nicktext col-md-9 col-xs-9">
-          <div
-            className="text"
-            dangerouslySetInnerHTML={
-                    {
-                        __html: item.line + '<span class="time small"> - ' + item.time + '</span>'
-                    }
-                        }>
-          </div>
+          <div className="text">
+            <span dangerouslySetInnerHTML={{__html: item.line }} />
+            <Emotion  classNames="glyphicon glyphicon-thumbs-up text-primary" />
+            <Emotion classNames="glyphicon glyphicon-thumbs-down text-danger" />
+            <span className="time small"> - {item.time}</span>
+          </div>  
         </div>
       </div>
     )

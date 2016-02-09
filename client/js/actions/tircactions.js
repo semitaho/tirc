@@ -16,6 +16,12 @@ function toggleLoader(value) {
   }
 }
 
+export function clickEmotion(type){
+  console.log('toggling emotion', type);
+  return {};
+
+}
+
 function formatReceiveData(data) {
   let formattedUsers = data.users.users;
   var arr = Parser.formatusers(formattedUsers);

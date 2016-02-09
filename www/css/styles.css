@@ -18,6 +18,10 @@ body {
     color: red;
 }
 
+html,body{
+    box-sizing: border-box;
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
     margin: 15px 6px 6px;
@@ -625,6 +629,9 @@ h4 {
     color: lightsteelblue;
 }
 
+#video_container{
+    box-sizing: border-box;
+}
 .video-toggle{
     padding-left: 0;
 }
@@ -638,6 +645,19 @@ h4 {
     height:50%;
 }
 
+.dislike {
+ background-color: yellow;
+    background-size: contain;
+    width: 50%;
+    font-size: 16px;
+}
+
+.glyphicon-thumbs-up {
+  margin-left: 1em;  
+}
+.emotion{
+  display: inline;
+}
 
  
 
