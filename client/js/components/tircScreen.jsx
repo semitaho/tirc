@@ -21,7 +21,7 @@ module.exports = React.createClass({
 
     var mappedTextrowData = dataall.map(item => {
       id++;
-      return ( <Textrow key={id} toggleEmotion={(type) =>  this.props.toggleEmotion(type,item.date) } elem={item}/> )
+      return ( <Textrow key={id} elem={item} toggleEmotion={this.props.toggleEmotion}  />)
     });
 
     var mappedPhantomrowData = this.props.activedata.map(item => <Phantomrow {...item} />);
@@ -36,21 +36,22 @@ module.exports = React.createClass({
     Resizer.resize(this.props.index, 700);
   },
 
-  shouldComponentUpdate: function (nextProps, nextState) {
-    var props = this.props;
-    var isEqual = _.isEqual(props, nextProps);
+  shouldComponentUpdate: function (nextProps, nextState) {    
+    var currentTexts  =  _.omit(this.props, 'toggleEmotion');
+    var nextTexts = _.omit(nextProps, 'toggleEmotion');
+    var isEqual = _.isEqual(nextTexts, currentTexts);
+    console.log('isEqual', isEqual);
     if (!isEqual) {
       return true;
     }
     return false;
+
   },
 
 
   componentDidUpdate: function (prevProps, prevState) {
-    console.log('tircScreen: on did update', this.scrolling)
+    console.log('tircScreen - on did update')
     var index = prevProps.index;
-    console.log('TircScreen: didUpdate');
-    console.log('resizible index update: ' + index);
     Resizer.resize(index);
 
   }

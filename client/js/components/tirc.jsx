@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
 import {shareVideo, connectWebsocket, receiveFrame} from './../actions/videoactions.js';
-import {connectBackend, listenBackend, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers, clickEmotion} from './../actions/tircactions.js';
+import {connectBackend, listenBackend, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers, toggleEmotion} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
 
@@ -39,7 +39,7 @@ class Tirc extends React.Component {
         <div className={className}>
           <TopicPanel {...topicpanel} {...tabs} receiveUsers={users => dispatch(receiveUsers(users))}/>
           <Mainpanel shareVideo={id => dispatch(shareVideo(this.ws, id))} {...tabs} userselect={userselect}
-                     visible={isVisible} clickEmotion={(type,textid) => dispatch(clickEmotion(type,textid))} />
+                     visible={isVisible} toggleEmotion={(textid,type) => dispatch(toggleEmotion(textid, type))} />
 
           <div className="tirc_action_panel row" id={actionpanelId}>
             <div className="col-md-11 col-sm-10 col-xs-8">

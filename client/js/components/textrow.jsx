@@ -80,13 +80,14 @@ module.exports = React.createClass({
     if (item.nick === Config.loadUser('taho')) {
       textrowstyle += ' own';
     }
+    console.log('item',item.date);
     return (<div className={textrowstyle}>
         <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
         <div className="nicktext col-md-9 col-xs-9">
           <div className="text">
             <span dangerouslySetInnerHTML={{__html: item.line }} />
-            <Emotion  classNames="glyphicon glyphicon-thumbs-up text-primary" />
-            <Emotion classNames="glyphicon glyphicon-thumbs-down text-danger" />
+            <Emotion toggleEmotion={() => this.props.toggleEmotion(item.date, true) }  classNames="glyphicon glyphicon-thumbs-up text-primary" />
+            <Emotion toggleEmotion={() => this.props.toggleEmotion(item.date, false) } classNames="glyphicon glyphicon-thumbs-down text-danger" />
             <span className="time small"> - {item.time}</span>
           </div>  
         </div>

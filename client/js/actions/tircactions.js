@@ -16,9 +16,13 @@ function toggleLoader(value) {
   }
 }
 
-export function clickEmotion(type){
+export function toggleEmotion(textid, type){
   console.log('toggling emotion', type);
-  return {};
+  console.log('toggling emotion id', textid);
+  return (dispatch,getState) =>  {
+    var user = getState().userselect.chosen;
+    return tircBackend.toggleEmotion(user,textid,type);
+  };
 
 }
 
@@ -39,7 +43,7 @@ export function updateText(index, text) {
 }
 
 export function sayGoodbye(user) {
-  return dispatch => {
+  return (dispatch,getState) => {
     return tircBackend.sayGoodbye(user);
   };
 }

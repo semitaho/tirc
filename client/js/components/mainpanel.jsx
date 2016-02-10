@@ -38,7 +38,7 @@ module.exports = React.createClass({
                <TircWebcam audio={false} width="ff" height={height} onUserMedia={streamMedia}/> : ''}
             </div> : ''}
           <div className={columns}>
-                <TircScreen toggleEmotion={this.props.clickEmotion} index={index} connectdata={this.props.connectdata}
+                <TircScreen toggleEmotion={this.props.toggleEmotion} index={index} connectdata={this.props.connectdata}
                             currentdata={this.props.currentdata} activedata={this.props.activedata}/>
           </div>
             
