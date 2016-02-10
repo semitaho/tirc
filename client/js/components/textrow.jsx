@@ -1,7 +1,6 @@
 var React = require('react'),
   Config = require('../services/ConfigService.js');
 
-
 import Emotion from './emotion.jsx';
 module.exports = React.createClass({
 
@@ -29,16 +28,13 @@ module.exports = React.createClass({
       && input.indexOf('>') === -1;
   },
 
-
   isActionPart: function (input) {
     return input.indexOf("is known as") !== -1;
   },
 
-
   parseTime: function (elem) {
     return elem.match(/[0-9][0-9]:[0-9][0-9](:[0-9][0-9])?/g)[0];
   },
-
 
   format: function (parsedText) {
     var ytre = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
@@ -74,22 +70,35 @@ module.exports = React.createClass({
 
   },
 
+  generateEmotionStyle: function (likes, dislikes) {
+    var styleSize = 0;
+    if (likes && likes.length > 0) {
+      styleSize += (likes.length * 10);
+    }
+    if (dislikes && dislikes.length > 0) {
+      styleSize -= (dislikes.length * 10);
+    }
+    return 'size-' + (100 + styleSize);
+
+  },
 
   rendercomment: function (item) {
     var textrowstyle = 'row comment textrow';
     if (item.nick === Config.loadUser('taho')) {
       textrowstyle += ' own';
     }
-    console.log('item',item.date);
+    textrowstyle += ' ' + this.generateEmotionStyle(item.likes, item.dislikes);
     return (<div className={textrowstyle}>
         <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
         <div className="nicktext col-md-9 col-xs-9">
           <div className="text">
-            <span dangerouslySetInnerHTML={{__html: item.line }} />
-            <Emotion toggleEmotion={() => this.props.toggleEmotion(item.date, true) }  classNames="glyphicon glyphicon-thumbs-up text-primary" />
-            <Emotion toggleEmotion={() => this.props.toggleEmotion(item.date, false) } classNames="glyphicon glyphicon-thumbs-down text-danger" />
+            <span dangerouslySetInnerHTML={{__html: item.line }}/>
+            <Emotion items={item.likes} toggleEmotion={() => this.props.toggleEmotion(item.date, true) }
+                     classNames="glyphicon glyphicon-thumbs-up text-primary"/>
+            <Emotion items={item.dislikes} toggleEmotion={() => this.props.toggleEmotion(item.date, false) }
+                     classNames="glyphicon glyphicon-thumbs-down text-danger"/>
             <span className="time small"> - {item.time}</span>
-          </div>  
+          </div>
         </div>
       </div>
     )
@@ -107,7 +116,6 @@ module.exports = React.createClass({
                     }></div>
     </div>)
   },
-
 
   renderwelcome: function (item) {
     return ( <div
@@ -192,8 +200,9 @@ module.exports = React.createClass({
   renderlogevent: function (item) {
     return (
       <div
-        className="textrow row logevent alert-warning"><div className="col-md-12">{item.line
-      }</div>
+        className="textrow row logevent alert-warning">
+        <div className="col-md-12">{item.line
+        }</div>
       </div> );
   }
 

@@ -40,8 +40,7 @@ module.exports = React.createClass({
     var currentTexts  =  _.omit(this.props, 'toggleEmotion');
     var nextTexts = _.omit(nextProps, 'toggleEmotion');
     var isEqual = _.isEqual(nextTexts, currentTexts);
-    console.log('isEqual', isEqual);
-    if (!isEqual) {
+      if (!isEqual) {
       return true;
     }
     return false;

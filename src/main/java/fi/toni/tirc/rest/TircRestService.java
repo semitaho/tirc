@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fi.toni.tirc.dto.Emotion;
 import fi.toni.tirc.dto.MessageBody;
 import fi.toni.tirc.dto.TircType;
 import org.apache.http.protocol.HTTP;
@@ -199,6 +200,11 @@ public class TircRestService {
       cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
               + "): " + text);
     }
+  }
+  @RequestMapping(method = RequestMethod.POST, value = "/toggleemotion")
+  public void toggleEmotion(@RequestBody Emotion emotion){
+
+    bus.toggleEmotion(emotion);;
   }
 
 

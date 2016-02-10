@@ -26,7 +26,7 @@ class Tirc extends React.Component {
   }
 
   render() {
-    let {tabs, userselect, topicpanel,loading,active, dispatch} = this.props
+    let {tabs, userselect, topicpanel,loading,active, dispatch} = this.props;
     if (this.props.loading && this.props.loading === true) {
       return <Spinner  />
     }
