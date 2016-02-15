@@ -1,8 +1,9 @@
 package fi.toni.tirc.rest;
 
+
 import fi.toni.tirc.communication.*;
-import fi.toni.tirc.communication.Measured.Source;
 import fi.toni.tirc.db.MongoWrapper;
+import fi.toni.tirc.dto.Emotion;
 import fi.toni.tirc.dto.MessageBody;
 import fi.toni.tirc.dto.TircType;
 import fi.toni.tirc.server.LogFileParser;
@@ -174,7 +175,7 @@ public class TircRestService {
     String text = message.getText();
     log.debug("text is: " + text + ", target: " + message.getTarget());
     String nick = message.getNick();
-    TircLine tircLine = new TircLine(Source.TIRC);
+    TircLine tircLine = new TircLine(Measured.Source.TIRC);
     tircLine.setType("comment");
     tircLine.setLine(message.getHtmltext());
     tircLine.setNick(nick);
@@ -188,6 +189,11 @@ public class TircRestService {
               + "): " + text);
                */
     }
+  }
+  @RequestMapping(method = RequestMethod.POST, value = "/toggleemotion")
+  public void toggleEmotion(@RequestBody Emotion emotion){
+
+    bus.toggleEmotion(emotion);;
   }
 
 

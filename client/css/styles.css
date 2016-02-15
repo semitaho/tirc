@@ -18,7 +18,7 @@ body {
     color: red;
 }
 
-html,body{
+html, body {
     box-sizing: border-box;
 }
 
@@ -71,7 +71,6 @@ h1 {
     width: 100%;
 }
 
-
 selector:-webkit-full-screen {
     display: block;
 / / displays the element only when in fullscreen
@@ -96,10 +95,9 @@ selector {
     overflow-y: auto;
 }
 
-.guest h3.list-group-item-heading  {
+.guest h3.list-group-item-heading {
     color: white;
 }
-
 
 .tirc_info_panel .tircuser .idle {
     display: none;
@@ -129,16 +127,17 @@ selector {
 
 .fixing, .typing {
     padding-left: 5em;
-   /* animation: myfirst 2s linear 0s alternate none infinite;
-    -webkit-animation: myfirst 2s linear 0s alternate none infinite; */
+    /* animation: myfirst 2s linear 0s alternate none infinite;
+     -webkit-animation: myfirst 2s linear 0s alternate none infinite; */
 }
 
 .fixing {
-   color: red;
+    color: red;
 
 }
+
 .typing {
-   color: yellow;
+    color: yellow;
 }
 
 .tirc_screen {
@@ -184,7 +183,6 @@ selector {
     font-weight: normal;
 }
 
-
 .tirc_screen .action .embed {
     text-align: center;
     max-width: 100%;
@@ -196,7 +194,7 @@ selector {
 
 }
 
-.thumbnail{
+.thumbnail {
     background-color: darkorange;
 
 }
@@ -492,6 +490,25 @@ a.ng-click-active {
     -webkit-animation: myfirst 1s ease-in;
 }
 
+.size-90 {
+    font-size: .9em;
+}
+
+.size-80 {
+    font-size: .8em;
+}
+
+.size-110, .size-120, .size-130 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.size-140 {
+    font-size: 1.8em;
+    font-weight: bold;
+
+}
+
 .tirc_main {
     height: 100%;
 
@@ -569,7 +586,7 @@ a.ng-click-active {
     background: none repeat scroll 0 0 #4179AD;
 }
 
-.list-group-item{
+.list-group-item {
     background-color: black;
     border: none;
 }
@@ -585,7 +602,7 @@ a.ng-click-active {
     transform: translateX(-50%) translateY(-50%);
 }
 
-.spinner.fadein{
+.spinner.fadein {
     animation: myfirst .5s linear 0s alternate none infinite;
     -webkit-animation: myfirst .5s linear 0s alternate none infinite;
 
@@ -599,40 +616,43 @@ a.ng-click-active {
 h3 {
     margin: 10px;
 }
+
 #tirc_nicks {
     padding-bottom: 0;
     margin-bottom: 0;
 }
 
-
-#tirc_nicks .tircuser{
+#tirc_nicks .tircuser {
     vertical-align: top;
 }
+
 h3 {
     margin: 0;
 }
+
 h4 {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-
-.panel-footer{
+.panel-footer {
     background: lightsteelblue;
 }
+
 .topic-panel {
-   background: #337ab7;
+    background: #337ab7;
 }
 
-#tirc_nicks .active{
+#tirc_nicks .active {
     font-weight: bold;
     color: lightsteelblue;
 }
 
-#video_container{
+#video_container {
     box-sizing: border-box;
 }
-.video-toggle{
+
+.video-toggle {
     padding-left: 0;
 }
 
@@ -641,22 +661,23 @@ h4 {
 }
 
 #tirc-video {
-    width:50%
-    height:50%;
+    width: 50% height : 50 %;
 }
 
 .dislike {
- background-color: yellow;
+    background-color: yellow;
     background-size: contain;
     width: 50%;
     font-size: 16px;
 }
 
 .glyphicon-thumbs-up {
-  margin-left: 1em;  
+    margin-left: 1em;
 }
-.emotion{
-  display: inline;
+
+.emotion {
+    display: inline;
+    margin-right: 1em;
 }
 
  

@@ -111,12 +111,14 @@ class TircBackend {
     });
   }
 
-  toggleEmotion(user,textid,type){
-     return $.ajax({
+  toggleEmotion(user, id, like) {
+
+    var emotion = {user, like, id};
+    return $.ajax({
       type: "POST",
       url: this.URL + 'toggleemotion',
       contentType: 'application/json;charset=UTF-8',
-      data: JSON.stringify(message)
+      data: JSON.stringify(emotion)
     });
 
   }

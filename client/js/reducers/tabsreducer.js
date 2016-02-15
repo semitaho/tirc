@@ -47,6 +47,12 @@ export default function tabsreducer(state = initTabState, action) {
       return Object.assign({}, state, {
         activedata: action.items
       });
+
+    case 'RECEIVE_CURRENTDATA':
+      console.log('hmm', action.data);
+      return Object.assign({}, state, {
+        currentdata: action.data
+      });
     case 'RECEIVE_TIRC_USERS':
       return Object.assign({}, state, {
         tircusers: action.tircusers

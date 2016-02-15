@@ -16,12 +16,10 @@ function toggleLoader(value) {
   }
 }
 
-export function toggleEmotion(textid, type){
-  console.log('toggling emotion', type);
-  console.log('toggling emotion id', textid);
-  return (dispatch,getState) =>  {
+export function toggleEmotion(textid, type) {
+  return (dispatch, getState) => {
     var user = getState().userselect.chosen;
-    return tircBackend.toggleEmotion(user,textid,type);
+    return tircBackend.toggleEmotion(user, textid, type);
   };
 
 }
@@ -43,7 +41,7 @@ export function updateText(index, text) {
 }
 
 export function sayGoodbye(user) {
-  return (dispatch,getState) => {
+  return (dispatch, getState) => {
     return tircBackend.sayGoodbye(user);
   };
 }
@@ -63,6 +61,9 @@ export function listenBackend(id, subscriber) {
           break;
         case 'ontopic':
           dispatch(receiveTopic(data.data));
+          break;
+        case 'oncurrentdata':
+          dispatch(receiveCurrentdata(data.data.data));
           break;
         default:
           break;
@@ -125,6 +126,13 @@ export function receiveTopic(topic) {
     topic
   }
 }
+export function receiveCurrentdata(data) {
+  return {
+    type: 'RECEIVE_CURRENTDATA',
+    data
+  };
+}
+
 export function receiveMessage(index, message, isunread) {
   return {
     type: 'RECEIVE_MESSAGE',
@@ -135,7 +143,7 @@ export function receiveMessage(index, message, isunread) {
 
 }
 
-export function toggleVideo(show){
+export function toggleVideo(show) {
   return {
     type: 'TOGGLE_VIDEO',
     show
@@ -157,9 +165,9 @@ function handleMessage(dispatch, getState, data) {
 
 }
 
-export function changeState(user, newstate,text) {
+export function changeState(user, newstate, text) {
   return dispatch => {
-    return tircBackend.changeState(user, newstate,text );
+    return tircBackend.changeState(user, newstate, text);
   };
 }
 
