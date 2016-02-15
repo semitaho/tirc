@@ -1,5 +1,24 @@
 package fi.toni.tirc.rest;
 
+import fi.toni.tirc.communication.*;
+import fi.toni.tirc.communication.Measured.Source;
+import fi.toni.tirc.db.MongoWrapper;
+import fi.toni.tirc.dto.MessageBody;
+import fi.toni.tirc.dto.TircType;
+import fi.toni.tirc.server.LogFileParser;
+import fi.toni.tirc.server.LogsReader;
+import fi.toni.tirc.server.TircListenerThread;
+import fi.toni.tirc.util.TircIdGenerator;
+import fi.toni.tirc.util.TircMessageFormatter;
+import fi.toni.tirc.util.TircMessageParser;
+import fi.toni.tirc.util.TircUtil;
+import org.apache.log4j.Logger;
+import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,42 +26,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-
-import fi.toni.tirc.dto.MessageBody;
-import fi.toni.tirc.dto.TircType;
-import org.apache.http.protocol.HTTP;
-import org.apache.log4j.Logger;
-import org.bson.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.async.DeferredResult;
-
-import com.mongodb.DBObject;
-
-import fi.toni.tirc.util.TircIdGenerator;
-import fi.toni.tirc.util.TircMessageFormatter;
-import fi.toni.tirc.util.TircMessageParser;
-import fi.toni.tirc.util.TircUtil;
-import fi.toni.tirc.db.MongoWrapper;
-import fi.toni.tirc.communication.ChannelTopic;
-import fi.toni.tirc.irc.ConnectionThread;
-import fi.toni.tirc.server.LogFileParser;
-import fi.toni.tirc.server.LogsReader;
-import fi.toni.tirc.communication.Measured;
-import fi.toni.tirc.communication.Measured.Source;
-import fi.toni.tirc.communication.MessageBus;
-import fi.toni.tirc.server.TircListenerThread;
-import fi.toni.tirc.communication.TircLine;
-import fi.toni.tirc.communication.TircUser;
-import fi.toni.tirc.communication.TircUsers;
 
 @RestController
 @RequestMapping("/backend")
@@ -50,8 +33,6 @@ public class TircRestService {
 
   static Logger log = Logger.getLogger(TircRestService.class);
 
-  @Autowired
-  private ConnectionThread cthread;
 
   @Autowired
   private LogsReader reader;
@@ -114,8 +95,12 @@ public class TircRestService {
     String lineStr = line.getLine();
     line.setLine(formattedLine);
     bus.addNewLine(line);
+    /**
+     * rest
+
     cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION saapui paikalle nickillä " + nick + " " + lineStr);
-    return line;
+     */
+     return line;
   }
 
   @RequestMapping("/changestate")
@@ -196,8 +181,12 @@ public class TircRestService {
     tircLine.setTarget(message.getTarget());
     bus.addNewLine(tircLine);
     if (tircLine.getTarget() == null) {
+      /*
+
+      * rest
       cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
               + "): " + text);
+               */
     }
   }
 
@@ -207,7 +196,11 @@ public class TircRestService {
     String nick = message.getNick();
     TircLine tircLineGoodbye = TircMessageParser.parseGoodbye(nick);
     bus.addNewLine(tircLineGoodbye);
+    /*
+    * rest
     cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION poistui paikalta nickillä " + nick);
+         */
+
   }
 
   @RequestMapping(value = "/updatelocation", method = RequestMethod.POST)
@@ -224,10 +217,15 @@ public class TircRestService {
   public void changeNick(@RequestBody MessageBody message) {
     String oldnick = message.getNickold();
     String newnick = message.getNick();
-    String line = "PRIVMSG " + cthread.getChannel()
+    String line = "PRIVMSG #test1"
             + " :\u0001ACTION vaihtoi nimimerkin " + oldnick
             + " nimimerkkiin " + newnick;
+    /*
+    * rest
+
     cthread.writeLine(line);
+     */
   }
+
 
 }

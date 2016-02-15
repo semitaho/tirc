@@ -139,29 +139,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
-				<configuration> <source>1.8</source> <target>1.8</target> </configuration> 
-				</plugin> -->
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<configuration> <archive> <manifest> <addClasspath>true</addClasspath> </manifest> 
-				</archive> </configuration> </plugin> -->
-			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <version>2.2</version> 
-				<configuration> <appendAssemblyId>false</appendAssemblyId> </configuration> 
-				<executions> <execution> <id>make-assembly</id> <phase>package</phase> <goals> 
-				<goal>single</goal> </goals> <configuration> <descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> 
-				</descriptorRefs> <archive> <manifest> <mainClass>fi.toni.tirc.TircServer</mainClass> 
-				</manifest> </archive> </configuration> </execution> <execution> <id>make-zip</id> 
-				<phase>package</phase> <goals> <goal>single</goal> </goals> <configuration> 
-				<descriptors> <descriptor>/src/assembly/zip.xml</descriptor> </descriptors> 
-				</configuration> </execution> </executions> </plugin> -->
-			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>2.0.2</version> 
-				<configuration> <includes> <include>TircServer.java</include> </includes> 
-				</configuration> </plugin> -->
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId> 
-				<version>1.1</version> <executions> <execution> <goals> <goal>java</goal> 
-				</goals> </execution> </executions> <configuration> <mainClass>fi.toni.tirc.TircServer</mainClass> 
-				</configuration> </plugin> -->
-
 		</plugins>
 	</build>
 </project>

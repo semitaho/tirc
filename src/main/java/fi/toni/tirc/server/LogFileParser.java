@@ -1,15 +1,8 @@
 package fi.toni.tirc.server;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import fi.toni.tirc.communication.IrcUser;
 import fi.toni.tirc.communication.TircLine;
+
+import java.util.*;
 
 public class LogFileParser {
 
@@ -73,34 +66,5 @@ public class LogFileParser {
 		}
 		return dayChangeLines;
 	}
-	
-	
-	
-	public static Map<String, IrcUser> parseNicksFromLine(
-			Map<String, IrcUser> oldTircUsers, String line) {
-		int lastIndexOf = line.lastIndexOf(":");
-		String nicks = line.substring(lastIndexOf + 1).trim();
-		String[] split = nicks.split(" ");
-		Map<String, IrcUser> users = new HashMap<String, IrcUser>();
-		for (String nick : split) {
-			IrcUser user = null;
-			if (nick.contains("@")) {
-				user = new IrcUser(nick.substring(1));
-			} else if (nick.contains("+")) {
-				user = new IrcUser(nick.substring(1));
-			} else {
-				user = new IrcUser(nick);
-			}
-			IrcUser oldUser = oldTircUsers.get(user.getNick());
-			if ((oldUser != null)) {
-				user.setIdleTime(oldUser.getIdleTime());
-			} 
-			users.put(user.getNick(), user);
-			
-		}
-		return users;
-	}
-
-
 
 }

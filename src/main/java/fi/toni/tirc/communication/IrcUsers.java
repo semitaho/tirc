@@ -1,9 +1,10 @@
 package fi.toni.tirc.communication;
 
+import fi.toni.tirc.dto.TircType;
+import fi.toni.tirc.dto.response.IrcUser;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import fi.toni.tirc.dto.TircType;
 
 public class IrcUsers extends Measured {
 

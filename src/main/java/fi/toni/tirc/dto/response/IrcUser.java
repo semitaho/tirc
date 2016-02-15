@@ -1,4 +1,4 @@
-package fi.toni.tirc.communication;
+package fi.toni.tirc.dto.response;
 
 import java.io.Serializable;
 
@@ -19,14 +19,6 @@ public class IrcUser implements Serializable {
 
 	private int idleTime = 0;
 
-	public IrcUser(String nick) {
-		this(nick, "tirc");
-	}
-
-	public IrcUser(String nick, String type) {
-		this.nick = nick;
-		this.type = "irc";
-	}
 
 	public void setNick(String nick) {
 		this.nick = nick;
