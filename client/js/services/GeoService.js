@@ -1,8 +1,5 @@
 module.exports = (function () {
   var watchId = null;
-  var currentPositionDone = function (position, successcallback, error) {
-
-  };
 
   return {
     init: function () {

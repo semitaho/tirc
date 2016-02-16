@@ -28,7 +28,7 @@ gulp.task('templates', function () {
 
 var webserver = require('gulp-webserver');
 
-gulp.task('build', ['templates']);
+gulp.task('build', ['copyhtml', 'templates', 'copycss', 'copyfonts', 'compilejs', 'copyjs', 'copyimages']);
 
 gulp.task('copyhtml', function () {
   return gulp.src(htmlfiles).

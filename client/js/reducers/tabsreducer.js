@@ -49,7 +49,6 @@ export default function tabsreducer(state = initTabState, action) {
       });
 
     case 'RECEIVE_CURRENTDATA':
-      console.log('hmm', action.data);
       return Object.assign({}, state, {
         currentdata: action.data
       });

@@ -2,6 +2,8 @@ import tircBackend from './../services/TircBackend.js';
 import Parser from './../services/Parser.js';
 import NotifyService from './../services/NotificationService.js';
 import Config from './../services/ConfigService.js';
+import GeoService from './../services/GeoService.js';
+
 function receiveServerData(serverdata) {
   return {
     type: 'RECEIVE_SERVER_DATA',
@@ -14,6 +16,17 @@ function toggleLoader(value) {
     type: 'TOGGLE_LOADER',
     value
   }
+}
+
+export function geocode(nick){
+  return dispatch => {
+    console.log('geocoding....', nick);
+    GeoService.init().then(GeoService.reverseGeocode)
+      .then(data => {
+        console.log('got',data);
+        return tircBackend.submitLocation(nick, data);
+    });
+  };
 }
 
 export function toggleEmotion(textid, type) {

@@ -133,19 +133,17 @@ class TircBackend {
     });
   }
 
-  sayWelcome(nick, location, success) {
-    var message = {
-      nick: nick
+  submitLocation(nick, location) {
+    let message = {
+      nick: nick,
+      location
     };
-    if (location !== null && location !== undefined) {
-      message.location = location;
-    }
-    $.ajax({
+    console.log('message', message);
+    return $.ajax({
       type: "POST",
-      url: URL + 'saywelcome',
+      url: this.URL + 'submitlocation',
       contentType: 'application/json;charset=UTF-8',
-      data: JSON.stringify(message),
-      success: success
+      data: JSON.stringify(message)
     });
   }
 

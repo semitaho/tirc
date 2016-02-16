@@ -5,13 +5,15 @@ package fi.toni.tirc.dto;
 
 import fi.toni.tirc.rest.Location;
 
+import java.io.Serializable;
+
 /**
  * Data transfer object for message travelling.
  * 
  * @author Toni
  *
  */
-public class MessageBody {
+public class MessageBody implements Serializable {
 
 	
 	private String nickold;

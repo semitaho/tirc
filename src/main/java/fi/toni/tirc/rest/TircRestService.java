@@ -47,6 +47,9 @@ public class TircRestService {
   @Autowired
   private TircListenerThread listenerThread;
 
+  @Autowired
+  private IrcRestClient restClient;
+
   public TircRestService() {
 
   }
@@ -66,10 +69,6 @@ public class TircRestService {
     connectData.setLogsData(dayChangeStartLogs);
     // haetaan vain #test1-data connectiin
     List<TircLine> test1Data = bus.getCurrentLines();
-    if (message.getLocation() != null) {
-      TircLine locationLine = handleLocation(request, message);
-      test1Data.add(locationLine);
-    }
     connectData.setCurrentData(test1Data);
     connectData.setId(TircIdGenerator.generateId());
     connectData.setUsers(bus.getIrcUsers());
@@ -83,11 +82,10 @@ public class TircRestService {
     return connectData;
   }
 
-
-  private TircLine handleLocation(HttpServletRequest request, MessageBody message) {
-    String location = message.getLocation().getLocation();
+  @RequestMapping(value = "/submitlocation", method = RequestMethod.POST)
+  private TircLine submitLocation(HttpServletRequest request, @RequestBody MessageBody message) {
+    log.debug("current location message: " + message);
     String nick = message.getNick();
-    log.debug("current location: " + location);
     String browser = TircUtil.resolveUserAgent(request);
     db.saveLocation(message, browser);
     List<Document> locations = db.findLatestLocationsByNick(nick, browser);
@@ -96,12 +94,8 @@ public class TircRestService {
     String lineStr = line.getLine();
     line.setLine(formattedLine);
     bus.addNewLine(line);
-    /**
-     * rest
-
-    cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION saapui paikalle nickillä " + nick + " " + lineStr);
-     */
-     return line;
+    restClient.join(nick, lineStr);
+    return line;
   }
 
   @RequestMapping("/changestate")
@@ -182,18 +176,15 @@ public class TircRestService {
     tircLine.setTarget(message.getTarget());
     bus.addNewLine(tircLine);
     if (tircLine.getTarget() == null) {
-      /*
-
-      * rest
-      cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :(" + nick
-              + "): " + text);
-               */
+      restClient.sendText(nick, text);
     }
   }
-  @RequestMapping(method = RequestMethod.POST, value = "/toggleemotion")
-  public void toggleEmotion(@RequestBody Emotion emotion){
 
-    bus.toggleEmotion(emotion);;
+  @RequestMapping(method = RequestMethod.POST, value = "/toggleemotion")
+  public void toggleEmotion(@RequestBody Emotion emotion) {
+
+    bus.toggleEmotion(emotion);
+    ;
   }
 
 
@@ -202,11 +193,7 @@ public class TircRestService {
     String nick = message.getNick();
     TircLine tircLineGoodbye = TircMessageParser.parseGoodbye(nick);
     bus.addNewLine(tircLineGoodbye);
-    /*
-    * rest
-    cthread.writeLine("PRIVMSG " + cthread.getChannel() + " :\u0001ACTION poistui paikalta nickillä " + nick);
-         */
-
+    restClient.leave(nick);
   }
 
   @RequestMapping(value = "/updatelocation", method = RequestMethod.POST)
