@@ -3,16 +3,9 @@
  */
 package fi.toni.tirc.communication;
 
+import fi.toni.tirc.dto.Emotion;
 import fi.toni.tirc.dto.response.IrcUser;
 import fi.toni.tirc.server.TircListenerThread;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-
-import fi.toni.tirc.dto.Emotion;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +14,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Toni
@@ -123,10 +115,6 @@ public class MessageBus {
   public void refreshTopic(String topicStr) {
     channelTopic.setTopic(topicStr);
     listenerThread.receive(channelTopic);
-  }
-
-  public void refreshIrcUsers() {
-    listenerThread.receive(ircUsers);
   }
 
   public void refreshIrcUsers(Map<String, IrcUser> tircUserMap) {

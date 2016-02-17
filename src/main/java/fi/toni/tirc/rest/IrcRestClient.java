@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 
 import java.util.Arrays;
@@ -37,6 +38,14 @@ public class IrcRestClient {
     requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     HttpEntity<T> httpEntity = new HttpEntity<>(entity, requestHeaders);
     return httpEntity;
+  }
+
+  public void askTopic(ListenableFutureCallback<ResponseEntity<String>> callback) {
+    AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+    HttpHeaders requestHeaders = new HttpHeaders();
+    requestHeaders.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
+    ListenableFuture<ResponseEntity<String>> forEntity = asyncRestTemplate.getForEntity(BASE_URL + "/asktopic", String.class);
+    forEntity.addCallback(callback);
 
   }
 

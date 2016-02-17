@@ -16,6 +16,8 @@ import fi.toni.tirc.util.TircUtil;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -79,6 +81,19 @@ public class TircRestService {
     connectData.setTircusers(tircUsers);
     TircLine tircLine = TircUtil.mapToJoinLine(nick);
     bus.addNewLine(tircLine);
+    restClient.askTopic(new ListenableFutureCallback<ResponseEntity<String>>() {
+      @Override
+      public void onFailure(Throwable throwable) {
+        log.error("Could not obtain topic, error", throwable);
+      }
+
+      @Override
+      public void onSuccess(ResponseEntity<String> stringResponseEntity) {
+        log.debug("FIND SOMETHING: " + stringResponseEntity.getBody());
+        bus.refreshTopic(stringResponseEntity.getBody());
+
+      }
+    });
     return connectData;
   }
 
