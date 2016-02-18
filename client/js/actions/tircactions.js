@@ -30,6 +30,7 @@ export function geocode(nick){
 }
 
 export function toggleEmotion(textid, type) {
+  console.log('toggling');
   return (dispatch, getState) => {
     var user = getState().userselect.chosen;
     return tircBackend.toggleEmotion(user, textid, type);

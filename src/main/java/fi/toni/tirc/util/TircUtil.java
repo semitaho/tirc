@@ -1,18 +1,17 @@
 package fi.toni.tirc.util;
 
+import fi.toni.tirc.communication.TircLine;
+import org.bson.Document;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.mongodb.BasicDBObject;
-
-import fi.toni.tirc.communication.TircLine;
-import org.bson.Document;
+import java.util.HashSet;
+import java.util.List;
 
 public class TircUtil {
 
@@ -89,7 +88,15 @@ public class TircUtil {
       tircLine.setLine(dbObject.getString("line"));
     }
     if (dbObject.containsKey("likes")){
+      List<String> likesList =  (List<String>) dbObject.get("likes");
+      HashSet<String> likes = new HashSet<>(likesList);
+      tircLine.setLikes(likes);
       // TODO: jatka huomenna
+    }
+    if (dbObject.containsKey("dislikes")){
+      List<String> likesList =  (List<String>) dbObject.get("dislikes");
+      HashSet<String> likes = new HashSet<>(likesList);
+      tircLine.setDislikes(likes);
     }
 
     return tircLine;

@@ -8,10 +8,10 @@ var clazz = React.createClass({
   render: function () {
     var id = 'tab_panel_0';
     return <div className="topic-panel row panel-title">
-              <div className="col-md-2 col-sm-10 col-xs-9">
+              <div className="col-md-4 col-sm-10 col-xs-9 topic">
                   <h3>{this.props.topic}</h3>
               </div>
-              <div className="col-md-8 hidden-xs hidden-sm overflow-scroll">
+              <div className="col-md-6 hidden-xs hidden-sm overflow-scroll">
                <Nickpanel users={this.props.users} receiveUsers={this.props.receiveUsers} tircusers={this.props.tircusers}/>
               </div>
               <div className="col-md-2 col-sm-2 col-xs-3">

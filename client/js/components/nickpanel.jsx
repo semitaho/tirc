@@ -88,16 +88,13 @@ module.exports = React.createClass({
 
       if (current !== user.nick) {
         return (<li className="tircuser guest">
-          <h4 className="nick" onClick={that.onuserclick.bind(that, user.nick)}
-               title="Aloita privakeskustelu">{user.nick}</h4>
-          <div className={clazz}>{statemap[user.state]}</div>
+          <h4 className="nick">{user.nick}</h4>
         </li>)
       }
 
       else {
         return (<li className="tircuser  active">
           <h4 className="nick">{user.nick}</h4>
-          <div className={clazz}>{statemap[user.state]}</div>
         </li>)
       }
     });

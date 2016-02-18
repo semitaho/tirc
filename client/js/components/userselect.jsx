@@ -17,7 +17,7 @@ class Userselect extends React.Component {
     };
     return (
       <div id="userselect" className="text-right">
-        <select className="form-control" name="userlist" onChange={onchange} value={this.props.chosen}>
+        <select className="form-control input-sm" name="userlist" onChange={onchange} value={this.props.chosen}>
           {this.props.users.map(user => {
             return (<option key={user}>{user}</option>)
           })}

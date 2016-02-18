@@ -5,7 +5,7 @@ class PhantomRow extends React.Component {
     let {nick,state, text} = this.props;
 
     var str = nick;
-    var clazz = 'col-md-12 ';
+    var clazz = 'col-md-9 col-md-offset-3 ';
     if (state === 'fixing'){
       str += ' korjaa...';
       clazz += 'fixing'
