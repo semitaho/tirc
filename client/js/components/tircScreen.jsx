@@ -49,9 +49,12 @@ module.exports = React.createClass({
 
 
   componentDidUpdate: function (prevProps, prevState) {
-    console.log('tircScreen - on did update')
+    console.log('tircScreen - on did update');
     var index = prevProps.index;
-    if (prevProps.currentdata.length !== this.props.currentdata.length){
+    let prevDataLength = prevProps.currentdata.length + prevProps.activedata.length;
+    let currentDataLength = this.props.currentdata.length + this.props.activedata.length;
+
+    if (prevDataLength !== currentDataLength){
       Resizer.resize(index);
     }
 
