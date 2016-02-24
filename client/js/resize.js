@@ -1,6 +1,14 @@
 var $ = require('jquery');
 module.exports = (function () {
 
+
+  var _isScrollActivated = function(domNode){
+    let elem = $(domNode);
+    if(elem.scrollTop() + elem.height() >= elem[0].scrollHeight) {
+       return false;
+    }
+    return true;
+  };
   var doScroll = function (index, interval) {
 
     var elem = $('#tirc_screen_' + index);
@@ -44,15 +52,9 @@ module.exports = (function () {
     var boxHeight = box.outerHeight();
     console.log('action panel height', boxHeight);
     console.log('y', box.offset().top);
-    let videoOuterHeight = videocontainer.outerHeight();
-    if (unmount){
-      videoOuterHeight = 0;
-    }
-    console.log('outer height', videoOuterHeight);
-
     var currentHeight = $(window).outerHeight();
-    elem.css('height', currentHeight - startY - boxHeight- videoOuterHeight);
-    scroll(lastHeight, interval);
+    elem.css('height', currentHeight - startY - boxHeight- 0);
+    //scroll(lastHeight, interval);
 
   };
 
@@ -61,7 +63,8 @@ module.exports = (function () {
 
   return {
     resize: resize,
-    scroll: scroll
+    scroll: scroll,
+    isScrollActivated: _isScrollActivated
   };
 })();
 

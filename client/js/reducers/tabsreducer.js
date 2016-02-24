@@ -7,6 +7,7 @@ const initTabState =
   screenloaded: true,
   topic: 'tIrc redux is here',
   users: [],
+  scrolling: false,
   tircusers: [
     {nick: 'taho', time: date, state: 'connected'},
     {nick: 'mcw', time: date2, state: 'fixing'}
@@ -35,6 +36,8 @@ export default function tabsreducer(state = initTabState, action) {
       return Object.assign({}, state, {
         currentdata
       });
+    case 'SCROLL': 
+      return Object.assign({}, state, {scrolling: action.scrolling});  
     case 'RECEIVE_USERS':
       return Object.assign({}, state, {
         users: action.users
@@ -48,9 +51,10 @@ export default function tabsreducer(state = initTabState, action) {
         activedata: action.items
       });
 
-    case 'RECEIVE_CURRENTDATA':
+    case 'RECEIVE_TEXTCHANGE':
+      let current = [...state.currentdata.slice(0, action.index), action.data, ...state.currentdata.slice(action.index+1)];
       return Object.assign({}, state, {
-        currentdata: action.data
+        currentdata:current
       });
     case 'RECEIVE_TIRC_USERS':
       return Object.assign({}, state, {
@@ -78,6 +82,7 @@ export default function tabsreducer(state = initTabState, action) {
         currentdata: action.serverdata.currentData,
         topic: action.serverdata.topic,
         users: action.serverdata.users,
+        scrolling:false,
         tircusers: action.serverdata.tircusers,
         activedata: [],
         messagebox: {}

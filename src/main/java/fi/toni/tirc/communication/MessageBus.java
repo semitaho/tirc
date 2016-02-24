@@ -125,9 +125,11 @@ public class MessageBus {
 
   public void toggleEmotion(Emotion emotion) {
     List<TircLine> currentLines = getCurrentLines();
+    TircLine chosenLine = null;
     for (int i = 0; i < currentLines.size(); i++) {
       TircLine currentLine = currentLines.get(i);
       if (currentLine.getDate().getTime() == emotion.getId().longValue()) {
+        chosenLine = currentLine;
         log.debug("GOT emotion line: " + currentLine);
         if (emotion.isLike()) {
           if (currentLine.getLikes().contains(emotion.getUser())) {
@@ -145,10 +147,10 @@ public class MessageBus {
         break;
       }
     }
-    CurrentData currentData = new CurrentData();
-    currentData.setData(currentLines);
-    listenerThread.receive(currentData);
-
+    if (chosenLine == null){
+      return;
+    }
+    listenerThread.receive(chosenLine);
     synchronized (this) {
       clearCurrent();
       this.newLines.addAll(currentLines);

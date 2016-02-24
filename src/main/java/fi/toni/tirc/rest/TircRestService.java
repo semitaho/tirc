@@ -197,9 +197,7 @@ public class TircRestService {
 
   @RequestMapping(method = RequestMethod.POST, value = "/toggleemotion")
   public void toggleEmotion(@RequestBody Emotion emotion) {
-
     bus.toggleEmotion(emotion);
-    ;
   }
 
 

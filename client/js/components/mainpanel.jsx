@@ -12,13 +12,10 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     console.log('mainScreen - mounted');
-    console.log('width: ' + $('#video_container').width());
-
   },
 
   render: function () {
     const streamMedia = e => {
-      console.log('got video',e);
       this.props.shareVideo('video');
     };
 
@@ -27,7 +24,7 @@ module.exports = React.createClass({
     var idindex = 'tirc_main_panel_middle_0';
     var clazz = '';
     let height =  uiService.calculateVideoHeight();
-    let columns = 'col-md-12 tirc_main panel-default' ;
+    let columns = 'col-md-12 tirc_main panel-default full-width' ;
     return (
 
         <div className="tirc_main_panel_middle  row" id={idindex}>
@@ -38,7 +35,7 @@ module.exports = React.createClass({
                <TircWebcam audio={false} width="ff" height={height} onUserMedia={streamMedia}/> : ''}
             </div> : ''}
           <div className={columns}>
-                <TircScreen toggleEmotion={this.props.toggleEmotion} index={index} connectdata={this.props.connectdata}
+                <TircScreen scrolling={this.props.scrolling} scroll={this.props.scroll} toggleEmotion={this.props.toggleEmotion} index={index} connectdata={this.props.connectdata}
                             currentdata={this.props.currentdata} activedata={this.props.activedata}/>
           </div>
             

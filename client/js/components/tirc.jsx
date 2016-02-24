@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
 import {shareVideo, connectWebsocket, receiveFrame} from './../actions/videoactions.js';
-import {connectBackend, listenBackend, geocode, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers, toggleEmotion} from './../actions/tircactions.js';
+import {connectBackend, listenBackend, geocode, changeState, topicpanel,sendText, updateText, toggleVideo,receiveUsers, sayGoodbye, changeUser, loadUsers, toggleEmotion, scroll} from './../actions/tircactions.js';
 
 class Tirc extends React.Component {
 
@@ -39,11 +39,12 @@ class Tirc extends React.Component {
                 <div className={className}>
                     <TopicPanel {...topicpanel} {...tabs} receiveUsers={users => dispatch(receiveUsers(users))}/>
                     <Mainpanel shareVideo={id => dispatch(shareVideo(this.ws, id))} {...tabs} userselect={userselect}
+                               scroll={(isScrolling) => dispatch(scroll(isScrolling))}
                                visible={isVisible}
                                toggleEmotion={(textid,type) => dispatch(toggleEmotion(textid, type))}/>
 
                     <div className="tirc_action_panel row" id={actionpanelId}>
-                        <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-12 col-sm-12 col-xs-12 full-width">
 
                             <Messagebox {...tabs.messagebox} updateText={text => dispatch(updateText(text))}
                                                              sendText={(text,formattedtext) => dispatch(sendText(this.props.userselect.chosen, text, formattedtext))}
@@ -58,10 +59,8 @@ class Tirc extends React.Component {
 
     componentDidMount() {
         let dispatch = this.props.dispatch;
-        console.log('tirc - doowing resize');
         $(window).unload(() => this.destroy());
         const onmessage = (event) => {
-            console.log('onmessage', event);
             dispatch(receiveFrame(event.data));
 
         };
@@ -70,7 +69,6 @@ class Tirc extends React.Component {
         dispatch(loadUsers()).then(data => {
             dispatch(geocode(this.props.userselect.chosen));
             dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {
-                console.log('backend fired...', backenddata);
                 dispatch(listenBackend(backenddata.id, this.props.userselect.chosen));
             });
         });

@@ -19,19 +19,4 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 let store = createStoreWithMiddleware(tircApp);
-
 render(<Provider store={store}><Tirc /></Provider>, tircContent);
-
-/*
-
- 
- geoservice.init()
- .then(geoservice.reverseGeocode)
- .then(function (location) {
- return backend.connect(config.loadUser(), location);
- }).catch(function (err) {
- console.log('on err', err);
- return backend.connect(config.loadUser());
- });
- */
-

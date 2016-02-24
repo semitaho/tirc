@@ -121,10 +121,10 @@ module.exports = React.createClass({
         return ( <div
                 className="row textrow">
                 <div
-                    className="action col-md-12"
+                    className="action col-md-12 thumbnail"
                     dangerouslySetInnerHTML={
                 {
-                    __html: '<div class="thumbnail"><div class="caption" >'+ item.nick + ' saapui paikalle ' + item.line + '</div><span class="time small"> - ' + item.time + '</span></div>'
+                    __html: '<div><div class="caption" >'+ item.nick + ' saapui paikalle ' + item.line + '</div><span class="time small"> - ' + item.time + '</span></div>'
                 }
                     }
                 ></div>

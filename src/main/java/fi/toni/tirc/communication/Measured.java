@@ -38,10 +38,6 @@ public abstract class Measured {
 		this.id = id;
 	}
 
-	public String getLastId() {
-		return this.getClass().getSimpleName() + "_" + id;
-	}
-	
 	public String getSource(){
 		return this.source;
 	}

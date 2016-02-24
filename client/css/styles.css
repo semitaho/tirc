@@ -9,6 +9,12 @@ body {
     width: 100%;
 }
 
+.row, .full-width {
+    margin: 0;
+    padding: 0; 
+}
+
+
 .sendButton {
     display: block;
     font-size: 16pt;
@@ -73,15 +79,6 @@ h1 {
     width: 100%;
 }
 
-selector:-webkit-full-screen {
-    display: block;
-/ / displays the element only when in fullscreen
-}
-
-selector {
-    display: none;
-/ / hides the element when not in fullscreen mode
-}
 
 .text-animate.ng-enter {
     -webkit-transition: 0.5s linear all; /* Chrome */
@@ -323,7 +320,6 @@ selector {
     border-bottom: 1px solid #D4D4D4;
 }
 
-ß
 .tirc_list_box {
     padding: 5px 4px;
     width: 100%;
@@ -354,7 +350,8 @@ selector {
 }
 
 body, html, .tirc_panel_content {
-    width: 100% height : 100 %;
+    width: 100%;
+    height: 100%;
 }
 
 html {
@@ -667,7 +664,8 @@ h4 {
 }
 
 #tirc-video {
-    width: 50% height : 50 %;
+    width: 50%;
+    height: 50%;
 }
 
 .dislike {

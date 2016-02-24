@@ -20,17 +20,14 @@ function toggleLoader(value) {
 
 export function geocode(nick){
   return dispatch => {
-    console.log('geocoding....', nick);
     GeoService.init().then(GeoService.reverseGeocode)
       .then(data => {
-        console.log('got',data);
         return tircBackend.submitLocation(nick, data);
     });
   };
 }
 
 export function toggleEmotion(textid, type) {
-  console.log('toggling');
   return (dispatch, getState) => {
     var user = getState().userselect.chosen;
     return tircBackend.toggleEmotion(user, textid, type);
@@ -76,9 +73,6 @@ export function listenBackend(id, subscriber) {
         case 'ontopic':
           dispatch(receiveTopic(data.data));
           break;
-        case 'oncurrentdata':
-          dispatch(receiveCurrentdata(data.data.data));
-          break;
         default:
           break;
       }
@@ -90,6 +84,18 @@ export function listenBackend(id, subscriber) {
 
 function handleReceive(dispatch, getState, data) {
   if (data.type === 'comment' && 'TIRC' === data.source) {
+    let currentData = getState().tabs.currentdata;
+    let index = -1;
+    currentData.forEach((item, id) => {
+      if (item.date === data.date){
+        index = id;
+      }
+    });
+    if (index > -1){
+      return dispatch(handleChangeMessage(data, index));
+    }
+
+
     let text = data.line;
     var user = getState().userselect.chosen;
     var nick = data.nick;
@@ -97,8 +103,15 @@ function handleReceive(dispatch, getState, data) {
       NotifyService.notify(nick, text, data.time);
     }
   }
-  handleMessage(dispatch, getState, data);
-  //TircState.onstatechange(TircState.setmessage, data);
+  handleNewMessage(dispatch, getState, data);
+}
+
+function handleChangeMessage(data, index){
+  return {
+    type: 'RECEIVE_TEXTCHANGE',
+    index,
+    data
+  };
 }
 
 function handleUsers(dispatch, data) {
@@ -164,7 +177,7 @@ export function toggleVideo(show) {
   };
 }
 
-function handleMessage(dispatch, getState, data) {
+function handleNewMessage(dispatch, getState, data) {
   let selectedtab = 0;
   let state = getState();
   if (data.target === null || data.target === undefined) {
@@ -230,10 +243,16 @@ export function loadUsers() {
   };
 }
 
+export function scroll(scrolling){
+  return {
+    type:'SCROLL',
+    scrolling
+  };
+}
+
 export function connectBackend(user) {
   return dispatch => {
     return tircBackend.connect(user).then(data=> {
-      console.log('got data', data);
       let formattedData = formatReceiveData(data);
       dispatch(toggleLoader(false));
       dispatch(receiveServerData(formattedData));
