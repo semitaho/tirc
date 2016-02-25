@@ -82,20 +82,25 @@ export function listenBackend(id, subscriber) {
   };
 }
 
-function handleReceive(dispatch, getState, data) {
-  if (data.type === 'comment' && 'TIRC' === data.source) {
-    let currentData = getState().tabs.currentdata;
-    let index = -1;
-    currentData.forEach((item, id) => {
-      if (item.date === data.date){
+function hasRowChanged(getState,data){
+  let currentData = getState().tabs.currentdata;
+  let index = -1;
+  currentData.forEach((item, id) => {
+    if (item.date === data.date || item.line === data.line){
         index = id;
-      }
-    });
-    if (index > -1){
-      return dispatch(handleChangeMessage(data, index));
     }
+  });
+  return index;
 
+}
 
+function handleReceive(dispatch, getState, data) {
+  var index = hasRowChanged(getState,data);
+  if (index > -1){
+    return dispatch(handleChangeMessage(data, index));
+  }
+  
+  if (data.type === 'comment' && 'TIRC' === data.source) {
     let text = data.line;
     var user = getState().userselect.chosen;
     var nick = data.nick;

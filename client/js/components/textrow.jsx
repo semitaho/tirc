@@ -1,5 +1,6 @@
 var React = require('react'),
-    Config = require('../services/ConfigService.js');
+    Config = require('../services/ConfigService.js'),
+   Resizer = require('../resize.js');
 
 import Emotion from './emotion.jsx';
 module.exports = React.createClass({
@@ -68,6 +69,11 @@ module.exports = React.createClass({
         var props = this.props;
         return !_.isEqual(props, nextProps);
 
+    },
+
+    componentDidMount: function(){
+      Resizer.scroll(0,600);
+      Resizer.resize(); 
     },
 
     generateEmotionStyle: function (likes, dislikes) {

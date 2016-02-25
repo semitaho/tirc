@@ -58,7 +58,10 @@ module.exports = (function () {
 
   };
 
-  $(window).resize(resize);
+  $(window).resize(() => {
+    resize(0);
+    scroll(0);
+  });
 
 
   return {

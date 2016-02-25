@@ -151,6 +151,8 @@ public class MessageBus {
       return;
     }
     listenerThread.receive(chosenLine);
+
+
     synchronized (this) {
       clearCurrent();
       this.newLines.addAll(currentLines);
