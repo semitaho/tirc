@@ -88,17 +88,28 @@ module.exports = React.createClass({
 
     },
 
+    handleText: function(line){
+        if (line.indexOf('lol') > -1){
+            let replaced = ' <span class="icon" style="background-position: 65% 42.5%;"></span> ';
+            let newLine = line.replace('lol', replaced);
+            return newLine;
+        }
+        let newText = line;
+        return newText; 
+    },
+
     rendercomment: function (item) {
         var textrowstyle = 'row comment textrow';
         if (item.nick === Config.loadUser('taho')) {
             textrowstyle += ' own';
         }
+        let text = this.handleText(item.line) 
         textrowstyle += ' ' + this.generateEmotionStyle(item.likes, item.dislikes);
         return (<div className={textrowstyle}>
                 <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
                 <div className="nicktext col-md-9 col-xs-9">
                     <div className="text">
-                        <span dangerouslySetInnerHTML={{__html: item.line }}/>
+                        <span dangerouslySetInnerHTML={{__html: item.line}}/>
                         <Emotion items={item.likes} toggleEmotion={() => this.props.toggleEmotion(item.date, true) }
                                  classNames="glyphicon glyphicon-thumbs-up text-primary"/>
                         <Emotion items={item.dislikes} toggleEmotion={() => this.props.toggleEmotion(item.date, false) }

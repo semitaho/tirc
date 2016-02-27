@@ -50,8 +50,6 @@ module.exports = (function () {
     var pos = elem.position();
     var box = $('#action_panel_' + lastHeight);
     var boxHeight = box.outerHeight();
-    console.log('action panel height', boxHeight);
-    console.log('y', box.offset().top);
     var currentHeight = $(window).outerHeight();
     elem.css('height', currentHeight - startY - boxHeight- 0);
     //scroll(lastHeight, interval);

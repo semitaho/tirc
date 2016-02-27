@@ -5,6 +5,7 @@ import fi.toni.tirc.communication.MessageBus;
 import fi.toni.tirc.communication.TircLine;
 import fi.toni.tirc.dto.response.IrcLine;
 import fi.toni.tirc.dto.response.IrcUser;
+import fi.toni.tirc.util.TircMessageFormatter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,8 @@ public class IrcRestService {
     tircLine.setSource(Measured.Source.IRC.name());
     tircLine.setNick(line.getNick());
     tircLine.setType(line.getType());
-    tircLine.setLine(line.getLine());
+    String formattedLine = TircMessageFormatter.formatMemes(line.getLine());
+    tircLine.setLine(formattedLine);
     bus.addNewLine(tircLine);
   }
 

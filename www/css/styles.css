@@ -686,6 +686,14 @@ h4 {
 
 .thumbnail{
     margin-bottom: auto;
+}
+
+.icon {
+  background: url(/images/icons.png);
+  background-size: 4100%;
+  height: 1em;
+  width: 1em;
+  display: inline-block;
 
 }
 

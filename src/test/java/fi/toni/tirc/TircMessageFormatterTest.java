@@ -21,7 +21,6 @@ public class TircMessageFormatterTest {
 		String comment = TircMessageFormatter.formatComment(text);
 		Assert.assertTrue("comment is: "+comment, comment.contains("<a target=\"_blank\" href=\"http://www.pesis.fi\">"));
 		Assert.assertTrue("comment is: "+comment, comment.contains("<a target=\"_blank\" href=\"https://www.google.fi\">"));
-		
 		text = "https://www.youtube.com/watch?v";
 		comment = TircMessageFormatter.formatComment(text);
 		Assert.assertTrue(comment, comment.contains("<a"));
@@ -34,4 +33,13 @@ public class TircMessageFormatterTest {
 		Assert.assertTrue(comment, comment.contains("<a"));
 		System.out.println("comment: "+comment);
 	}
+
+  @Test
+  public void testFormatMemes(){
+    String text = "no LOL!!";
+    String s = TircMessageFormatter.formatMemes(text);
+    System.out.println(s);
+
+
+  }
 }

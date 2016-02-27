@@ -186,9 +186,10 @@ public class TircRestService {
     String nick = message.getNick();
     TircLine tircLine = new TircLine(Measured.Source.TIRC);
     tircLine.setType("comment");
-    tircLine.setLine(message.getHtmltext());
     tircLine.setNick(nick);
     tircLine.setTarget(message.getTarget());
+    String formatted = TircMessageFormatter.formatMemes(message.getHtmltext());
+    tircLine.setLine(formatted);
     bus.addNewLine(tircLine);
     if (tircLine.getTarget() == null) {
       restClient.sendText(nick, text);
