@@ -4,10 +4,10 @@ var React = require('react'),
     Messagebox = require('./messagebox.jsx'),
     Resizer = require('../resize.js'),
     Config = require('../services/ConfigService.js'),
-    GeoService = require('../services/GeoService.js'),
-    Spinner = require('./spinner.jsx');
+    GeoService = require('../services/GeoService.js');
 
 import { connect } from 'react-redux';
+import Spinner from './spinner.jsx';
 import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
 import {shareVideo, connectWebsocket, receiveFrame} from './../actions/videoactions.js';
@@ -28,7 +28,7 @@ class Tirc extends React.Component {
     render() {
         let {tabs, userselect, topicpanel,loading,active, dispatch} = this.props;
         if (this.props.loading && this.props.loading === true) {
-            return <Spinner  />
+            return <div className="col-md-12 col-xs-12 col-sm-12"><Spinner  /></div>
         }
         let className = '';
         let isVisible = true;
@@ -62,7 +62,6 @@ class Tirc extends React.Component {
         $(window).unload(() => this.destroy());
         const onmessage = (event) => {
             dispatch(receiveFrame(event.data));
-
         };
         // this.ws = new WebSocket("ws://" + location.hostname + ":8880/streaming");
         // this.ws.onmessage = onmessage;

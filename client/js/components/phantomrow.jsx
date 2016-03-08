@@ -19,7 +19,6 @@ class PhantomRow extends React.Component {
   }
 
   componentDidMount(){
-    Resizer.scroll(0);
     Resizer.resize(); 
 
   }
@@ -30,7 +29,6 @@ class PhantomRow extends React.Component {
 
 
   componentDidUpdate(){
-    Resizer.scroll(0); 
     Resizer.resize(); 
 
   }

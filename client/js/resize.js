@@ -10,6 +10,7 @@ module.exports = (function () {
     return true;
   };
   var doScroll = function (index, interval) {
+    console.log('do scroll');
 
     var elem = $('#tirc_screen_' + index);
 
@@ -35,7 +36,9 @@ module.exports = (function () {
   };
 
 
-  var resize = function (lastHeight, interval, unmount) {
+  var resize = function (lastHeight, interval) {
+    console.log('do resize');
+
     if (lastHeight === undefined || isNaN(lastHeight)) {
       lastHeight = 0;
     }
@@ -52,13 +55,12 @@ module.exports = (function () {
     var boxHeight = box.outerHeight();
     var currentHeight = $(window).outerHeight();
     elem.css('height', currentHeight - startY - boxHeight- 0);
-    //scroll(lastHeight, interval);
+    scroll(lastHeight, interval);
 
   };
 
   $(window).resize(() => {
     resize(0);
-    scroll(0);
   });
 
 

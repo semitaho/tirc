@@ -72,8 +72,7 @@ module.exports = React.createClass({
     },
 
     componentDidMount: function(){
-      Resizer.scroll(0,600);
-      Resizer.resize(); 
+      Resizer.resize(0, 600); 
     },
 
     generateEmotionStyle: function (likes, dislikes) {
@@ -103,7 +102,6 @@ module.exports = React.createClass({
         if (item.nick === Config.loadUser('taho')) {
             textrowstyle += ' own';
         }
-        let text = this.handleText(item.line) 
         textrowstyle += ' ' + this.generateEmotionStyle(item.likes, item.dislikes);
         return (<div className={textrowstyle}>
                 <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
