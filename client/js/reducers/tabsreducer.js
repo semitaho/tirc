@@ -12,6 +12,7 @@ const initTabState =
     {nick: 'taho', time: date, state: 'connected'},
     {nick: 'mcw', time: date2, state: 'fixing'}
   ],
+  phrases: [],
   connectdata: [],
   currentdata: [{
     nick: 'sysse',
@@ -59,6 +60,12 @@ export default function tabsreducer(state = initTabState, action) {
     case 'RECEIVE_TIRC_USERS':
       return Object.assign({}, state, {
         tircusers: action.tircusers
+      });
+    case 'RECEIVE_PHRASES':
+      console.log('in receive phrases',action.phrases);
+      return Object.assign({}, state, {
+        phrases: action.phrases,
+        phraseindex: action.index
       });
 
     case 'UPDATE_TEXT':

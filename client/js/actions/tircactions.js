@@ -18,12 +18,12 @@ function toggleLoader(value) {
   }
 }
 
-export function geocode(nick){
+export function geocode(nick) {
   return dispatch => {
     GeoService.init().then(GeoService.reverseGeocode)
       .then(data => {
         return tircBackend.submitLocation(nick, data);
-    });
+      });
   };
 }
 
@@ -82,12 +82,12 @@ export function listenBackend(id, subscriber) {
   };
 }
 
-function hasRowChanged(getState,data){
+function hasRowChanged(getState, data) {
   let currentData = getState().tabs.currentdata;
   let index = -1;
   currentData.forEach((item, id) => {
-    if (item.date === data.date || item.line === data.line){
-        index = id;
+    if (item.date === data.date || item.line === data.line) {
+      index = id;
     }
   });
   return index;
@@ -95,11 +95,11 @@ function hasRowChanged(getState,data){
 }
 
 function handleReceive(dispatch, getState, data) {
-  var index = hasRowChanged(getState,data);
-  if (index > -1){
+  var index = hasRowChanged(getState, data);
+  if (index > -1) {
     return dispatch(handleChangeMessage(data, index));
   }
-  
+
   if (data.type === 'comment' && 'TIRC' === data.source) {
     let text = data.line;
     var user = getState().userselect.chosen;
@@ -111,7 +111,7 @@ function handleReceive(dispatch, getState, data) {
   handleNewMessage(dispatch, getState, data);
 }
 
-function handleChangeMessage(data, index){
+function handleChangeMessage(data, index) {
   return {
     type: 'RECEIVE_TEXTCHANGE',
     index,
@@ -182,6 +182,15 @@ export function toggleVideo(show) {
   };
 }
 
+function receivePhrases(phrases, index) {
+  return {
+    type: 'RECEIVE_PHRASES',
+    phrases,
+    index
+  };
+
+}
+
 function handleNewMessage(dispatch, getState, data) {
   let selectedtab = 0;
   let state = getState();
@@ -248,9 +257,9 @@ export function loadUsers() {
   };
 }
 
-export function scroll(scrolling){
+export function scroll(scrolling) {
   return {
-    type:'SCROLL',
+    type: 'SCROLL',
     scrolling
   };
 }

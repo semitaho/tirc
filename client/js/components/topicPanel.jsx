@@ -17,7 +17,7 @@ var clazz = React.createClass({
                      <Nickpanel users={this.props.users} receiveUsers={this.props.receiveUsers} tircusers={this.props.tircusers}/>
                     </div>
                     <div className="col-md-2 col-sm-2 col-xs-3">
-                      <Userselect {...this.props.userselect} changeUser={nick => dispatch(changeUser(nick))}/>
+                      <Userselect {...this.props.userselect} changeUser={this.props.changeUser}/>
                     </div>
                   </div>
                 </div>

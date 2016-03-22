@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import tabsreducers from './tabsreducer.js';
 
 let userselectstate = {
+  users: []
 };
 
 function userselectreducer(state = userselectstate, action) {

@@ -19,4 +19,10 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 let store = createStoreWithMiddleware(tircApp);
-render(<Provider store={store}><Tirc /></Provider>, tircContent);
+config.loadPhrases().then(phraseObjects => {
+    let phraseNames = phraseObjects.map(phrase => phrase.name);
+    let index = Math.floor(Math.random() * phraseNames.length);
+    render(<Provider store={store}><Tirc phraseindex={index} phrases={phraseNames} /></Provider>, tircContent);
+
+  });
+

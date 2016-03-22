@@ -28,6 +28,17 @@ module.exports = (function () {
       return 'taho';
     },
 
+    loadPhrases: function(){
+      console.log('loading phrases from mongo....');
+      var REST_URI = 'https://api.mongolab.com/api/1/databases/tirc/collections/phrase?apiKey=' + API_KEY;
+      return $.ajax({
+        type: "GET",
+        url: REST_URI,
+        contentType: 'application/json;charset=UTF-8'
+      });
+
+    },
+
     loadFromDb: function () {
       var qCriteria = {_id: 'client'};
       var REST_URI = 'https://api.mongolab.com/api/1/databases/tirc/collections/configuration?q=' + JSON.stringify(qCriteria) + '&l=1&apiKey=' + API_KEY;
