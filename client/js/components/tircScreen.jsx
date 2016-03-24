@@ -34,9 +34,10 @@ module.exports = React.createClass({
     Resizer.resize(0, 400);
   },
   componentDidUpdate: function(){
-    Resizer.resize(0,400);
+    Resizer.resize(0,600);
   },
 
+  /*
   shouldComponentUpdate: function (nextProps, nextState) {    
     var currentTexts  =  _.omit (this.props, 'toggleEmotion');
     var nextTexts = _.omit(nextProps, 'toggleEmotion');
@@ -47,6 +48,7 @@ module.exports = React.createClass({
     return false;
 
   }
+  */
 
 
 });
