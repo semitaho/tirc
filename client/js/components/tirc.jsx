@@ -1,16 +1,12 @@
 var React = require('react'),
-  Tabheader = require('./tabheader.jsx'),
   Mainpanel = require('./mainpanel.jsx'),
   Messagebox = require('./messagebox.jsx'),
-  Resizer = require('../resize.js'),
-  Config = require('../services/ConfigService.js'),
   GeoService = require('../services/GeoService.js');
 
 import {connect} from 'react-redux';
 import Spinner from './spinner.jsx';
-import Userselect from './userselect.jsx';
 import TopicPanel from './topicPanel.jsx';
-import {shareVideo, connectWebsocket, receiveFrame} from './../actions/videoactions.js';
+import {shareVideo, receiveFrame} from './../actions/videoactions.js';
 import {
   connectBackend,
   listenBackend,
@@ -19,8 +15,6 @@ import {
   topicpanel,
   sendText,
   updateText,
-  toggleVideo,
-  receiveUsers,
   sayGoodbye,
   changeUser,
   loadUsers,
@@ -28,6 +22,7 @@ import {
   scroll
 } from './../actions/tircactions.js';
 
+import {receiveUsers} from './../actions/topicpanelactions.js';
 class Tirc extends React.Component {
 
   constructor() {
@@ -43,17 +38,17 @@ class Tirc extends React.Component {
   render() {
     let {tabs, userselect, topicpanel, loading, active, dispatch} = this.props;
     if (this.props.loading && this.props.loading === true) {
-      return <div className="col-md-12 col-xs-12 col-sm-12"><Spinner index={this.props.phraseindex} phrases={this.props.phrases} /></div>
+      return <div className="col-md-12 col-xs-12 col-sm-12"><Spinner index={this.props.phraseindex} phrases={this.props.phrases}/></div>
     }
     let className = '';
     let isVisible = true;
     var actionpanelId = 'action_panel_0';
     return (
       <div className="tirc_content">
-        {loading && loading === true  ? <Spinner fadeout={true}  index={this.props.phraseindex} phrases={this.props.phrases}  /> : ''}
+        {loading && loading === true ? <Spinner fadeout={true} index={this.props.phraseindex} phrases={this.props.phrases}/> : ''}
         <div className={className}>
-          <TopicPanel {...topicpanel} {...tabs} changeUser={(nick) => dispatch(changeUser(nick))}
-                                                receiveUsers={users => dispatch(receiveUsers(users))}/>
+          <TopicPanel {...topicpanel} changeUser={(nick) => dispatch(changeUser(nick))}
+                                      receiveUsers={users => dispatch(receiveUsers(users))}/>
           <Mainpanel shareVideo={id => dispatch(shareVideo(this.ws, id))} {...tabs} userselect={userselect}
                      scroll={(isScrolling) => dispatch(scroll(isScrolling))}
                      visible={isVisible}
@@ -82,10 +77,12 @@ class Tirc extends React.Component {
     // this.ws = new WebSocket("ws://" + location.hostname + ":8880/streaming");
     // this.ws.onmessage = onmessage;
     dispatch(loadUsers()).then(data => {
+
       dispatch(geocode(this.props.userselect.chosen));
+
       dispatch(connectBackend(this.props.userselect.chosen)).then(backenddata => {
         dispatch(listenBackend(backenddata.id, this.props.userselect.chosen));
-      });
+      })
 
     });
 
@@ -93,14 +90,14 @@ class Tirc extends React.Component {
 }
 
 function select(state) {
-
   return {
-    userselect: state.userselect,
+    userselect: state.topicpanel.userselect,
     data: state.data,
     topicpanel: {
-      userselect: state.userselect,
-      users: state.tabs.users,
-      tircusers: state.tabs.tircusers
+      userselect: state.topicpanel.userselect,
+      users: state.topicpanel.users,
+      tircusers: state.topicpanel.tircusers,
+      topic: state.topicpanel.topic
     },
     tabs: state.tabs,
     loading: state.loading

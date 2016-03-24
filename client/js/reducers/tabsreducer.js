@@ -38,11 +38,7 @@ export default function tabsreducer(state = initTabState, action) {
         currentdata
       });
     case 'SCROLL': 
-      return Object.assign({}, state, {scrolling: action.scrolling});  
-    case 'RECEIVE_USERS':
-      return Object.assign({}, state, {
-        users: action.users
-      });
+      return Object.assign({}, state, {scrolling: action.scrolling});
     case 'RECEIVE_FRAME':
       return Object.assign({}, state, {
         srcframe: action.data
@@ -57,10 +53,7 @@ export default function tabsreducer(state = initTabState, action) {
       return Object.assign({}, state, {
         currentdata:current
       });
-    case 'RECEIVE_TIRC_USERS':
-      return Object.assign({}, state, {
-        tircusers: action.tircusers
-      });
+
     case 'RECEIVE_PHRASES':
       console.log('in receive phrases',action.phrases);
       return Object.assign({}, state, {
@@ -73,10 +66,6 @@ export default function tabsreducer(state = initTabState, action) {
       return Object.assign({}, state, {
         messagebox
       });
-    case 'RECEIVE_TOPIC':
-      return Object.assign({}, state, {
-        topic: action.topic
-      });
     case 'TOGGLE_VIDEO':
       return Object.assign({}, state, {
         showvideo: action.show
@@ -87,10 +76,7 @@ export default function tabsreducer(state = initTabState, action) {
         name: 'tirc',
         connectdata: action.serverdata.logsData,
         currentdata: action.serverdata.currentData,
-        topic: action.serverdata.topic,
-        users: action.serverdata.users,
         scrolling:false,
-        tircusers: action.serverdata.tircusers,
         activedata: [],
         messagebox: {}
       });

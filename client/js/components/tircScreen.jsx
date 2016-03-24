@@ -23,25 +23,25 @@ module.exports = React.createClass({
       return ( <Textrow key={id} elem={item} toggleEmotion={this.props.toggleEmotion}  />)
     });
 
-    var mappedPhantomrowData = this.props.activedata.map(item => <Phantomrow {...item} />);
+    var mappedPhantomrowData = this.props.activedata.map((item,index) => <Phantomrow {...item} />);
     let mappedData = mappedTextrowData.concat(mappedPhantomrowData);
-
     return <div  className={classStr} id={screenindex}>{mappedData}</div>
 
   },
 
   componentDidMount: function () {
     console.log('TircScreen: didMount');
-    Resizer.scroll(0);
-    Resizer.resize();
-
+    Resizer.resize(0, 400);
+  },
+  componentDidUpdate: function(){
+    Resizer.resize(0,400);
   },
 
   shouldComponentUpdate: function (nextProps, nextState) {    
     var currentTexts  =  _.omit (this.props, 'toggleEmotion');
     var nextTexts = _.omit(nextProps, 'toggleEmotion');
     var isEqual = _.isEqual(nextTexts, currentTexts);
-      if (!isEqual) {
+    if (!isEqual) {
       return true;
     }
     return false;

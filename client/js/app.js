@@ -1,13 +1,7 @@
-import backend  from './services/TircBackend.js';
-import geoservice from './services/GeoService.js';
 import config from './services/ConfigService.js';
-import state from './TircStore.js';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-import $ from 'jquery';
-
-
+import {createStore, applyMiddleware} from 'redux';
 import tircApp from './reducers/tircreducer';
 import {render} from 'react-dom';
 import React from 'react';
@@ -20,9 +14,9 @@ const createStoreWithMiddleware = applyMiddleware(
 
 let store = createStoreWithMiddleware(tircApp);
 config.loadPhrases().then(phraseObjects => {
-    let phraseNames = phraseObjects.map(phrase => phrase.name);
-    let index = Math.floor(Math.random() * phraseNames.length);
-    render(<Provider store={store}><Tirc phraseindex={index} phrases={phraseNames} /></Provider>, tircContent);
+  let phraseNames = phraseObjects.map(phrase => phrase.name);
+  let index = Math.floor(Math.random() * phraseNames.length);
+  render(<Provider store={store}><Tirc phraseindex={index} phrases={phraseNames}/></Provider>, tircContent);
 
-  });
+});
 

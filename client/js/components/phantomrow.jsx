@@ -1,5 +1,4 @@
 import React from 'react';
-import Resizer from '../resize.js';
 
 class PhantomRow extends React.Component {
   render(){
@@ -18,20 +17,12 @@ class PhantomRow extends React.Component {
         <div className={clazz}>{str}</div></div>);
   }
 
-  componentDidMount(){
-    Resizer.resize(); 
-
-  }
-
   shouldComponentUpdate(nextProps, nextState) { 
     return !_.isEqual(this.props, nextProps);
   }
 
 
-  componentDidUpdate(){
-    Resizer.resize(); 
 
-  }
 }
 
 export default PhantomRow;

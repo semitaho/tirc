@@ -55,16 +55,18 @@ module.exports = React.createClass({
   onPress: function (event) {
     if (event.which === 13) {
       this.say();
+      event.target.blur();
     } else if (event.which === 8 || event.which === 46) {
       this.statechange('fixing');
     } else {
       this.statechange('typing');
     }
+
   },
 
   statechange: function (state) {
     var previousState = this.typestate.state;
-    this.typestate = {time: new Date(), state: state};
+    this.typestate = {time: new Date(), state};
     if (state !== previousState) {
       this.props.changeState(state);
     }

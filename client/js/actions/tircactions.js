@@ -3,6 +3,7 @@ import Parser from './../services/Parser.js';
 import NotifyService from './../services/NotificationService.js';
 import Config from './../services/ConfigService.js';
 import GeoService from './../services/GeoService.js';
+import {receiveUsers, receiveTircUsers, receiveTopic} from './topicpanelactions.js';
 
 function receiveServerData(serverdata) {
   return {
@@ -29,14 +30,14 @@ export function geocode(nick) {
 
 export function toggleEmotion(textid, type) {
   return (dispatch, getState) => {
-    var user = getState().userselect.chosen;
+    var user = getState().topicpanel.userselect.chosen;
     return tircBackend.toggleEmotion(user, textid, type);
   };
 
 }
 
 function formatReceiveData(data) {
-  let formattedUsers = data.users.users;
+  let formattedUsers = data.users ?  data.users.users: {};
   var arr = Parser.formatusers(formattedUsers);
   data.users = arr;
   return data;
@@ -77,6 +78,8 @@ export function listenBackend(id, subscriber) {
           break;
       }
       dispatch(listenBackend(data.lastid, subscriber));
+    }, error => {
+      console.log('error',error);
     });
 
   };
@@ -86,7 +89,7 @@ function hasRowChanged(getState, data) {
   let currentData = getState().tabs.currentdata;
   let index = -1;
   currentData.forEach((item, id) => {
-    if (item.date === data.date || item.line === data.line) {
+    if (item.date === data.date && item.line === data.line) {
       index = id;
     }
   });
@@ -101,8 +104,9 @@ function handleReceive(dispatch, getState, data) {
   }
 
   if (data.type === 'comment' && 'TIRC' === data.source) {
+
     let text = data.line;
-    var user = getState().userselect.chosen;
+    var user = getState().topicpanel.userselect.chosen;
     var nick = data.nick;
     if (!NotifyService.isFocus() && text.indexOf(user) > -1) {
       NotifyService.notify(nick, text, data.time);
@@ -127,7 +131,6 @@ function handleUsers(dispatch, data) {
 function handleTircUsers(dispatch, data) {
   dispatch(receiveTircUsers(data));
   let activeItems = data.filter(item => item.state === 'fixing' || item.state === 'typing');
-  console.log('active', activeItems);
   dispatch(receiveActiveData(activeItems));
 }
 
@@ -136,33 +139,6 @@ export function receiveActiveData(items) {
     type: 'RECEIVE_ACTIVE_DATA',
     items
   }
-}
-
-export function receiveUsers(users) {
-  return {
-    type: 'RECEIVE_USERS',
-    users
-  };
-}
-
-export function receiveTircUsers(tircusers) {
-  return {
-    type: 'RECEIVE_TIRC_USERS',
-    tircusers
-  }
-}
-
-export function receiveTopic(topic) {
-  return {
-    type: 'RECEIVE_TOPIC',
-    topic
-  }
-}
-export function receiveCurrentdata(data) {
-  return {
-    type: 'RECEIVE_CURRENTDATA',
-    data
-  };
 }
 
 export function receiveMessage(index, message, isunread) {
@@ -180,15 +156,6 @@ export function toggleVideo(show) {
     type: 'TOGGLE_VIDEO',
     show
   };
-}
-
-function receivePhrases(phrases, index) {
-  return {
-    type: 'RECEIVE_PHRASES',
-    phrases,
-    index
-  };
-
 }
 
 function handleNewMessage(dispatch, getState, data) {
@@ -229,7 +196,6 @@ export function updateText(text) {
   };
 }
 export function changeUser(user) {
-  console.log('change');
   return {
     type: 'CHANGE_USER',
     user
@@ -246,7 +212,6 @@ export function receiveUserlist(users) {
 export function loadUsers() {
   return dispatch => {
     return Config.loadFromDb().then(data => {
-      console.log('has', data);
       let users = data[0].users;
       let chosen = Config.loadUser('taho');
       dispatch(receiveUserlist(users));

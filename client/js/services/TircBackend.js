@@ -102,7 +102,6 @@ class TircBackend {
       htmltext,
       target
     };
-    console.log('message', message);
     return $.ajax({
       type: "POST",
       url: this.URL + 'say',
@@ -169,7 +168,7 @@ class TircBackend {
 
     return $.ajax({
       type: "POST",
-      url: URL + 'saygoodbye',
+      url: this.URL + 'saygoodbye',
       contentType: 'application/json;charset=UTF-8',
       data: JSON.stringify(message)
     });

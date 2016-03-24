@@ -1,28 +1,10 @@
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux';
 import tabsreducers from './tabsreducer.js';
-
-let userselectstate = {
-  users: []
-};
-
-function userselectreducer(state = userselectstate, action) {
-  if (action.type === 'CHANGE_USER') {
-    return Object.assign({}, state, {
-      chosen: action.user
-    });
-  }
-
-  if (action.type === 'RECEIVE_USER_LIST'){
-    return Object.assign({}, state, {
-      users: action.users
-    });
-  }
-  return state;
-}
+import topicpanelreducer from './topicpanelreducer.js';
 
 export default combineReducers({
   tabs: tabsreducers,
-  userselect: userselectreducer,
+  topicpanel: topicpanelreducer,
   active: (state = 'tirc', action) => state,
   loading: (state = true, action) => {
     if (action.type === 'TOGGLE_LOADER') {

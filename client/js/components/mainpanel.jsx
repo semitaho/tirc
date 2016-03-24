@@ -1,8 +1,7 @@
 var React = require('react'),
   TopicPanel = require('./topicPanel.jsx'),
   TircScreen = require('./tircScreen.jsx'),
-  TircBackend = require('../services/TircBackend.js'),
-  Resizer = require('../resize.js');
+  TircBackend = require('../services/TircBackend.js');
 
 import TircWebcam from './tircwebcam.jsx';
 import TircVideo from './tircvideo.jsx';

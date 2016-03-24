@@ -34,7 +34,6 @@ module.exports = (function () {
 
 
   var resize = function (lastHeight, interval) {
-    
     if (lastHeight === undefined || isNaN(lastHeight)) {
       lastHeight = 0;
     }
