@@ -42,9 +42,7 @@ module.exports = (function () {
     if (tircnicks.position() === null || tircnicks.position() == undefined) {
       return;
     }
-    let videocontainer = $('#video_container');
     var startY = tircnicks.offset().top + tircnicks.outerHeight();
-
     var pos = elem.position();
     var box = $('#action_panel_' + lastHeight);
     var boxHeight = box.outerHeight();

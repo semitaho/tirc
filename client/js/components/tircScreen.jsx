@@ -36,20 +36,7 @@ module.exports = React.createClass({
   componentDidUpdate: function(){
     Resizer.resize(0,600);
   },
-
-  /*
-  shouldComponentUpdate: function (nextProps, nextState) {    
-    var currentTexts  =  _.omit (this.props, 'toggleEmotion');
-    var nextTexts = _.omit(nextProps, 'toggleEmotion');
-    var isEqual = _.isEqual(nextTexts, currentTexts);
-    if (!isEqual) {
-      return true;
-    }
-    return false;
-
-  }
-  */
-
+  
 
 });
 

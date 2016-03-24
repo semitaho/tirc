@@ -16,15 +16,7 @@ class PhantomRow extends React.Component {
     return (<div className="row">
         <div className={clazz}>{str}</div></div>);
   }
-
-  /*
-  shouldComponentUpdate(nextProps, nextState) { 
-    return !_.isEqual(this.props, nextProps);
-  }
-  */
-
-
-
+  
 }
 
 export default PhantomRow;

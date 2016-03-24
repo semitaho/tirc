@@ -4,13 +4,11 @@ import Config from '../services/ConfigService.js';
 class NickPanel extends React.Component {
   constructor() {
     super();
-    this.increaseIdle = this.increaseIdle.bind(this);
     this.statemap = {typing: 'kirjoittaa...', fixing: 'korjaa...', connected: 'yhdistänyt', idle: 'idlaa'};
   }
 
   componentDidMount() {
     console.log('Nickpanel: mount');
-    this.interval = setInterval(this.increaseIdle, 1000);
   }
 
   render() {
@@ -54,22 +52,6 @@ class NickPanel extends React.Component {
 
   }
 
-  increaseIdle() {
-    var users = this.props.users;
-    if (users.length === 0) {
-      return;
-    }
-    var that = this;
-    var idleusers = users.map(function (user) {
-      var newIdletime = user.idleTime + 1;
-      var idle = that.formatToMinutes(newIdletime);
-      user.idle = idle;
-      user.idleTime = newIdletime;
-      return user;
-    });
-    this.props.receiveUsers(idleusers);
-  }
-
   formatToMinutes(time) {
     // Hours, minutes and seconds'
     var hrs = ~~(time / 3600);
@@ -87,7 +69,7 @@ class NickPanel extends React.Component {
 
   fillIdletime(users) {
     var that = this;
-    var idleusers = users.map(function (user) {
+    var idleusers = users.map(user => {
       var idle = that.formatToMinutes(user.idleTime);
       user.idle = idle;
       return user;
@@ -98,7 +80,6 @@ class NickPanel extends React.Component {
 
   componentWillUnmount() {
     console.log('unmount');
-    clearInterval(this.interval);
   }
 
 }

@@ -4,18 +4,17 @@ var React = require('react'),
 import UIService  from '../services/UIService.js';
 module.exports = React.createClass({
 
-  say: function () {
+  say: function (text) {
     var self = this;
-    var selftext = this.props.text;
-    if (UIService.hasLink(this.props.text)) {
-      UIService.embedlyText(this.props.text, done => {
+    var selftext = text;
+    if (UIService.hasLink(text)) {
+      UIService.embedlyText(text, done => {
         this.props.sendText(selftext, done);
       });
     } else {
       this.props.sendText(selftext, selftext);
     }
     this.statechange('idle');
-    this.props.updateText('');
   },
 
   saysuccess: function () {
@@ -53,9 +52,11 @@ module.exports = React.createClass({
 
 
   onPress: function (event) {
+    event.preventDefault();
     if (event.which === 13) {
-      this.say();
+      this.say(event.target.value);
       event.target.blur();
+      this.clearText(event.target);
     } else if (event.which === 8 || event.which === 46) {
       this.statechange('fixing');
     } else {
@@ -76,12 +77,12 @@ module.exports = React.createClass({
     this.statechange('idle');
   },
 
-  updateText: function (event) {
-    this.props.updateText(event.target.value);
+  clearText: function (targetDOM) {
+    targetDOM.value = '';
   },
   render: function () {
     return (
-        <input type="text" name="text" value={this.props.text} onChange={this.updateText} onBlur={this.onBlur}
+        <input type="text" name="text" defaultValue=''  onkeypress={this.updateText}  onBlur={this.onBlur}
                id="textline" className="input-lg form-control message_box"
                placeholder="say something..." onKeyUp={this.onPress}></input>
     );
