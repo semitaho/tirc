@@ -5,7 +5,7 @@ var Config = require('./ConfigService'),
 class TircBackend {
 
   constructor() {
-    this.URL = 'http://' + location.hostname + ':8880/backend/';
+    this.URL = 'http://' + location.hostname + ':80/backend/';
   }
 
   /*
