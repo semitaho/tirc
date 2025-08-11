@@ -1,17 +1,16 @@
 package fi.toni.tirc.rest;
 
 import fi.toni.tirc.dto.request.IrcText;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
-import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 /**
  * Created by taho on 16/02/16.
@@ -21,16 +20,21 @@ public class IrcRestClient {
 
   public static final String BASE_URL = "http://localhost:8080/irc";
 
-  static Logger log = Logger.getLogger(IrcRestClient.class);
+  static Logger log = LoggerFactory.getLogger(IrcRestClient.class);
 
 
   public void sendText(String nick, String text) {
-    AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+    final var webclient = createWebClient();
     IrcText ircText = new IrcText(nick, text);
-    log.debug("SEND text to IRC: " + ircText);
+    log.debug("SEND text to IRC: {} ", ircText);
     HttpEntity<IrcText> request = createRequest(ircText);
-    ListenableFuture<ResponseEntity<IrcText>> responseEntityListenableFuture = asyncRestTemplate.postForEntity(BASE_URL + "/sendtext", request, IrcText.class);
-    responseEntityListenableFuture.addCallback(new TircListenableFutureCallback<>());
+    webclient.post()
+            .uri("/sendtext")
+            .bodyValue(request)
+            .retrieve()
+            .bodyToMono(IrcText.class)
+            .subscribe(new TircListenableFutureCallback<>());
+
   }
 
   private <T> HttpEntity<T> createRequest(T entity) {
@@ -40,30 +44,50 @@ public class IrcRestClient {
     return httpEntity;
   }
 
-  public void askTopic(ListenableFutureCallback<ResponseEntity<String>> callback) {
-    AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+  private WebClient createWebClient() {
+    return WebClient.builder()
+            .baseUrl(BASE_URL)
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build();
+  }
+
+  public void askTopic(final Consumer<String> callback) {
+    final var webClient = createWebClient();
     HttpHeaders requestHeaders = new HttpHeaders();
     requestHeaders.setAccept(Arrays.asList(MediaType.TEXT_PLAIN));
-    ListenableFuture<ResponseEntity<String>> forEntity = asyncRestTemplate.getForEntity(BASE_URL + "/asktopic", String.class);
-    forEntity.addCallback(callback);
+    webClient
+            .get()
+            .uri("/asktopic")
+            .headers(httpHeaders -> httpHeaders.addAll(requestHeaders))
+            .retrieve()
+            .bodyToMono(String.class)
+            .subscribe(callback);
+
 
   }
 
   public void leave(String nick) {
-    AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
-    log.debug("LEAVE from IRC with nick: " + nick);
+    final var webClient = createWebClient();
+    log.debug("LEAVE from IRC with nick: {}", nick);
     HttpEntity<String> request = createRequest(nick);
-    ListenableFuture<ResponseEntity<String>> responseEntityListenableFuture = asyncRestTemplate.postForEntity(BASE_URL + "/leave", request, String.class);
-    responseEntityListenableFuture.addCallback(new TircListenableFutureCallback<>());
+    webClient.post().uri("/leave")
+            .bodyValue(request)
+            .retrieve()
+            .bodyToMono(String.class)
+            .subscribe(new TircListenableFutureCallback<>());
   }
 
   public void join(String nick, String text) {
-    AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
+    final var webClient = createWebClient();
     IrcText ircText = new IrcText(nick, text);
-    log.debug("JOIN to IRC with nick: " + nick);
+    log.debug("JOIN to IRC with nick:{} ", nick);
     HttpEntity<IrcText> request = createRequest(ircText);
-    ListenableFuture<ResponseEntity<IrcText>> responseEntityListenableFuture = asyncRestTemplate.postForEntity(BASE_URL + "/join", request, IrcText.class);
-    responseEntityListenableFuture.addCallback(new TircListenableFutureCallback<>());
+    webClient.post()
+            .uri("/join")
+            .bodyValue(request)
+            .retrieve()
+            .bodyToMono(IrcText.class)
+            .subscribe(new TircListenableFutureCallback<>());
 
   }
 }

@@ -1,14 +1,15 @@
 package fi.toni.tirc.util;
 
 import fi.toni.tirc.communication.TircLine;
+import jakarta.servlet.http.HttpServletRequest;
 import org.bson.Document;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -18,8 +19,8 @@ public class TircUtil {
   private static final String DATE_PATTERN = "HH:mm:ss";
 
   public static String getCurrentTimeAsString() {
-    DateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
-    String format = dateFormat.format(new Date());
+    final var now = LocalDate.now();
+    String format = now.format(DateTimeFormatter.ofPattern(DATE_PATTERN));
     return format;
   }
 
@@ -87,14 +88,14 @@ public class TircUtil {
     if (dbObject.containsKey("line")) {
       tircLine.setLine(dbObject.getString("line"));
     }
-    if (dbObject.containsKey("likes")){
-      List<String> likesList =  (List<String>) dbObject.get("likes");
+    if (dbObject.containsKey("likes")) {
+      List<String> likesList = (List<String>) dbObject.get("likes");
       HashSet<String> likes = new HashSet<>(likesList);
       tircLine.setLikes(likes);
       // TODO: jatka huomenna
     }
-    if (dbObject.containsKey("dislikes")){
-      List<String> likesList =  (List<String>) dbObject.get("dislikes");
+    if (dbObject.containsKey("dislikes")) {
+      List<String> likesList = (List<String>) dbObject.get("dislikes");
       HashSet<String> likes = new HashSet<>(likesList);
       tircLine.setDislikes(likes);
     }

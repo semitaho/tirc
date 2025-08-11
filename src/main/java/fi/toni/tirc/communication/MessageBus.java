@@ -6,7 +6,8 @@ package fi.toni.tirc.communication;
 import fi.toni.tirc.dto.Emotion;
 import fi.toni.tirc.dto.response.IrcUser;
 import fi.toni.tirc.server.TircListenerThread;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,8 @@ import java.util.Map;
 @Component
 public class MessageBus {
 
-  static Logger log = org.apache.log4j.Logger.getLogger(MessageBus.class);
+  static Logger log = LoggerFactory.getLogger(MessageBus.class);
+
   private List<TircLine> logs;
   private List<TircLine> newLines;
   private ChannelTopic channelTopic;

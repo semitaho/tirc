@@ -1,12 +1,12 @@
 /**
- * 
+ *
  */
 package fi.toni.tirc.dto;
 
-import org.apache.log4j.Logger;
-import org.springframework.web.context.request.async.DeferredResult;
-
 import fi.toni.tirc.rest.TircListenResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.async.DeferredResult;
 
 /**
  * @author Toni
@@ -14,28 +14,28 @@ import fi.toni.tirc.rest.TircListenResponse;
  */
 public class TircResponseClient {
 
-	static Logger log = org.apache.log4j.Logger
-			.getLogger(TircResponseClient.class);
+  static Logger log = LoggerFactory
+          .getLogger(TircResponseClient.class);
 
-	private DeferredResult<TircListenResponse> client;
+  private DeferredResult<TircListenResponse> client;
 
-	private long id;
-	private String uuid;
+  private long id;
+  private String uuid;
 
-	public TircResponseClient(String uuidt) {
-		this.uuid = uuidt;
-	}
+  public TircResponseClient(String uuidt) {
+    this.uuid = uuidt;
+  }
 
-	public long getId() {
-		return this.id;
-	}
+  public long getId() {
+    return this.id;
+  }
 
-	public DeferredResult<TircListenResponse> getClient() {
-		return this.client;
-	}
+  public DeferredResult<TircListenResponse> getClient() {
+    return this.client;
+  }
 
-	public String getUuid() {
-		return uuid;
-	}
+  public String getUuid() {
+    return uuid;
+  }
 
 }

@@ -1,20 +1,16 @@
 package fi.toni.tirc.server;
 
-import java.util.Properties;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import fi.toni.tirc.db.MongoWrapper;
-import org.apache.log4j.Logger;
-import org.bson.Document;
+import fi.toni.tirc.util.TircResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mongodb.BasicDBObject;
-
-import fi.toni.tirc.util.TircResourceLoader;
-import fi.toni.tirc.db.MongoWrapper;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import java.util.Map;
+import java.util.Properties;
 
 @Component
 public class TircConfiguration {
@@ -29,11 +25,11 @@ public class TircConfiguration {
   public static final String TIRC_INTERVAL_WHOIS = "intervalwhois";
 
   public static final String TIRC_GLOBAL_JNDI_NAME = "java:global/tirc/TircConfiguration!fi.toni.tirc.server.lifecycle.TircConfiguration";
-  static Logger log = Logger.getLogger(TircConfiguration.class);
+  static Logger log = LoggerFactory.getLogger(TircConfiguration.class);
 
   private String configuration;
 
-  private Document configurationModel;
+  private Map<String, String> configurationModel;
 
   @Autowired
   private MongoWrapper mongoWrapper;
@@ -41,13 +37,13 @@ public class TircConfiguration {
 
   public TircConfiguration() {
     configuration = loadConfigurationIdentifier();
-    log.info("Configuration loaded with environment: " + configuration);
+    log.info("Configuration loaded with environment: {}", configuration);
 
   }
 
   @PostConstruct
   public void afterCreate() {
-    configurationModel = mongoWrapper.loadConfiguration(configuration);
+    configurationModel = Map.of(); // Bson  mongoWrapper.loadConfiguration(configuration);
 
   }
 
@@ -91,6 +87,6 @@ public class TircConfiguration {
   }
 
   public String getProperty(String propKey) {
-    return configurationModel.getString(propKey);
+    return configurationModel.get(propKey);
   }
 }

@@ -3,9 +3,24 @@
  */
 package fi.toni.tirc.db;
 
-import static com.mongodb.client.model.Filters.*;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import fi.toni.tirc.communication.TircLine;
+import fi.toni.tirc.dto.MessageBody;
+import fi.toni.tirc.rest.Location;
+import fi.toni.tirc.util.TircUtil;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import java.net.UnknownHostException;
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,24 +28,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.print.Doc;
-
-import com.mongodb.*;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import org.apache.log4j.Logger;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import fi.toni.tirc.util.TircUtil;
-import fi.toni.tirc.rest.Location;
-import fi.toni.tirc.dto.MessageBody;
-import fi.toni.tirc.communication.TircLine;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.gte;
+import static com.mongodb.client.model.Filters.lt;
 
 /**
  * @author taho
@@ -39,7 +40,7 @@ import fi.toni.tirc.communication.TircLine;
 public class MongoWrapper {
 
 
-  static Logger log = Logger.getLogger(MongoWrapper.class);
+  static Logger log = LoggerFactory.getLogger(MongoWrapper.class);
 
   public static final String COLLECTION_LOCATION = "location";
   public static final String COLLECTION_LOGS = "logs";
@@ -57,8 +58,10 @@ public class MongoWrapper {
 
     String textUri = "mongodb://tircuser:tirc123@ds037451.mongolab.com:37451/tirc";
     MongoClientURI mongoClientURI = new MongoClientURI(textUri);
-    MongoClient mongoClient = new MongoClient(mongoClientURI);
-    tircDb = mongoClient.getDatabase("tirc");
+    try (MongoClient mongoClient = new MongoClient(mongoClientURI)) {
+      tircDb = mongoClient.getDatabase("tirc");
+
+    }
 
   }
 

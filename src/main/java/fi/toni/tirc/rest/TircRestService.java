@@ -1,7 +1,12 @@
 package fi.toni.tirc.rest;
 
 
-import fi.toni.tirc.communication.*;
+import fi.toni.tirc.communication.ChannelTopic;
+import fi.toni.tirc.communication.Measured;
+import fi.toni.tirc.communication.MessageBus;
+import fi.toni.tirc.communication.TircLine;
+import fi.toni.tirc.communication.TircUser;
+import fi.toni.tirc.communication.TircUsers;
 import fi.toni.tirc.db.MongoWrapper;
 import fi.toni.tirc.dto.Emotion;
 import fi.toni.tirc.dto.MessageBody;
@@ -13,15 +18,20 @@ import fi.toni.tirc.util.TircIdGenerator;
 import fi.toni.tirc.util.TircMessageFormatter;
 import fi.toni.tirc.util.TircMessageParser;
 import fi.toni.tirc.util.TircUtil;
-import org.apache.log4j.Logger;
+import jakarta.servlet.http.HttpServletRequest;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.concurrent.ListenableFutureCallback;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,7 +44,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 @RequestMapping("/backend")
 public class TircRestService {
 
-  static Logger log = Logger.getLogger(TircRestService.class);
+  static Logger log = LoggerFactory.getLogger(TircRestService.class);
 
 
   @Autowired
@@ -56,7 +66,7 @@ public class TircRestService {
 
   }
 
-  @RequestMapping(value = "/connect", method = RequestMethod.POST)
+  @PostMapping(value = "/connect")
   public TircConnectData connect(HttpServletRequest request,
                                  @RequestBody MessageBody message) {
 
@@ -81,18 +91,10 @@ public class TircRestService {
     connectData.setTircusers(tircUsers);
     TircLine tircLine = TircUtil.mapToJoinLine(nick);
     bus.addNewLine(tircLine);
-    restClient.askTopic(new ListenableFutureCallback<ResponseEntity<String>>() {
-      @Override
-      public void onFailure(Throwable throwable) {
-        log.error("Could not obtain topic, error", throwable);
-      }
+    restClient.askTopic(response -> {
+      log.debug("FIND SOMETHING: {}", response);
+      bus.refreshTopic(response);
 
-      @Override
-      public void onSuccess(ResponseEntity<String> stringResponseEntity) {
-        log.debug("FIND SOMETHING: " + stringResponseEntity.getBody());
-        bus.refreshTopic(stringResponseEntity.getBody());
-
-      }
     });
     return connectData;
   }
