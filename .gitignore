@@ -6,3 +6,7 @@ tirc.log
 www
 war
 test1
+.gradle
+.next
+tirc-vite
+target
