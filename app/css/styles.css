@@ -1,0 +1,701 @@
+/** Example rules used by the template application (remove for your app) */
+body {
+    color: white;
+    margin-right: 0;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+}
+
+.row, .full-width {
+    margin: 0;
+    padding: 0; 
+}
+
+
+.sendButton {
+    display: block;
+    font-size: 16pt;
+}
+
+.serverResponseLabelError {
+    color: red;
+}
+
+html, body {
+    box-sizing: border-box;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+    margin: 15px 6px 6px;
+}
+
+.tirc_content {
+    width: 100%;
+    padding-left:0;
+    padding-right:0;
+    height: 100%;
+}
+
+.tirc_content .hidden {
+    display: none;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+h1 {
+    font-size: 3.2em;
+    font-weight: bold;
+    margin: 0;
+    top: 0;
+    padding: 0;
+    display: block;
+    float: left;
+}
+
+.tab_panel {
+    background: none repeat scroll 0 0 #4179AD;
+    color: #EAEAEA;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+    z-index: 10;
+    height: auto;
+}
+
+.tab_panel div {
+    vertical-align: middle;
+    height: auto;
+    overflow-y: auto;
+    z-index: 10;
+    font-weight: bold;
+}
+
+.tirc_header_panel {
+    height: auto;
+    width: 100%;
+}
+
+
+.text-animate.ng-enter {
+    -webkit-transition: 0.5s linear all; /* Chrome */
+    transition: 0.5s linear all;
+    opacity: 0;
+}
+
+.text-animate.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.tirc_info_panel {
+    overflow-y: auto;
+}
+
+.guest h3.list-group-item-heading {
+    color: white;
+}
+
+.tirc_info_panel .tircuser .idle {
+    display: none;
+}
+
+.tirc_info_panel .user {
+    margin-bottom: 1em;
+}
+
+.table {
+    display: table;
+    width: 100%;
+}
+
+.cell {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.tirc_info_panel .typing {
+    color: yellow;
+}
+
+.tirc_info_panel .connected {
+    color: violet;
+}
+
+.fixing {
+    color: red;
+}
+
+.typing {
+    color: yellow;
+}
+
+.tirc_screen {
+    border-bottom: .5px solid #ccc;
+    vertical-align: bottom;
+    overflow-y: auto;
+}
+
+.tirc_screen, .tirc_info_panel {
+    overflow-x: auto;
+}
+
+.tirc_screen .joinOrPart {
+    color: red;
+}
+
+.tirc_screen .me {
+    color: gray;
+}
+
+.tirc_screen .star {
+    font-weight: bold;
+}
+
+.tirc_screen .star .time {
+    color: black;
+
+}
+
+.tirc_screen .action, .tirc_screen .star {
+    color: black;
+    text-align: center;
+}
+
+.tirc_screen .logevent {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+
+}
+
+.tirc_screen .action {
+    font-weight: normal;
+}
+
+.tirc_screen .action .embed {
+    text-align: center;
+    max-width: 100%;
+}
+
+.embed img {
+    max-width: 75%;
+    display: block;
+
+}
+
+.thumbnail {
+    background-color: darkorange;
+
+}
+
+.thumbnail .caption img {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.tirc_screen .own {
+    color: white;
+}
+
+.tirc_screen .quit {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tirc_screen .day_changed {
+    color: lightcyan;
+}
+
+.tirc_screen .mode {
+    color: green;
+}
+
+.tirc_screen div a, .tirc_screen div a:visited {
+    color: #4179AD;
+}
+
+.tirc_action_panel {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    right: 0;
+    z-index: 100;
+
+}
+
+.said {
+    color: yellow;
+}
+
+.say_button {
+    margin: 0;
+    padding: 0;
+    /*position: absolute;
+    right: -10;
+    bottom:0; */
+    height: 100%;
+    width: 100%;
+}
+
+.tirc_window {
+    padding-left: 5px;
+    width: 100%;
+    height: 100%;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+}
+
+.tirc_scroll_window {
+    background: #292a2c;
+    background-color: #292a2c;
+    color: yellow;
+}
+
+.v-panel-content-tirc_scroll_window {
+    background: #292a2c;
+}
+
+.nick_list_scroll {
+    background-color: #292a2c;
+    height: 100%;
+}
+
+.nick_list {
+    height: 100%;
+    padding: 5px;
+    background: #292a2c;
+    font-size: 11px;
+    color: white;
+    font-family: "nexa_heavyregular", Helvetica, Arial, Verdana, sans-serif;
+}
+
+.message_box {
+    height: 100%;
+    background: black;
+    color: white;
+}
+
+.private {
+    color: white;
+    font-size: medium;
+}
+
+.tagged_row {
+    background-color: white;
+    color: black;
+}
+
+.TircLoginPanel {
+    padding: 10px;
+    padding-top: 0;
+    float: right;
+    margin-bottom: 10px;
+    /*
+    border: 1px solid black;
+    */
+}
+
+.TircLoginPanel .gwt-TextBox {
+    width: 145px;
+    padding: 2px 1px;
+}
+
+.TircLoginPanel .gwt-Label {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.TircLoginPanel .gwt-Button {
+    float: right;
+}
+
+.login_panel_header {
+    color: #3B382D;
+    background-color: #EFEFEF;
+    border-bottom: 1px solid #D4D4D4;
+}
+
+.tirc_list_box {
+    padding: 5px 4px;
+    width: 100%;
+    background: black;
+    color: white;
+}
+
+.operator {
+    font-style: italic;
+}
+
+.idle {
+    color: #f0ad4e;
+}
+
+.tirc_tab_item {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.tirc_window a, .tirc_window a:visited {
+    color: lightBlue;
+}
+
+.tirc_pic {
+    margin-left: 2px;
+    margin-right: 4px;
+}
+
+body, html, .tirc_panel_content {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+    background: black;
+}
+
+body {
+    height: 100%;
+    background: black;
+}
+
+.tirc_left_panel, .tirc_right_panel {
+    width: 100%;
+    height: 100%;
+}
+
+.tirc_line {
+    background: black;
+    color: yellow;
+}
+
+.v-generated-body, .tirc {
+    background: black;
+}
+
+.current_date {
+    display: table-cell;
+}
+
+.user_panel .value {
+    display: table-cell;
+    text-align: left;
+}
+
+.user_panel .value input {
+    width: 100%;
+}
+
+.current_user a {
+    color: white;
+}
+
+.message_container_full, .message_container_part {
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border: none;
+}
+
+.message_container_full {
+    width: 100%;
+}
+
+.message_container_part {
+    right: 1em;
+
+}
+
+.accept {
+    height: 4em;
+    width: 1em;
+    position: absolute;
+    right: 0;
+    border: none;
+    bottom: 0;
+    top: 0;
+    color: white;
+    text-decoration: none;
+    font-size: 3em;
+    text-align: center;
+    font-weight: bold;
+    padding-left: 0;
+}
+
+a.ng-click-active {
+    background: blue;
+}
+
+.location {
+    display: inline;
+}
+
+@media screen and (max-width: 850px) {
+
+    .tirc_screen .mode, .tirc_screen .quit, .tirc_screen .joinOrPart {
+        font-size: 0.9em;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .tirc_info_panel {
+        display: none;
+    }
+
+    .tirc_screen {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .say_button {
+        display: none;
+    }
+
+    .message_container {
+        width: 100%;
+    }
+
+    body {
+        margin-left: auto;
+        margin-right: auto;
+        width: 98%;
+    }
+}
+
+.topicandmiddle {
+    display: table-row;
+}
+
+.text {
+    color: yellow;
+    word-wrap: break-word;
+}
+
+.textrow {
+    font-size: 1.2em;
+    animation: myfirst 1s ease-in;
+    -webkit-animation: myfirst 1s ease-in;
+}
+
+.size-90 {
+    font-size: .9em;
+}
+
+.size-80 {
+    font-size: .8em;
+}
+
+.size-110, .size-120, .size-130 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.size-140 {
+    font-size: 1.8em;
+    font-weight: bold;
+
+}
+
+.tirc_main {
+    height: 100%;
+
+}
+
+.relative {
+    height: 100%;
+}
+
+@-webkit-keyframes myfirst {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.own .nick {
+    color: #00a651;
+
+}
+
+.row .time {
+    color: red;
+}
+
+.embed {
+    height: auto;
+    display: block;
+
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.embed iframe {
+    width: auto;
+    height: auto;
+}
+
+.attach, #attach {
+    display: none;
+    outline: none;
+    height: 100%;
+    margin-right: 1em;
+    font-size: 1.5em;
+    background: orange;
+}
+
+.embed .description {
+    color: orange;
+    font-size: 80%;
+}
+
+.tab {
+    color: white;
+    font-size: 2em;
+    float: left;
+    text-decoration: none;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab.active {
+    background: none repeat scroll 0 0 #4179AD;
+}
+
+.list-group-item {
+    background-color: black;
+    border: none;
+}
+
+.spinner {
+    position: fixed;
+    z-index: 3000;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.spinner.fadein {
+    animation: myfirst .5s linear 0s alternate none infinite;
+    -webkit-animation: myfirst .5s linear 0s alternate none infinite;
+
+}
+
+.spinner.fadeout {
+    animation: myfirst 1.5s linear 0s reverse forwards;
+    -webkit-animation: myfirst 1.5s linear 0s reverse forwards;
+}
+
+h3 {
+    margin: 10px;
+}
+
+#tirc_nicks {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#tirc_nicks .tircuser {
+    vertical-align: top;
+    }
+
+h3 {
+    margin: 0;
+}
+
+h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.panel-footer {
+    background: lightsteelblue;
+}
+
+.topic-panel {
+    background: #337ab7;
+    vertical-align: middle;
+}
+
+.topic {
+    overflow-x: auto;
+}
+
+#tirc_nicks{
+    vertical-align: middle;
+    display: inline-block;
+}
+#tirc_nicks .active {
+    font-weight: bold;
+    color: lightsteelblue;
+}
+
+#video_container {
+    box-sizing: border-box;
+}
+
+.video-toggle {
+    padding-left: 0;
+}
+
+.overflow-scroll {
+    overflow-x: auto;
+}
+
+#tirc-video {
+    width: 50%;
+    height: 50%;
+}
+
+.dislike {
+    background-color: yellow;
+    background-size: contain;
+    width: 50%;
+    font-size: 16px;
+}
+
+.glyphicon-thumbs-up {
+    margin-left: 1em;
+}
+
+.emotion {
+    display: inline;
+    margin-right: 1em;
+}
+
+.thumbnail{
+    margin-bottom: auto;
+}
+
+.icon {
+  background: url(/images/icons.png);
+  background-size: 4100%;
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+
+}
+
+ 
+
