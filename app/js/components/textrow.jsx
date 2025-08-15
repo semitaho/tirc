@@ -1,42 +1,42 @@
-var React = require('react'),
-  Config = require('../services/ConfigService.js');
-
+import Config from '../services/ConfigService.js';
+import React from 'react';
 import Emotion from './emotion.jsx';
-export default  React.createClass({
+import useUi from '../hooks/ui.hook.js';
+class Textrow extends React.Component {
 
-  getClassName: function (text) {
+  getClassName(text) {
     if (this.isJoinOrPart(text)) {
       return 'joinOrPart';
     }
     return '';
-  },
+  }
 
-  isJoinOrPart: function (input) {
+  isJoinOrPart(input) {
     return input.indexOf("has joined #") !== -1
       || input.indexOf("has left #") !== -1;
-  },
+  }
 
-  isQuit: function (input) {
+  isQuit(input) {
     return input.indexOf("has quit ") !== -1;
 
-  },
+  }
 
-  isMePart: function (input) {
+  isMePart(input) {
     return input.indexOf(" * ") !== -1
       && input.indexOf(" has ") === -1
       && input.indexOf('<') === -1
       && input.indexOf('>') === -1;
-  },
+  }
 
-  isActionPart: function (input) {
+  isActionPart(input) {
     return input.indexOf("is known as") !== -1;
-  },
+  }
 
-  parseTime: function (elem) {
+  parseTime(elem) {
     return elem.match(/[0-9][0-9]:[0-9][0-9](:[0-9][0-9])?/g)[0];
-  },
+  }
 
-  format: function (parsedText) {
+  format(parsedText) {
     var ytre = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
     var matchArray = parsedText.match(ytre);
     if (matchArray) {
@@ -52,19 +52,19 @@ export default  React.createClass({
       });
     }
     return parsedText;
-  },
+  }
 
-  formatImage: function (match) {
+  formatImage (match) {
     var imglink = '<a href="' + match + '" target="_blank"><img src="' + match + '" title="' + match + '" /></a>';
     return imglink;
-  },
+  }
 
-  formatLink: function (match) {
+  formatLink (match) {
     var link = '<a href="' + match + '" target="_blank">' + match + '</a><div class="selector-wrapper"></div> ';
     return link;
-  },
+  }
 
-  generateEmotionStyle: function (likes, dislikes) {
+  generateEmotionStyle (likes, dislikes) {
     var styleSize = 0;
     if (likes && likes.length > 0) {
       styleSize += (likes.length * 10);
@@ -74,9 +74,9 @@ export default  React.createClass({
     }
     return 'size-' + (100 + styleSize);
 
-  },
+  }
 
-  handleText: function (line) {
+  handleText (line) {
     if (line.indexOf('lol') > -1) {
       let replaced = ' <span class="icon" style="background-position: 65% 42.5%;"></span> ';
       let newLine = line.replace('lol', replaced);
@@ -84,9 +84,10 @@ export default  React.createClass({
     }
     let newText = line;
     return newText;
-  },
+  }
 
-  rendercomment: function (item) {
+  rendercomment (item, t) {
+    console.log('time'+item.time)
     var textrowstyle = 'row comment textrow';
     if (item.nick === Config.loadUser('taho')) {
       textrowstyle += ' own';
@@ -101,14 +102,14 @@ export default  React.createClass({
                      classNames="glyphicon glyphicon-thumbs-up text-primary"/>
             <Emotion items={item.dislikes} toggleEmotion={() => this.props.toggleEmotion(item.date, false) }
                      classNames="glyphicon glyphicon-thumbs-down text-danger"/>
-            <span className="time small"> - {item.time}</span>
+            <span className="time small"> - {t(item.time)}</span>
           </div>
         </div>
       </div>
     )
-  },
+  }
 
-  renderme: function (item) {
+  renderme (item) {
     return ( <div
       className="row textrow">
       <div
@@ -119,9 +120,9 @@ export default  React.createClass({
                 }
                     }></div>
     </div>)
-  },
+  }
 
-  renderwelcome: function (item) {
+  renderwelcome (item) {
     return ( <div
         className="row textrow">
         <div
@@ -134,9 +135,9 @@ export default  React.createClass({
         ></div>
       </div>
     )
-  },
+  }
 
-  renderaction: function (item) {
+  renderaction (item) {
     return ( <div
         className="row textrow">
         <div
@@ -149,9 +150,9 @@ export default  React.createClass({
         ></div>
       </div>
     )
-  },
+  }
 
-  renderquit: function (item) {
+  renderquit (item) {
     return ( <div
         className="row textrow">
         <div
@@ -165,27 +166,28 @@ export default  React.createClass({
 
       </div>
     )
-  },
-  renderjoin: function (item) {
+  }
+  renderjoin (item, t) {
     return ( <div
         className="row textrow">
         <div
-          className="col-md-12 bg-info quit">{item.nick} saapui kanavalle - {item.time}</div>
+          className="col-md-12 bg-info quit">{item.nick} saapui kanavalle - {t(item.time)}</div>
 
       </div>
     )
-  },
+  }
 
-  renderpart: function (item) {
+  renderpart (item) {
     return ( <div
         className="row textrow">
         <div className="bg-warning col-md-12 quit"> {item.nick} jätti kanavan - {item.time}</div>
       </div>
     )
-  },
-  render: function () {
+  }
+  render () {
+   const { t} =  useUi();
     if (this['render' + this.props.elem.type]) {
-      return this['render' + this.props.elem.type](this.props.elem);
+      return this['render' + this.props.elem.type](this.props.elem, t);
     } else {
       console.log('ERROR! method: render' + this.props.elem.type + ' cannot be found, row: ' + JSON.stringify(this.props.elem));
       return null;
@@ -199,9 +201,9 @@ export default  React.createClass({
             }
             </span>
       </div> )
-  },
+  }
 
-  renderlogevent: function (item) {
+  renderlogevent (item) {
     return (
       <div
         className="textrow row logevent alert-warning">
@@ -210,4 +212,6 @@ export default  React.createClass({
       </div> );
   }
 
-});
+}
+
+export default Textrow;

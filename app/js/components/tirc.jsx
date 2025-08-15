@@ -31,7 +31,7 @@ class Tirc extends React.Component {
 
   render() {
     const topicpanel = {
-      topic: 'Vain yksi tietää totuuden',
+      topic: 'Testi',
       users: [],
       tircusers: [],
       userselect: {
