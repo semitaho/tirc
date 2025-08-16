@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import UIService from "../services/UIService.js";
+import { useMessages, sendMessage } from "../hooks/messaging.hook.js";
 const MessageBox = (props) => {
 
     let id = null;
@@ -59,6 +60,7 @@ const MessageBox = (props) => {
          // this.props.sendText(selftext, done);
         });
       } else {
+        sendMessage('Andon', 'comment', text);
        // this.props.sendText(selftext, selftext);
       }
       statechange("idle");
