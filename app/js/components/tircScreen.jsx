@@ -6,16 +6,14 @@ const TircScreen = () => {
   const containerRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
-
   const { latestMessages } = useMessages();
 
   // autoscroll
   useEffect(() => {
-   
-   // if (isAtBottom) return;
+    // if (isAtBottom) return;
     const elem = containerRef.current;
-    console.log('scroll height:'+elem.scrollHeight);
-      elem.scrollTop = elem.scrollHeight;
+    console.log("scroll height:" + elem.scrollHeight);
+    elem.scrollTop = elem.scrollHeight;
   }, [latestMessages.length]);
   var dataall = latestMessages; //this.props.connectdata.concat(this.props.currentdata);
   var id = 0;
