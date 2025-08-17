@@ -52,7 +52,6 @@ class Tirc extends React.Component {
         </div>
       );
     }
-    let className = "";
     let isVisible = true;
     var actionpanelId = "action_panel_0";
     return (
@@ -66,14 +65,12 @@ class Tirc extends React.Component {
         ) : (
           ""
         )}
-        <div className={className}>
           <TopicPanel
             {...topicpanel}
             changeUser={(nick) => dispatch(changeUser(nick))}
             receiveUsers={(users) => dispatch(receiveUsers(users))}
           />
           <MainPanel
-            shareVideo={(id) => dispatch(shareVideo(this.ws, id))}
             {...tabs}
             users={[]}
             tircusers={[]}
@@ -82,7 +79,7 @@ class Tirc extends React.Component {
             currentdata={[]}
             activedata={[]}
             index={0}
-            scroll={(isScrolling) => dispatch(scroll(isScrolling))}
+           //  scroll={(isScrolling) => dispatch(scroll(isScrolling))}
             visible={isVisible}
             toggleEmotion={(textid, type) =>
               dispatch(toggleEmotion(textid, type))
@@ -107,7 +104,6 @@ class Tirc extends React.Component {
             </div>
           </div>
         </div>
-      </div>
     );
   }
 

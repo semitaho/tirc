@@ -37,7 +37,10 @@ html, body {
     width: 100%;
     padding-left:0;
     padding-right:0;
-    height: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .tirc_content .hidden {
@@ -133,9 +136,11 @@ h1 {
 }
 
 .tirc_screen {
+    flex:1;
     border-bottom: .5px solid #ccc;
     vertical-align: bottom;
     overflow-y: auto;
+    padding-bottom: 50px;
 }
 
 .tirc_screen, .tirc_info_panel {
@@ -241,6 +246,16 @@ h1 {
     bottom:0; */
     height: 100%;
     width: 100%;
+}
+
+.tirc_main_panel_middle {
+    flex: 1;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+      min-height: 0;          /* IMPORTANT fix for flex scroll in some browsers */
+
+   /* overflow-y: auto; */
 }
 
 .tirc_window {
@@ -500,11 +515,6 @@ a.ng-click-active {
 .size-140 {
     font-size: 1.8em;
     font-weight: bold;
-
-}
-
-.tirc_main {
-    height: 100%;
 
 }
 

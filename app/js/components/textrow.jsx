@@ -86,8 +86,7 @@ class Textrow extends React.Component {
     return newText;
   }
 
-  rendercomment (item, t) {
-    console.log('time'+item.time)
+  rendercomment (item, t, em) {
     var textrowstyle = 'row comment textrow';
     if (item.nick === Config.loadUser('taho')) {
       textrowstyle += ' own';
@@ -97,7 +96,7 @@ class Textrow extends React.Component {
         <div className="nick columns col-md-3 col-xs-3 text-right">{item.nick}</div>
         <div className="nicktext col-md-9 col-xs-9">
           <div className="text">
-            <span dangerouslySetInnerHTML={{__html: item.line}}/>
+            <span dangerouslySetInnerHTML={{__html: em(item.line)}}/>
             <Emotion items={item.likes} toggleEmotion={() => this.props.toggleEmotion(item.date, true) }
                      classNames="glyphicon glyphicon-thumbs-up text-primary"/>
             <Emotion items={item.dislikes} toggleEmotion={() => this.props.toggleEmotion(item.date, false) }
@@ -185,9 +184,9 @@ class Textrow extends React.Component {
     )
   }
   render () {
-   const { t} =  useUi();
+   const { t, em } =  useUi();
     if (this['render' + this.props.elem.type]) {
-      return this['render' + this.props.elem.type](this.props.elem, t);
+      return this['render' + this.props.elem.type](this.props.elem, t, em);
     } else {
       console.log('ERROR! method: render' + this.props.elem.type + ' cannot be found, row: ' + JSON.stringify(this.props.elem));
       return null;

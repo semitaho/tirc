@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { saveUser } from "../services/ConfigService";
+import ConfigService, { saveUser } from "../services/ConfigService";
 import { useData } from "../hooks/firebase.hook";
-const Userselect = ( { users, chosen }) => {
+const Userselect = ( { users }) => {
+  const [chosen, setChosen] = useState(ConfigService.loadUser());
   const onchange = (event) => {
     var newnick = event.target.value;
-    saveUser(event.target.value);
-    this.props.changeUser(newnick);
+    saveUser(newnick);
+    setChosen(newnick);
   };
-  const [ nicks ] = useData("nicks");
+  const  nicks = [{name: 'Aino'},  {name: 'Toni'}, {name: 'Hilma'},
+{name: 'Taho Ohjelmistopalvelut Oy'}, {name: 'Hanna'}
+
+  ];
   console.log("Nicks in Userselect:", nicks);
   return (
     

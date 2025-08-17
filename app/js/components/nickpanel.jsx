@@ -14,6 +14,7 @@ class NickPanel extends React.Component {
   render() {
     var users = this.fillIdletime(this.props.users);
     var tircusers = this.props.tircusers;
+    
     users = users.map(function (user, index) {
       return <li key={index}>
         <h4 className="nick">{user.nick}</h4>

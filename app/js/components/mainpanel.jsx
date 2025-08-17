@@ -12,7 +12,6 @@ const MainPanel = (props) => {
   return (
     <div className="tirc_main_panel_middle  row" id={idindex}>
     
-      <div className={columns}>
         <TircScreen
           scrolling={props.scrolling}
           scroll={props.scroll}
@@ -22,7 +21,6 @@ const MainPanel = (props) => {
           currentdata={props.currentdata}
           activedata={props.activedata}
         />
-      </div>
     </div>
   );
 };
