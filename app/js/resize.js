@@ -52,9 +52,6 @@ module.exports = (function () {
 
   };
 
-  $(window).resize(() => {
-    resize(0);
-  });
 
 
   return {

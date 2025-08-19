@@ -9,8 +9,7 @@ let tircContent = document.getElementById("tirc_content");
 let phraseNames = ["Inex antoinette"];
 let index = 0; //Math.floor(Math.random() * phraseNames.length);
 createRoot(tircContent).render(
-  <StrictMode>
     <Tirc phraseindex={index} phrases={phraseNames}></Tirc>
-  </StrictMode>,
+
 );
 

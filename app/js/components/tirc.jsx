@@ -17,19 +17,20 @@ import {
   toggleEmotion,
   scroll,
 } from "../actions/tircactions.js";
-import React from "react";
+import React, { useEffect } from "react";
 import { receiveUsers } from "../actions/topicpanelactions.js";
-import useUi, { useWindowFocus } from "../hooks/ui.hook.js";
 import { useMessages } from "../hooks/messaging.hook.js";
 import ConfigService from "../services/ConfigService.js";
 const Tirc = (props) => {
-     const { sendMessage }  = useMessages();
+  const { sendMessage } = useMessages();
 
-  const { focused } = useWindowFocus();
-  console.log("focused:", focused);
-  if (focused) {
-    sendMessage(ConfigService.loadUser(), "welcome", "");
-  }
+  useEffect(() => {
+    const handleBlur = () => {
+      console.log("blurred!");
+      sendMessage(ConfigService.loadUser(), "quit", "");
+    };
+    window.addEventListener("blur", handleBlur);
+  }, []);
 
   const topicpanel = {
     topic: "Testi",
@@ -41,7 +42,7 @@ const Tirc = (props) => {
     },
   };
   let { tabs, userselect, loading, active, dispatch } = props;
-  if (props.loading && tprops.loading === true) {
+  if ( loading &&  loading === true) {
     return (
       <div className="col-md-12 col-xs-12 col-sm-12">
         <Spinner index={props.phraseindex} phrases={props.phrases} />
@@ -83,13 +84,7 @@ const Tirc = (props) => {
       <div className="tirc_action_panel row" id={actionpanelId}>
         <div className="col-md-12 col-sm-12 col-xs-12 full-width">
           <Messagebox
-            updateText={(text) => dispatch(updateText(text))}
-            sendText={(text, formattedtext) =>
-              dispatch(sendText(props.userselect.chosen, text, formattedtext))
-            }
-            changeState={(newstate, text) =>
-              dispatch(changeState(props.userselect.chosen, newstate, text))
-            }
+          
           />
         </div>
       </div>

@@ -1,30 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import UIService from "../services/UIService.js";
-import { useMessages, sendMessage } from "../hooks/messaging.hook.js";
+import { usePhantomMessages, sendMessage } from "../hooks/messaging.hook.js";
 import ConfigService from "../services/ConfigService.js";
 import useGPT from "../hooks/gpt.hook.js";
 const MessageBox = (props) => {
+  const { savePhantomMessage } = usePhantomMessages();
+  const [typestate, setTypestate] = useState({
+    time: new Date(),
+    state: "idle",
+  });
+  console.log("current state. ", typestate);
+
   let id = null;
   const { prompt } = useGPT();
   const inputRef = useRef(null);
 
-  const [typestate, setTypestate] = useState({
-    time: new Date(),
-    state: "connected",
-  });
+  function statechange(state) {
+    var previousState = typestate.state;
+
+    const newState = { time: new Date(), state };
+    if (state !== previousState) {
+      console.log("prev state, new state", previousState, state);
+
+      console.log("uusi...", state);
+      setTypestate(newState);
+      savePhantomMessage(newState.state, ConfigService.loadUser());
+    }
+  }
   function onstateupdate() {
     if (typestate.state === "typing" || typestate.state === "fixing") {
       var currentTime = new Date();
       var millisecondsDiff = currentTime.getTime() - typestate.time.getTime();
-      if (millisecondsDiff > 1500) {
+      console.log("milli diff", millisecondsDiff);
+      if (millisecondsDiff > 2000) {
         setTypestate({ time: new Date(), state: "idle" });
-      }
-    } else if (typestate.state === "connected") {
-      var currentTime = new Date();
-      var millisecondsDiff = currentTime.getTime() - typestate.time.getTime();
-      if (millisecondsDiff > 60000) {
-        setTypestate({ time: new Date(), state: "idle" });
+        savePhantomMessage("idle", ConfigService.loadUser());
       }
     }
   }
@@ -34,8 +45,7 @@ const MessageBox = (props) => {
     if (event.which === 13) {
       if (event.target.value.indexOf("tirc") === 0) {
         sayGpt(event.target.value);
-      }
-      {
+      } else {
         say(event.target.value);
       }
       event.target.blur();
@@ -48,15 +58,6 @@ const MessageBox = (props) => {
     }
   }
 
-  function statechange(state) {
-    var previousState = typestate.state;
-    /*
-      this.typestate = { time: new Date(), state };
-      if (state !== previousState) {
-        this.props.changeState(state);
-      }
-        */
-  }
   function onBlur(event) {
     statechange("idle");
   }
@@ -91,7 +92,6 @@ const MessageBox = (props) => {
     id = setInterval(onstateupdate, 500);
     inputRef?.current.focus();
     return () => {
-      console.log("MessageBox: componentWillUnmount");
       clearInterval(id);
     };
   }, []);

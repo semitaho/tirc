@@ -121,14 +121,14 @@ class Textrow extends React.Component {
     </div>)
   }
 
-  renderwelcome (item) {
+  renderwelcome (item, t) {
     return ( <div
         className="row textrow">
         <div
           className="action col-md-12 thumbnail"
           dangerouslySetInnerHTML={
                 {
-                    __html: '<div><div class="caption" >'+ item.nick + ' saapui paikalle ' + item.line + '</div><span class="time small"> - ' + item.time + '</span></div>'
+                    __html: '<div><div class="caption" >'+ item.nick + ' saapui paikalle ' + item.line + '</div><span class="time small"> - ' + t(item.time) + '</span></div>'
                 }
                     }
         ></div>
@@ -151,7 +151,7 @@ class Textrow extends React.Component {
     )
   }
 
-  renderquit (item) {
+  renderquit (item, t) {
     return ( <div
         className="row textrow">
         <div
@@ -160,7 +160,7 @@ class Textrow extends React.Component {
           ircistä: {
             item.line
           }
-          -{item.time
+          {t(item.time)
           }</div>
 
       </div>
