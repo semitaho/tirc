@@ -27,7 +27,7 @@ const Tirc = (props) => {
   useEffect(() => {
     const handleBlur = () => {
       console.log("blurred!");
-      sendMessage(ConfigService.loadUser(), "quit", "");
+    //  sendMessage(ConfigService.loadUser(), "quit", "");
     };
     window.addEventListener("blur", handleBlur);
   }, []);
