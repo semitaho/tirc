@@ -23,6 +23,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          OPENAPI_TIRC_KEY: ${{ secrets.OPENAPI_TIRC_KEY }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
