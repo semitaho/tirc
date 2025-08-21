@@ -1,9 +1,8 @@
 import OpenAI from "openai";
 
 const apiUrl = "https://api.openai.com/v1/chat/completions"; // Update with the correct API endpoint
-const keijo =     "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";
 const client = new OpenAI({
-  apiKey:keijo,
+  apiKey:process.env.OPENAPI_TIRC_KEY,
   dangerouslyAllowBrowser: true,
 });
 
