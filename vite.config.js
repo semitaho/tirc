@@ -7,4 +7,4 @@ export default defineConfig({
   plugins: [react()],
     base: '/tirc/',  // 👈 must match repo name
 
-})
+});
