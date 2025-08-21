@@ -34,7 +34,7 @@ const usePhantomMessages = () => {
     const q = query(collection(db,  PHANTOM_COLLECTION));
     onSnapshot(q, (snapshot) => {
       const phantomRows = snapshot.docs.map((doc) => doc.data());
-      setPhantomMessages(phantomRows);
+      setPhantomMessages([]);
     });
   }
 
