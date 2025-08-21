@@ -5,4 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   root: 'app',
   plugins: [react()],
+    base: '/tirc/',  // 👈 must match repo name
+
 })
