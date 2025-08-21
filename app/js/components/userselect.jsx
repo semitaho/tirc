@@ -11,6 +11,8 @@ const Userselect = ({ users }) => {
   const nicks = [
     { name: "Aino" },
     { name: "Toni" },
+    { name: "Andon" },
+
     { name: "Hilma" },
     { name: "Taho Ohjelmistopalvelut Oy" },
     { name: "Hanna" },
