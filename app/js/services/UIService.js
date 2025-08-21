@@ -1,8 +1,5 @@
 const KEY = '65fac812c50542dfb026115c52cff16a';
-$.embedly.defaults.key = KEY;
-$.embedly.defaults.query = {
-  chars: 400,
-    autoplay: false
+utoplay: false
   };
 const urlRe = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 class UIService {

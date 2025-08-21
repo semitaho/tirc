@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import UIService from "../services/UIService.js";
 import { usePhantomMessages, sendMessage } from "../hooks/messaging.hook.js";
 import ConfigService from "../services/ConfigService.js";
 import useGPT from "../hooks/gpt.hook.js";
@@ -64,14 +63,8 @@ const MessageBox = (props) => {
   function say(text) {
     var self = this;
     var selftext = text;
-    if (UIService.hasLink(text)) {
-      UIService.embedlyText(text, (done) => {
-        // this.props.sendText(selftext, done);
-      });
-    } else {
-      sendMessage(ConfigService.loadUser(), "comment", text);
-      // this.props.sendText(selftext, selftext);
-    }
+
+    sendMessage(ConfigService.loadUser(), "comment", text);
     statechange("idle");
   }
 
