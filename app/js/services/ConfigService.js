@@ -25,7 +25,6 @@ export function loadUser() {
 }
 
 export function loadPhrases() {
-  console.log("loading phrases from mongo....");
   var REST_URI =
     "https://api.mongolab.com/api/1/databases/tirc/collections/phrase?apiKey=" +
     API_KEY;

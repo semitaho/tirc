@@ -55,7 +55,6 @@ export default function tabsreducer(state = initTabState, action) {
       });
 
     case 'RECEIVE_PHRASES':
-      console.log('in receive phrases',action.phrases);
       return Object.assign({}, state, {
         phrases: action.phrases,
         phraseindex: action.index

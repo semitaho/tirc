@@ -106,7 +106,6 @@ const useMessages = () => {
         alkulataus = false;
         setReady(true);
       } else {
-        console.log("doc changes length:", snapshot.docChanges().length);
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             notify(change.doc.data());
