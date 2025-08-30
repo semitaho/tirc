@@ -106,6 +106,7 @@ const MessageBox = (props) => {
     inputRef?.current.focus();
     return () => {
       clearInterval(id);
+      console.log('unmounting..');
       savePhantomMessage('idle', ConfigService.loadUser());
 
     };
