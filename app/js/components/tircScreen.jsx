@@ -13,7 +13,6 @@ const TircScreen = () => {
   useEffect(() => {
     // if (isAtBottom) return;
     const elem = containerRef.current;
-    console.log("scroll height:" + elem.scrollHeight);
     elem.scrollTop = elem.scrollHeight;
   }, [messages.length, phantomMessages.length, activeMessages.length]);
   var dataall = messages.concat(activeMessages);
