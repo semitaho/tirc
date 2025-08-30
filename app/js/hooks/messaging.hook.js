@@ -91,24 +91,22 @@ const useMessages = () => {
   const time = new Date().getTime() - DATA_FROM_LAST_HOURS * 60 * 60 * 1000;
   const [messages, setMessages] = useState([]);
   const [activeMessages, setActiveMessages] = useState([]);
-  const [ready, setReady] = useState(false);
+
+  const activeMessagesJson = JSON.stringify(activeMessages);
 
   useEffect(() => {
     let alkulataus = true;
     const q = query(collection(db, "messages"), where("time", ">", time));
     const unsubsribe = onSnapshot(q, (snapshot) => {
       if (alkulataus) {
-        const allMessages = snapshot.docs
-          .map((doc) => doc.data())
-          .filter((docdata) => docdata.type !== "phantom");
+        const allMessages = snapshot.docs.map((doc) => doc.data());
         setMessages(allMessages);
         console.log("messaged initialization load done!");
         alkulataus = false;
-        setReady(true);
       } else {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
-            console.log('added uusi..');
+            console.log("added uusi..");
             notify(change.doc.data());
 
             setActiveMessages((prev) => {
@@ -124,8 +122,10 @@ const useMessages = () => {
         });
       }
     });
-    return () => unsubsribe();
-  }, [ready]);
+    return () => {
+       unsubsribe();
+    }
+  }, []);
 
   return {
     messages,

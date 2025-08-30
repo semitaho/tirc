@@ -44,6 +44,10 @@ const MessageBox = (props) => {
   function isFixing(event) {
     return event.which === 8 || event.which === 46;
   }
+
+  function isTyping(event) {
+    return event.key.length === 1;
+  }
   function onstatetick() {
     const currentState = typestateRef.current; // 👈 always latest
     if (currentState.state === "typing" || currentState.state === "fixing") {
@@ -69,7 +73,7 @@ const MessageBox = (props) => {
       clearText(event.target);
     } else if (isFixing(event)) {
       statechange("fixing");
-    } else {
+    } else  if (isTyping(event)) {
       statechange("typing");
     }
   }

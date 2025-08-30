@@ -8,13 +8,15 @@ const TircScreen = () => {
 
   const { messages, activeMessages } = useMessages();
   const { phantomMessages } = usePhantomMessages();
+  const phantomMessagesJson = JSON.stringify(phantomMessages);
 
+  console.log('render tirc screen...');
   // autoscroll
   useEffect(() => {
     // if (isAtBottom) return;
     const elem = containerRef.current;
     elem.scrollTop = elem.scrollHeight;
-  }, [messages.length, phantomMessages.length, activeMessages.length]);
+  }, [activeMessages.length, messages.length, phantomMessages.length]);
   var dataall = messages.concat(activeMessages);
   var id = 0;
   var classStr = "tirc_screen";

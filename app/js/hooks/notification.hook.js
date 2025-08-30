@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-let newMessagesCounter = 0;
 let notification = null;
 const originalTitle = document.title;
 export function useNotify() {
+  const [newMessagesCounter, setNewMessagesCounter] = useState(0);
   const notify = (messageRow) => {
     if (
       Notification.permission === "granted" &&
@@ -11,15 +11,17 @@ export function useNotify() {
       document.hidden
     ) {
       console.log("notification will be send!");
-      newMessagesCounter++;
+      setNewMessagesCounter((messages) => {
+        const newMessages = messages + 1;
+        document.title = `(${newMessages}) ${originalTitle}`;
+        return newMessages;
+      });
       const blinkTitle = "Uusi viesti käyttäjältä: " + messageRow.nick;
       if (notification) {
         notification = new Notification(blinkTitle, {
           body: messageRow.line,
         });
       }
-
-      document.title = `(${newMessagesCounter}) ${originalTitle}`;
     }
   };
   // Request permission on mount
@@ -28,7 +30,7 @@ export function useNotify() {
       if (!document.hidden) {
         console.log("no hidden!");
         document.title = originalTitle;
-        newMessagesCounter = 0;
+        setNewMessagesCounter(0);
       } else {
       }
     });
