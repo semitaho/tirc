@@ -6,7 +6,7 @@ const TircScreen = () => {
   const containerRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
-  const { messages } = useMessages();
+  const { messages, activeMessages } = useMessages();
   const { phantomMessages } = usePhantomMessages();
 
   // autoscroll
@@ -15,8 +15,8 @@ const TircScreen = () => {
     const elem = containerRef.current;
     console.log("scroll height:" + elem.scrollHeight);
     elem.scrollTop = elem.scrollHeight;
-  }, [messages.length, phantomMessages.length]);
-  var dataall = messages; //this.props.connectdata.concat(this.props.currentdata);
+  }, [messages.length, phantomMessages.length, activeMessages.length]);
+  var dataall = messages.concat(activeMessages);
   var id = 0;
   var classStr = "tirc_screen";
   var index = 0;
