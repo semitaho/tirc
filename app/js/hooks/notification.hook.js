@@ -6,7 +6,10 @@ let notificationActive = false;
 export function useNotify() {
 
    const notify = (messageRow) => {
-     if (Notification.permission === "granted" && messageRow.type === 'comment' && !notificationActive) {
+     if (Notification.permission === "granted" 
+      && messageRow.type === 'comment'
+       && document.hidden 
+       && !notificationActive) {
      const notification =  new Notification("Uusi viesti käyttäjältä: "+messageRow.nick, {
         body: messageRow.line
       });
