@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
 let notificationActive = false;
+let blinkNotification = null;
+const originalTitle = document.title;
 export function useNotify() {
   const notify = (messageRow) => {
     if (
@@ -10,12 +12,19 @@ export function useNotify() {
       !notificationActive
     ) {
       console.log("notification will be send!");
-      const notification = new Notification(
-        "Uusi viesti käyttäjältä: " + messageRow.nick,
-        {
-          body: messageRow.line,
+      const blinkTitle = "Uusi viesti käyttäjältä: " + messageRow.nick;
+      const notification = new Notification(blinkTitle, {
+        body: messageRow.line,
+      });
+
+      blinkNotification = setInterval(() => {
+        if (document.title === originalTitle) {
+          document.title = blinkTitle;
+        } else {
+          document.title = originalTitle;
         }
-      );
+      }, 100);
+
       notificationActive = true;
       notification.addEventListener("close", () => {
         notificationActive = false;
@@ -33,6 +42,9 @@ export function useNotify() {
       if (!document.hidden) {
         notificationActive = false;
         console.log("no hidden!");
+        clearInterval(blinkNotification);
+        document.title = originalTitle;
+      } else {
       }
     });
     if (Notification.permission === "default") {
