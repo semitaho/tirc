@@ -4,7 +4,7 @@ import { usePhantomMessages, sendMessage } from "../hooks/messaging.hook.js";
 import ConfigService from "../services/ConfigService.js";
 import useGPT from "../hooks/gpt.hook.js";
 
-const MILLISECONDS_TO_TICK = 2000;
+const MILLISECONDS_TO_TICK = 1000;
 const MessageBox = (props) => {
   const { savePhantomMessage } = usePhantomMessages();
 
@@ -16,19 +16,26 @@ const MessageBox = (props) => {
   const typestateRef = useRef(typestate);
   // keep the ref in sync with React state
   useEffect(() => {
-    typestateRef.current = typestate;
+    setRealtimeState(typestate.state);
   }, [typestate]);
 
   let id = null;
   const { prompt } = useGPT();
   const inputRef = useRef(null);
 
+  function setRealtimeState(state) {
+    typestateRef.current = {
+      state,
+      time: new Date(),
+
+
+    }
+  }
   function statechange(state) {
     const newState = { time: new Date(), state };
     var previousState = typestateRef.current?.state;
+    setRealtimeState(state);
     if (state !== previousState) {
-      console.log("prev state, new state", previousState, state);
-      console.log("uusi...", state);
       setTypestate(newState);
       savePhantomMessage(newState.state, ConfigService.loadUser());
     }
@@ -39,12 +46,9 @@ const MessageBox = (props) => {
   }
   function onstatetick() {
     const currentState = typestateRef.current; // 👈 always latest
-
-    console.log("current state:", currentState.state);
     if (currentState.state === "typing" || currentState.state === "fixing") {
       var currentTime = new Date();
-      var millisecondsDiff = currentTime.getTime() - typestate.time.getTime();
-      console.log("milli diff", millisecondsDiff);
+      var millisecondsDiff = currentTime.getTime() - typestateRef.current?.time.getTime();
       if (millisecondsDiff > MILLISECONDS_TO_TICK) {
         setTypestate({ time: new Date(), state: "idle" });
         savePhantomMessage("idle", ConfigService.loadUser());
@@ -83,7 +87,6 @@ const MessageBox = (props) => {
 
   function sayGpt(text) {
     prompt(text).then((response) => {
-      console.log("response", response);
       if (response) {
         sendMessage("tirc-tekoäly", "comment", response);
       }

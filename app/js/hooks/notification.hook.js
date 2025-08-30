@@ -2,13 +2,25 @@ import { useEffect } from "react";
 
 
 
+let notificationActive = false;
 export function useNotify() {
 
    const notify = (messageRow) => {
-     if (Notification.permission === "granted" && messageRow.type === 'comment') {
-      new Notification("Uusi viesti käyttäjältä: "+messageRow.nick, {
+     if (Notification.permission === "granted" && messageRow.type === 'comment' && !notificationActive) {
+     const notification =  new Notification("Uusi viesti käyttäjältä: "+messageRow.nick, {
         body: messageRow.line
       });
+      notificationActive = true;
+      notification.onclose(() => {
+        notificationActive = false;
+
+      });
+
+       notification.onclick(() => {
+        notificationActive = false;
+
+      });
+
     }
 
   };
