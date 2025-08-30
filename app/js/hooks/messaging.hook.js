@@ -108,6 +108,7 @@ const useMessages = () => {
       } else {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
+            console.log('added uusi..');
             notify(change.doc.data());
 
             setActiveMessages((prev) => {
@@ -124,7 +125,7 @@ const useMessages = () => {
       }
     });
     return () => unsubsribe();
-  }, []);
+  }, [ready]);
 
   return {
     messages,
