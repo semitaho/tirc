@@ -26,7 +26,7 @@ const TircScreen = () => {
     return <Textrow key={id} elem={item} />;
   });
 
-  var mappedPhantomrowData = phantomMessages.map((item,index) => <Phantomrow {...item} />);
+  var mappedPhantomrowData = phantomMessages.map((item,index) => <Phantomrow key={{index}} {...item} />);
   let mappedData = mappedTextrowData.concat(mappedPhantomrowData);
   return (
     <div ref={containerRef} className={classStr} id={screenindex}>
