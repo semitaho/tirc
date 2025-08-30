@@ -8,9 +8,6 @@ const TircScreen = () => {
 
   const { messages, activeMessages } = useMessages();
   const { phantomMessages } = usePhantomMessages();
-  const phantomMessagesJson = JSON.stringify(phantomMessages);
-
-  console.log('render tirc screen...');
   // autoscroll
   useEffect(() => {
     // if (isAtBottom) return;
